@@ -1,9 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import Provider from './_trpc/Provider'
+import 'tw-elements/dist/css/tw-elements.min.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({ weight: '400', subsets: ['latin'] })
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -17,7 +18,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
+			<body className={roboto.className}>
 				<Provider>{children}</Provider>
 			</body>
 		</html>
