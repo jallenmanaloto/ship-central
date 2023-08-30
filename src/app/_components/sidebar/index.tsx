@@ -15,7 +15,11 @@ const Sidebar = () => {
 					<h1 className="h-full text-white font-medium text-2xl px-6 py-4">
 						Ship Central
 					</h1>
-					<IoMdClose size={20} color="#fff" style={{ marginLeft: '35px' }} />
+					<IoMdClose
+						size={20}
+						color="#fff"
+						style={{ marginLeft: '35px', cursor: 'pointer' }}
+					/>
 				</div>
 				<div className="flex items-center py-2 px-6">
 					<BiHome size={18} color="#f4f6f8" />
@@ -26,21 +30,21 @@ const Sidebar = () => {
 						REPORTS
 					</h2>
 				</div>
-				<div className="flex items-center py-3 px-6">
+				<div className="flex items-center py-3 px-6 cursor-pointer ">
 					<GoStack style={{ color: '#919eab' }} />
-					<h2 className="text-categoryInactive text-md ml-2 font-medium">
+					<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
 						Daily Loading
 					</h2>
 				</div>
-				<div className="flex items-center py-3 px-6">
+				<div className="flex items-center py-3 px-6 cursor-pointer ">
 					<PiBoat style={{ color: '#919eab' }} />
-					<h2 className="text-categoryInactive text-md ml-2 font-medium">
+					<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
 						Vessel Loading
 					</h2>
 				</div>
-				<div className="flex items-center py-3 px-6">
+				<div className="flex items-center py-3 px-6 cursor-pointer ">
 					<SiSimpleanalytics style={{ color: '#919eab' }} />
-					<h2 className="text-categoryInactive text-md ml-2 font-medium">
+					<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
 						Analytics
 					</h2>
 				</div>
@@ -49,9 +53,9 @@ const Sidebar = () => {
 						REQUESTS
 					</h2>
 				</div>
-				<div className="flex items-center py-3 px-6">
+				<div className="flex items-center py-3 px-6 cursor-pointer ">
 					<RiCoinsFill style={{ color: '#919eab' }} />
-					<h2 className="text-categoryInactive text-md ml-2 font-medium">
+					<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
 						Budget
 					</h2>
 				</div>
@@ -60,9 +64,9 @@ const Sidebar = () => {
 						FILE & STORAGE
 					</h2>
 				</div>
-				<div className="flex items-center py-3 px-6">
+				<div className="flex items-center py-3 px-6 cursor-pointer ">
 					<GoUpload style={{ color: '#919eab' }} />
-					<h2 className="text-categoryInactive text-md ml-2 font-medium">
+					<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
 						Upload file
 					</h2>
 				</div>

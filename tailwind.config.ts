@@ -14,7 +14,8 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       backgroundColor: {
-        midnight: '#212b36'
+        midnight: '#212b36',
+        body: '#637381'
       },
       colors: {
         dashboard: '#f4f6f8',

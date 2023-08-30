@@ -4,7 +4,7 @@ import Sidebar from '@/app/_components/sidebar'
 
 const Dashboard = () => {
 	return (
-		<div className="flex">
+		<div className="flex h-screen w-screen bg-slate-200 overflow-hidden">
 			<Sidebar />
 			<Header />
 		</div>
