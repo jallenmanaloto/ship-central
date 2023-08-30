@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.2.0",
     "@tanstack/react-query": "^4.33.0",
     "@trpc/client": "^10.38.0",
     "@trpc/react-query": "^10.38.0",
@@ -25,5 +26,8 @@
     "typescript": "5.2.2",
     "zod": "^3.22.2",
     "zustand": "^4.4.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.2.0"
   }
 }

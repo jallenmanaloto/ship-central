@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vessel {
+  id                      String            @id @default(uuid())
+  name                    String
+  totalCargoLoad          Int
+  currentlyActive         Boolean           @default(false)
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  loadingReports          LoadingReport[]
+  analytics               Analytics[]
+  lct                     Lct[]
+}
+
+model LoadingReport {
+  id                      String            @id @default(uuid())
+  activity                String
+  actualActivity          String
+  activityFrom            DateTime
+  activityTo              DateTime
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @default(now())
+  vessel                  Vessel            @relation(fields: [vesselId], references: [id])
+  vesselId                String
+}
+
+model Analytics {
+  id                      String            @id @default(uuid())
+  laytime                 DateTime
+  laytimeAsOf             DateTime
+  laytimeConsumed         DateTime
+  totalCargoLoaded        Int
+  estTotalTimeFinish      DateTime
+  estDispatch             DateTime
+  totalCargo              Int
+  estTimeToFinishLoading  DateTime
+  totalCargoToLoad        Int
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @default(now())
+  vessel                  Vessel            @relation(fields: [vesselId], references: [id])
+  vesselId                String            
+}
+
+model Lct {
+  id                      String            @id @default(uuid())
+  name                    String
+  vessel                  Vessel            @relation(fields: [vesselId], references: [id])
+  vesselId                String
+  trips                   LctTrips[]
+}
+
+model LctTrips {
+  id                      String            @id @default(uuid())
+  cargoLoad               Int
+  tripToVessel            String
+  createdAt               DateTime
+  updatedAt               DateTime
+  lct                     Lct               @relation(fields: [lctId], references: [id])
+  lctId                   String
+}
