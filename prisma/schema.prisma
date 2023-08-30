@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,60 +8,53 @@ datasource db {
 }
 
 model Vessel {
-  id                      String            @id @default(uuid())
-  name                    String
-  totalCargoLoad          Int
-  currentlyActive         Boolean           @default(false)
-  createdAt               DateTime          @default(now())
-  updatedAt               DateTime          @updatedAt
-  loadingReports          LoadingReport[]
-  analytics               Analytics[]
-  lct                     Lct[]
+  id              String    @id @default(uuid())
+  name            String
+  totalCargoLoad  Int?
+  currentlyActive Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
 }
 
 model LoadingReport {
-  id                      String            @id @default(uuid())
-  activity                String
-  actualActivity          String
-  activityFrom            DateTime
-  activityTo              DateTime
-  createdAt               DateTime          @default(now())
-  updatedAt               DateTime          @default(now())
-  vessel                  Vessel            @relation(fields: [vesselId], references: [id])
-  vesselId                String
+  id             String    @id @default(uuid())
+  activity       String?
+  actualActivity String?
+  activityFrom   DateTime
+  activityTo     DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
+  vesselId       String
 }
 
 model Analytics {
-  id                      String            @id @default(uuid())
-  laytime                 DateTime
-  laytimeAsOf             DateTime
-  laytimeConsumed         DateTime
-  totalCargoLoaded        Int
-  estTotalTimeFinish      DateTime
-  estDispatch             DateTime
-  totalCargo              Int
-  estTimeToFinishLoading  DateTime
-  totalCargoToLoad        Int
-  createdAt               DateTime          @default(now())
-  updatedAt               DateTime          @default(now())
-  vessel                  Vessel            @relation(fields: [vesselId], references: [id])
-  vesselId                String            
+  id                     String    @id @default(uuid())
+  laytime                DateTime?
+  laytimeAsOf            DateTime?
+  laytimeConsumed        DateTime?
+  totalCargoLoaded       Int?
+  estTotalTimeFinish     DateTime?
+  estDispatch            DateTime?
+  totalCargo             Int?
+  estTimeToFinishLoading DateTime?
+  totalCargoToLoad       Int?
+  monitored              Boolean   @default(false)
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime? @updatedAt
+  vesselId               String
 }
 
 model Lct {
-  id                      String            @id @default(uuid())
-  name                    String
-  vessel                  Vessel            @relation(fields: [vesselId], references: [id])
-  vesselId                String
-  trips                   LctTrips[]
+  id       String @id @default(uuid())
+  name     String
+  vesselId String
 }
 
 model LctTrips {
-  id                      String            @id @default(uuid())
-  cargoLoad               Int
-  tripToVessel            String
-  createdAt               DateTime
-  updatedAt               DateTime
-  lct                     Lct               @relation(fields: [lctId], references: [id])
-  lctId                   String
+  id           String    @id @default(uuid())
+  cargoLoad    Int?
+  tripToVessel String?
+  createdAt    DateTime? @default(now())
+  updatedAt    DateTime? @updatedAt
+  lctId        String
 }
