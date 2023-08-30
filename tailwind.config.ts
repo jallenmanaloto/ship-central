@@ -13,9 +13,20 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      backgroundColor: {
+        midnight: '#212b36'
+      },
+      colors: {
+        dashboard: '#f4f6f8',
+        category: '#454f5b',
+        categoryInactive: '#919eab'
+      },
+      letterSpacing: {
+        category: '0.3rem'
+      }
     },
   },
   plugins: [require("tw-elements/dist/plugin.cjs")],
-  darkMode: "class"
+  // darkMode: "class"
 }
 export default config
