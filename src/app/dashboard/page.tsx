@@ -6,12 +6,7 @@ import MobileNav from '../_components/sidebar/MobileNav'
 const Dashboard = () => {
 	return (
 		<div className="flex h-screen w-screen bg-slate-200 overflow-hidden">
-			<div className="hidden lg:block">
-				<Sidebar />
-			</div>
-			<div className="block md:hidden">
-				<MobileNav />
-			</div>
+			<Sidebar />
 			<Header />
 		</div>
 	)
