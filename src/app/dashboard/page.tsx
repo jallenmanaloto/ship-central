@@ -9,7 +9,7 @@ const Dashboard = () => {
 			<div className="hidden lg:block">
 				<Sidebar />
 			</div>
-			<div className="sm:block hidden">
+			<div className="block md:hidden">
 				<MobileNav />
 			</div>
 			<Header />
