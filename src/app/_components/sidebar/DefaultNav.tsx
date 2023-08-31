@@ -9,20 +9,12 @@ import { RiCoinsFill } from 'react-icons/ri'
 
 const DefaultNav = () => {
 	return (
-		<div className="h-screen w-full max-w-[260px] bg-midnight absolute">
+		<div className="hidden lg:block h-screen w-full max-w-[260px] bg-midnight">
 			<div>
 				<div className="h-[70px] flex items-center">
 					<h1 className="h-full text-white font-medium text-2xl px-6 py-4 flex items-center">
 						Ship Central
 					</h1>
-					<FiArrowLeft
-						size={20}
-						color="#fff"
-						style={{
-							marginLeft: '35px',
-							cursor: 'pointer',
-						}}
-					/>
 				</div>
 				<div className="flex items-center py-2 px-6">
 					<BiHome size={18} color="#f4f6f8" />

@@ -13,7 +13,7 @@ import { useDrawerStore } from '@/utils/store'
 const MobileNav = () => {
 	const { display, toggleDrawer } = useDrawerStore()
 	return (
-		<div>
+		<div className="block lg:hidden">
 			<nav
 				id="sidenav-1"
 				className="absolute left-0 top-0 z-[1035] h-full w-60 -translate-x-full overflow-hidden bg-midnight shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:translate-x-0 transition-transform duration-300 ease-in-out"
