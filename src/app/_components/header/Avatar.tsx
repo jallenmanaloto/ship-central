@@ -1,15 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
-
 const Avatar = ({ imageUrl }: { imageUrl: string }) => {
-	// useEffect(() => {
-	// 	const init = async () => {
-	// 		const { Avatar } = await import('tw-elements')
-	// 	}
-	// 	init()
-	// }, [])
-
 	return (
 		<>
 			<img
