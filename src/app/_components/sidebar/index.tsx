@@ -1,6 +1,6 @@
 import React from 'react'
 import { BiHome } from 'react-icons/bi'
-import { IoMdClose } from 'react-icons/io'
+import { FiArrowLeft } from 'react-icons/fi'
 import { GoStack } from 'react-icons/go'
 import { GoUpload } from 'react-icons/go'
 import { PiBoat } from 'react-icons/pi'
@@ -9,16 +9,19 @@ import { RiCoinsFill } from 'react-icons/ri'
 
 const Sidebar = () => {
 	return (
-		<div className="h-screen w-full max-w-[250px] bg-midnight absolute">
+		<div className="h-screen w-full max-w-[300px] bg-midnight absolute">
 			<div>
 				<div className="h-[70px] flex items-center">
-					<h1 className="h-full text-white font-medium text-2xl px-6 py-4">
+					<h1 className="h-full text-white font-medium text-2xl px-6 py-4 flex items-center">
 						Ship Central
 					</h1>
-					<IoMdClose
+					<FiArrowLeft
 						size={20}
 						color="#fff"
-						style={{ marginLeft: '35px', cursor: 'pointer' }}
+						style={{
+							marginLeft: '35px',
+							cursor: 'pointer',
+						}}
 					/>
 				</div>
 				<div className="flex items-center py-2 px-6">
