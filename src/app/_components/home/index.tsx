@@ -1,6 +1,7 @@
 import React from 'react'
 import Goals from '../cards/Goals'
 import Forecast from '../forecast'
+import Table from '../tables'
 
 const Home = () => {
 	return (
@@ -9,6 +10,9 @@ const Home = () => {
 			<div className="w-full t-0 grid grid-cols-1 -mt-20 md:grid-cols-2 gap-7 px-10">
 				<Goals />
 				<Forecast />
+			</div>
+			<div className="w-full px-10 grid grid-cols-1">
+				<Table />
 			</div>
 		</div>
 	)
