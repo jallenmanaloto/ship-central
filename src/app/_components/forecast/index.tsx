@@ -2,7 +2,7 @@ import Weather from '../cards/Weather'
 
 const Forecast = () => {
 	return (
-		<div className="h-full overflow-y-scroll">
+		<div className="h-full">
 			<Weather />
 		</div>
 	)
