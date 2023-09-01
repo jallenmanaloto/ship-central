@@ -4,9 +4,9 @@ import Forecast from '../forecast'
 
 const Home = () => {
 	return (
-		<div className="relative h-full overflow-y-scroll pb-10">
-			<div className="absolute w-full h-52 bg-sky-800" />
-			<div className="absolute w-full t-0 grid grid-cols-1 mt-20 md:grid-cols-2 gap-7 px-10">
+		<div className="h-full pb-10">
+			<div className="w-full h-[268px] bg-sky-800" />
+			<div className="w-full t-0 grid grid-cols-1 -mt-20 md:grid-cols-2 gap-7 px-10">
 				<Goals />
 				<Forecast />
 			</div>
