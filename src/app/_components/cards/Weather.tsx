@@ -1,5 +1,5 @@
-import React from 'react'
-import Bubbles from '../bubbles'
+'use client'
+
 import { BsWind } from 'react-icons/bs'
 import { GiBigWave } from 'react-icons/gi'
 import { IoIosWater } from 'react-icons/io'
@@ -10,31 +10,51 @@ const Details = () => {
 	return (
 		<div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 py-4">
 			<div className="flex w-auto items-center px-3">
-				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+				<div
+					className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800"
+					data-te-toggle="tooltip"
+					data-te-placement="top"
+					title="Wind">
 					<BsWind size={32} color="#075985" />
 				</div>
 				<h2 className="text-lg font-medium text-neutral-500 px-2">90km/h</h2>
 			</div>
 			<div className="flex w-auto items-center px-3">
-				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+				<div
+					className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800"
+					data-te-toggle="tooltip"
+					data-te-placement="top"
+					title="Swell">
 					<GiBigWave size={32} color="#075985" />
 				</div>
 				<h2 className="text-lg font-medium text-neutral-500 px-2">5m</h2>
 			</div>
 			<div className="flex w-auto items-center px-3">
-				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+				<div
+					className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800"
+					data-te-toggle="tooltip"
+					data-te-placement="top"
+					title="Chance of rain">
 					<IoIosWater size={32} color="#075985" />
 				</div>
 				<h2 className="text-lg font-medium text-neutral-500 px-2">10%</h2>
 			</div>
 			<div className="flex w-auto items-center px-3">
-				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+				<div
+					className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800"
+					data-te-toggle="tooltip"
+					data-te-placement="top"
+					title="Rain">
 					<BsCloudRain size={32} color="#075985" />
 				</div>
 				<h2 className="text-lg font-medium text-neutral-500 px-2">5mm</h2>
 			</div>
 			<div className="flex w-auto items-center px-3">
-				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+				<div
+					className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800"
+					data-te-toggle="tooltip"
+					data-te-placement="top"
+					title="Temperature">
 					<LiaTemperatureLowSolid size={32} color="#075985" />
 				</div>
 				<h2 className="text-lg font-medium text-neutral-500 px-2">32°</h2>
