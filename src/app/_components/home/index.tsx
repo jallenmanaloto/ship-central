@@ -11,7 +11,7 @@ const Home = () => {
 				<Goals />
 				<Forecast />
 			</div>
-			<div className="w-full px-10 grid grid-cols-1">
+			<div className="w-full px-10 pb-12 grid grid-cols-1">
 				<Table />
 			</div>
 		</div>
