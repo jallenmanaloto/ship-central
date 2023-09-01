@@ -4,7 +4,7 @@ import Content from './content'
 
 const Main = () => {
 	return (
-		<div className="relative w-screen h-screen bg-slate-200 overflow-y-scroll">
+		<div className="w-screen h-screen bg-slate-200 overflow-y-scroll">
 			<Header />
 			<Content />
 		</div>
