@@ -4,7 +4,7 @@ import Main from '../_components/Main'
 
 const Dashboard = () => {
 	return (
-		<div className="flex h-screen w-screen overflow-hidden">
+		<div className="flex h-screen w-screen overflow-scroll">
 			<Sidebar />
 			<Main />
 		</div>
