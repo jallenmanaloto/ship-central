@@ -1,4 +1,47 @@
 import React from 'react'
+import Bubbles from '../bubbles'
+import { BsWind } from 'react-icons/bs'
+import { GiBigWave } from 'react-icons/gi'
+import { IoIosWater } from 'react-icons/io'
+import { BsCloudRain } from 'react-icons/bs'
+import { LiaTemperatureLowSolid } from 'react-icons/lia'
+
+const Details = () => {
+	return (
+		<div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 py-4">
+			<div className="flex w-auto items-center px-3">
+				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+					<BsWind size={32} color="#075985" />
+				</div>
+				<h2 className="text-lg font-medium text-neutral-500 px-2">90km/h</h2>
+			</div>
+			<div className="flex w-auto items-center px-3">
+				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+					<GiBigWave size={32} color="#075985" />
+				</div>
+				<h2 className="text-lg font-medium text-neutral-500 px-2">5m</h2>
+			</div>
+			<div className="flex w-auto items-center px-3">
+				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+					<IoIosWater size={32} color="#075985" />
+				</div>
+				<h2 className="text-lg font-medium text-neutral-500 px-2">10%</h2>
+			</div>
+			<div className="flex w-auto items-center px-3">
+				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+					<BsCloudRain size={32} color="#075985" />
+				</div>
+				<h2 className="text-lg font-medium text-neutral-500 px-2">5mm</h2>
+			</div>
+			<div className="flex w-auto items-center px-3">
+				<div className="flex justify-center items-center h-16 w-16 border-solid border-2 rounded-lg border-sky-800">
+					<LiaTemperatureLowSolid size={32} color="#075985" />
+				</div>
+				<h2 className="text-lg font-medium text-neutral-500 px-2">32°</h2>
+			</div>
+		</div>
+	)
+}
 
 const Weather = () => {
 	const date = new Date()
@@ -25,7 +68,7 @@ const Weather = () => {
 					Dinagat Islands
 				</h1>
 				<div className="flex items-center">
-					<h2 className="text-xl font-base leading-tight text-neutral-600">
+					<h2 className="w-full text-base md:text-lg font-base leading-tight text-neutral-600">
 						{formattedDate}
 					</h2>
 				</div>
@@ -42,6 +85,7 @@ const Weather = () => {
 					alt=""
 				/>
 			</div>
+			<Details />
 		</div>
 	)
 }
