@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import Provider from './_trpc/Provider'
-import 'tw-elements/dist/css/tw-elements.min.css'
+// import 'tw-elements/dist/css/tw-elements.min.css'
 
 const roboto = Roboto({ weight: '400', subsets: ['latin'] })
 
