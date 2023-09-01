@@ -17,7 +17,7 @@ const Progress = ({
 					className="h-2 bg-sky-800"
 					style={{ width: `${percentage}` }}></div>
 			</div>
-			<h3 className="text-base pl-5 text-neutral-600">{percentage}</h3>
+			<h3 className="text-sm pl-5 text-neutral-600">{percentage}</h3>
 		</div>
 	)
 }
