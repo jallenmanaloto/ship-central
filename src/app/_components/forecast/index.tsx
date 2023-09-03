@@ -1,5 +1,5 @@
 import Weather from '../cards/Weather'
-import Temp from './Temp'
+import Temp from './UvIndex'
 import SunStat from './SunStat'
 
 const Forecast = () => {
