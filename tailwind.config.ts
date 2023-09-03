@@ -15,7 +15,8 @@ const config: Config = {
       },
       backgroundColor: {
         midnight: '#212b36',
-        body: '#637381'
+        body: '#637381',
+        weather: '#162D3B'
       },
       colors: {
         dashboard: '#f4f6f8',
