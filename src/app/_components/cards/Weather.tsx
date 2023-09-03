@@ -36,20 +36,6 @@ const WeatherDetails = () => {
 
 const Weather = () => {
 	const date = new Date()
-	const monthNames = [
-		'Jan',
-		'Feb',
-		'Mar',
-		'Apr',
-		'May',
-		'Jun',
-		'Jul',
-		'Aug',
-		'Sep',
-		'Oct',
-		'Nov',
-		'Dec',
-	]
 
 	return (
 		<div
