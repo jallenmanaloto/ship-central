@@ -28,7 +28,9 @@ const TempSwell = () => {
 								<tr>
 									{daily.swell_wave_height_max.map((swell, idx) => {
 										return (
-											<td className="whitespace-nowrap px-6 py-1 text-xs font-medium text-white">
+											<td
+												key={idx}
+												className="whitespace-nowrap px-6 py-1 text-xs font-medium text-white">
 												{swell}m
 											</td>
 										)
