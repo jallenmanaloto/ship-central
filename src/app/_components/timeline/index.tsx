@@ -7,17 +7,32 @@ const Timeline = () => {
 				<div className="flex-start flex items-center pt-3">
 					<div className="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-900 dark:bg-neutral-500"></div>
 					<p className="text-sm text-neutral-500 dark:text-neutral-300">
-						01.07.2021
+						September 1, 2023
 					</p>
 				</div>
-				<div className="mb-6 ml-4 mt-2">
-					<h4 className="mb-1.5 text-xl font-semibold">Title of section 1</h4>
-					<p className="mb-3 text-neutral-500 dark:text-neutral-300">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-						scelerisque diam non nisi semper, et elementum lorem ornare.
-						Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales
-						vehicula.
-					</p>
+				<div className="flex my-2 ml-4">
+					<div>
+						<h4 className="mb-1.5 text-base font-medium">1:35PM - 3:20PM</h4>
+						<p className="mb-3 text-neutral-500 dark:text-neutral-300">
+							Vessel arrived port of Surigao pilot station
+						</p>
+					</div>
+					<div className="flex items-center pr-3">
+						<h4>Edit</h4>
+						<h4>Trash</h4>
+					</div>
+				</div>
+				<div className="flex my-2 ml-4">
+					<div>
+						<h4 className="mb-1.5 text-base font-medium">3:35PM - 3:45PM</h4>
+						<p className="mb-3 text-neutral-500 dark:text-neutral-300">
+							Resume & cont. loading operation H4&H5
+						</p>
+					</div>
+					<div className="flex items-center pr-3">
+						<h4>Edit</h4>
+						<h4>Trash</h4>
+					</div>
 				</div>
 			</li>
 
