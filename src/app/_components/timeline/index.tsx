@@ -1,6 +1,7 @@
 import React from 'react'
 import { AiFillEdit } from 'react-icons/ai'
 import { MdDelete } from 'react-icons/md'
+import CreateUpdate from '../modals/daily-loading/CreateUpdate'
 
 const Timeline = () => {
 	return (
@@ -20,11 +21,7 @@ const Timeline = () => {
 						</p>
 					</div>
 					<div className="invisible group-hover:visible flex items-center pr-3 mt-4">
-						<AiFillEdit
-							size={20}
-							color="#454f5b"
-							style={{ marginRight: '4px' }}
-						/>
+						<CreateUpdate action="update" />
 						<MdDelete size={20} color="#454f5b" style={{ marginLeft: '4px' }} />
 					</div>
 				</div>
