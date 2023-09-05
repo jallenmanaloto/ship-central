@@ -47,6 +47,7 @@ model Projects {
   updatedAt              DateTime?        @updatedAt
   vesselId               String
   loadingReports         LoadingReport[]
+  lctTrips               LctTrips[]
 }
 
 model Lct {
@@ -63,4 +64,6 @@ model LctTrips {
   createdAt    DateTime? @default(now())
   updatedAt    DateTime? @updatedAt
   lctId        String
+  project      Projects    @relation(fields: [projectId], references: [id])
+  projectId    String
 }
