@@ -38,7 +38,7 @@ const Table = () => {
 								{vesselAnalytics.map((vesselAnalytic, idx) => {
 									return (
 										<>
-											<tr className="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
+											<tr className="border-b odd:bg-neutral-100 even:bg-white dark:border-neutral-500 dark:bg-neutral-700">
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
 													{vesselAnalytic.name}
 												</td>
