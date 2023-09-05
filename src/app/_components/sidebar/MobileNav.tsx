@@ -1,6 +1,8 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { BiHome } from 'react-icons/bi'
 import { FiArrowLeft } from 'react-icons/fi'
 import { GoStack } from 'react-icons/go'
@@ -12,6 +14,8 @@ import { useDrawerStore } from '@/utils/store'
 
 const MobileNav = () => {
 	const { display, toggleDrawer } = useDrawerStore()
+	const pathname = usePathname()
+
 	return (
 		<div className="block lg:hidden">
 			<nav
@@ -35,21 +39,46 @@ const MobileNav = () => {
 							}}
 						/>
 					</div>
-					<div className="flex items-center py-2 px-6">
-						<BiHome size={18} color="#f4f6f8" />
-						<h2 className="text-dashboard ml-1 font-medium">Dashboard</h2>
-					</div>
+					<Link href="/dashboard">
+						<div className="flex items-center py-2 px-6">
+							<BiHome
+								size={18}
+								color={`${pathname === '/dashboard' ? '#f4f6f8' : '#919eab'}`}
+							/>
+							<h2
+								className={`${
+									pathname === '/dashboard'
+										? 'text-dashboard'
+										: 'text-categoryInactive'
+								} ml-1 font-medium`}>
+								Dashboard
+							</h2>
+						</div>
+					</Link>
 					<div className="flex items-center py-3 px-6">
 						<h2 className="text-sm text-category font-semibold tracking-category">
 							REPORTS
 						</h2>
 					</div>
-					<div className="flex items-center py-3 px-6 cursor-pointer ">
-						<GoStack style={{ color: '#919eab' }} />
-						<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
-							Daily Loading
-						</h2>
-					</div>
+					<Link href="/dashboard/daily-loading">
+						<div className="flex items-center py-3 px-6 cursor-pointer ">
+							<GoStack
+								color={`${
+									pathname === '/dashboard/daily-loading'
+										? '#f4f6f8'
+										: '#919eab'
+								}`}
+							/>
+							<h2
+								className={`${
+									pathname === '/dashboard/daily-loading'
+										? 'text-dashboard'
+										: 'text-categoryInactive'
+								} w-full text-md ml-2 font-medium hover:text-white`}>
+								Daily Loading
+							</h2>
+						</div>
+					</Link>
 					<div className="flex items-center py-3 px-6 cursor-pointer ">
 						<PiBoat style={{ color: '#919eab' }} />
 						<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
