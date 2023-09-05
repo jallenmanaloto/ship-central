@@ -82,13 +82,13 @@ const MobileNav = () => {
 					<div className="flex items-center py-3 px-6 cursor-pointer ">
 						<PiBoat style={{ color: '#919eab' }} />
 						<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
-							Vessel Loading
+							LCT Loading
 						</h2>
 					</div>
 					<div className="flex items-center py-3 px-6 cursor-pointer ">
 						<SiSimpleanalytics style={{ color: '#919eab' }} />
 						<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
-							Analytics
+							Projects
 						</h2>
 					</div>
 					<div className="flex items-center py-3 px-6">
