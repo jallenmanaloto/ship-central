@@ -9,7 +9,7 @@ import { RiCoinsFill } from 'react-icons/ri'
 
 const DefaultNav = () => {
 	return (
-		<div className="hidden lg:block h-screen w-full max-w-[260px] bg-midnight">
+		<div className="hidden md:block fixed top-0 h-screen w-[240px] bg-midnight">
 			<div>
 				<div className="h-[70px] flex items-center">
 					<h1 className="h-full text-white font-medium text-2xl px-6 py-4 flex items-center">
