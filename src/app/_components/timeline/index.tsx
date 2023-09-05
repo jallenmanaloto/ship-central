@@ -5,7 +5,7 @@ import CreateUpdate from '../modals/daily-loading/CreateUpdate'
 
 const Timeline = () => {
 	return (
-		<ol className="border-l border-neutral-900 dark:border-neutral-500">
+		<ol className="border-l border-neutral-900 dark:border-neutral-500 pb-12">
 			<li>
 				<div className="flex-start flex items-center pt-3">
 					<div className="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-900 dark:bg-neutral-500"></div>

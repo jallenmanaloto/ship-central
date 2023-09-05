@@ -21,7 +21,7 @@ const DailyLoading = () => {
 						<CreateUpdate action="create" />
 					</div>
 				</div>
-				<div className="pt-10 px-4">
+				<div className="pt-10 pb-5 px-4">
 					<Timeline />
 				</div>
 			</div>
