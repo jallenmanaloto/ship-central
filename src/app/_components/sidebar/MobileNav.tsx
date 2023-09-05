@@ -137,7 +137,7 @@ const MobileNav = () => {
 							strokeWidth={1.5}
 							stroke="currentColor"
 							className={`w-5 h-5 ${
-								pathname === '/dashboard/daily-loading'
+								pathname === '/dashboard/vessels'
 									? 'stroke-dashboard'
 									: 'stroke-categoryInactive'
 							} group-hover:stroke-dashboard`}>
