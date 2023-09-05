@@ -1,13 +1,6 @@
-import React from 'react'
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select'
+import React, { useState } from 'react'
+import Select from '@mui/joy/Select'
+import Option from '@mui/joy/Option'
 import dayjs from 'dayjs'
 
 type ProjDetails = {
@@ -17,25 +10,21 @@ type ProjDetails = {
 }[]
 
 const Options = ({ projects }: { projects: ProjDetails }) => {
+	const [selectedValue, setSelectedValue] = useState('')
+	console.log(selectedValue)
 	return (
-		<Select>
-			<SelectTrigger className="w-full border-2 border-neutral-900 border-opacity-50">
-				<SelectValue placeholder="Select a Project" />
-			</SelectTrigger>
-			<SelectContent>
-				<SelectGroup>
-					<SelectLabel>Projects</SelectLabel>
-					{projects.map((project, idx) => {
-						const startDate = dayjs(project.projectStartDate).format('D-MMM-YY')
-						const endDate = dayjs(project.projectEndDate).format('D-MMM-YY')
-						return (
-							<SelectItem
-								key={idx}
-								value="apple">{`${project.name} (${startDate} - ${endDate})`}</SelectItem>
-						)
-					})}
-				</SelectGroup>
-			</SelectContent>
+		<Select placeholder="Choose project">
+			{projects.map((project, idx) => {
+				const startDate = dayjs(project.projectStartDate).format('D-MMM-YY')
+				const endDate = dayjs(project.projectEndDate).format('D-MMM-YY')
+				return (
+					<Option
+						key={idx}
+						value={
+							project.name
+						}>{`${project.name} (${startDate} - ${endDate})`}</Option>
+				)
+			})}
 		</Select>
 	)
 }
