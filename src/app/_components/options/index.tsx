@@ -25,11 +25,13 @@ const Options = ({ projects }: { projects: ProjDetails }) => {
 			<SelectContent>
 				<SelectGroup>
 					<SelectLabel>Projects</SelectLabel>
-					{projects.map((project) => {
+					{projects.map((project, idx) => {
 						const startDate = dayjs(project.projectStartDate).format('D-MMM-YY')
 						const endDate = dayjs(project.projectEndDate).format('D-MMM-YY')
 						return (
-							<SelectItem value="apple">{`${project.name} (${startDate} - ${endDate})`}</SelectItem>
+							<SelectItem
+								key={idx}
+								value="apple">{`${project.name} (${startDate} - ${endDate})`}</SelectItem>
 						)
 					})}
 				</SelectGroup>
