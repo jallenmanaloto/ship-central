@@ -4,6 +4,7 @@ import React from 'react'
 import Options from '@/app/_components/options'
 import { projects } from '@/app/faker/data/projects'
 import { Button } from '@/components/ui/button'
+import Timeline from '@/app/_components/timeline'
 
 const DailyLoading = () => {
 	return (
@@ -12,9 +13,12 @@ const DailyLoading = () => {
 				<h1 className="text-xl text-neutral-800 font-bold py-5 px-4">
 					Daily Loading Report
 				</h1>
-				<div className="grid grid-cols-1 grid-rows-2 gap-4 px-4">
+				<div className="grid grid-cols-1 grid-rows-2 gap-4 px-4 pb-4">
 					<Options projects={projects} />
 					<Button className="py-4 bg-midnight">Search</Button>
+				</div>
+				<div className="pt-10 px-4">
+					<Timeline />
 				</div>
 			</div>
 		</div>
