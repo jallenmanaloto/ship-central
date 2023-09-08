@@ -3,13 +3,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BiHome } from 'react-icons/bi'
-import { FiArrowLeft } from 'react-icons/fi'
-import { GoStack } from 'react-icons/go'
-import { GoUpload } from 'react-icons/go'
-import { PiBoat } from 'react-icons/pi'
-import { SiSimpleanalytics } from 'react-icons/si'
-import { RiCoinsFill } from 'react-icons/ri'
 import { useDrawerStore } from '@/utils/store'
 
 const MobileNav = () => {
@@ -29,15 +22,20 @@ const MobileNav = () => {
 						<h1 className="h-full text-white font-medium text-2xl px-6 py-4 flex items-center">
 							Ship Central
 						</h1>
-						<FiArrowLeft
+						<svg
 							onClick={toggleDrawer}
-							size={20}
-							color="#fff"
-							style={{
-								marginLeft: '20px',
-								cursor: 'pointer',
-							}}
-						/>
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="w-6 h-6 stroke-white">
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+							/>
+						</svg>
 					</div>
 					<div className="flex items-center py-3 px-6">
 						<h2 className="text-sm text-category font-semibold tracking-category">
@@ -184,7 +182,19 @@ const MobileNav = () => {
 						</h2>
 					</div>
 					<div className="flex items-center py-3 px-6 cursor-pointer ">
-						<GoUpload style={{ color: '#919eab' }} />
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="w-6 h-6 stroke-categoryInactive">
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
+							/>
+						</svg>
 						<h2 className="text-categoryInactive w-full text-md ml-2 font-medium hover:text-white">
 							Upload file
 						</h2>

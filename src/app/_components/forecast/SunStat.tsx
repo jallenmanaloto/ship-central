@@ -1,6 +1,4 @@
 import React from 'react'
-import { BsSunriseFill } from 'react-icons/bs'
-import { BsSunsetFill } from 'react-icons/bs'
 import { weatherForecast } from '@/app/faker/data/weatherForecast'
 import dayjs from 'dayjs'
 
@@ -22,11 +20,7 @@ const Head = () => {
 	return (
 		<>
 			<div className="flex">
-				{status === 'sunrise' ? (
-					<BsSunriseFill size={24} color="rgb(82 82 82)" />
-				) : (
-					<BsSunsetFill size={24} color="rgb(82 82 82)" />
-				)}
+				{status === 'sunrise' ? <h4>sunrise icon</h4> : <h4>sunset icon</h4>}
 				<div className="flex justify-center px-1">
 					<h1 className="text-base font-semibold leading-3 text-neutral-600">
 						{status === 'sunrise' ? 'Sunrise' : 'Sunset'}

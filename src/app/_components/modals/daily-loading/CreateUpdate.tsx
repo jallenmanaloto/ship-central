@@ -8,7 +8,6 @@ import Textarea from '@mui/joy/Textarea'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
-import { AiFillEdit } from 'react-icons/ai'
 
 const DatePicker = () => {
 	return (
@@ -90,12 +89,7 @@ const UpdateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
 	return (
 		<>
-			<AiFillEdit
-				onClick={() => setOpen(true)}
-				size={20}
-				color="#454f5b"
-				style={{ marginRight: '4px' }}
-			/>
+			<h3 onClick={() => setOpen(true)}>close icon</h3>
 			<Modal
 				aria-labelledby="modal-title"
 				aria-describedby="modal-desc"

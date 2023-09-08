@@ -1,5 +1,4 @@
 import React from 'react'
-import { BsFillSunFill } from 'react-icons/bs'
 import { weatherForecast } from '@/app/faker/data/weatherForecast'
 
 interface UVIndex {
@@ -27,7 +26,7 @@ const Temp = () => {
 	return (
 		<div className="block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)">
 			<div className="flex">
-				<BsFillSunFill size={20} color="rgb(82 82 82)" />
+				<h4>Sun Icon</h4>
 				<div className="flex justify-center px-1">
 					<h1 className="text-base font-semibold leading-3 text-neutral-600">
 						UV Index

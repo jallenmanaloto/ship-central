@@ -1,8 +1,5 @@
 'use client'
 
-import { BsWind } from 'react-icons/bs'
-import { IoIosWater } from 'react-icons/io'
-import { MdLocationOn } from 'react-icons/md'
 import TempSwell from '../tables/TempSwell'
 import dayJs from 'dayjs'
 import weather from '../../../../public/weather.jpg'
@@ -12,19 +9,16 @@ const WeatherDetails = () => {
 		<div className="pt-4">
 			<div className="flex items-center justify-around">
 				<div className="flex items-center">
-					<BsWind size={14} color="white" />
 					<h2 className="text-sm font-medium tracking-wider px-1 text-white">
 						720hpa
 					</h2>
 				</div>
 				<div className="flex items-center">
-					<IoIosWater size={14} color="white" />
 					<h2 className="text-sm font-medium tracking-wider px-1 text-white">
 						32%
 					</h2>
 				</div>
 				<div className="flex items-center">
-					<BsWind size={14} color="white" />
 					<h2 className="text-sm font-medium tracking-wider px-1 text-white">
 						12km/h
 					</h2>
@@ -48,7 +42,6 @@ const Weather = () => {
 					<div>
 						<div className="flex items-center justify-between pb-1">
 							<div className="flex items-center">
-								<MdLocationOn size={16} color="white" />
 								<div className="flex justify-between">
 									<h1 className="text-xl font-medium leading-tight text-white">
 										Dinagat Islands

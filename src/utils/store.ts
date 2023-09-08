@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 type ToggleDrawer = {
   display: boolean,
-  toggleDrawer: (state: boolean) => void
+  toggleDrawer: () => void
 }
 export const useDrawerStore = create<ToggleDrawer>((set) => ({
   display: true,
