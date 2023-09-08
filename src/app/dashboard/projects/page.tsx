@@ -5,6 +5,7 @@ import Projects from '@/app/_components/options/Projects'
 import { projects } from '../../faker/data/projects'
 import { Button } from '@/components/ui/button'
 import CreateUpdate from '@/app/_components/modals/my-projects/CreateUpdate'
+import ProjectDetail from '@/app/_components/cards/ProjectDetail'
 
 const MyProjects = () => {
 	return (
@@ -20,6 +21,15 @@ const MyProjects = () => {
 				<div className="grid grid-cols-2 grid-rows-1 md:grid-cols-2 md:grid-rows-none gap-4 px-4">
 					<Button className="py-4 bg-midnight opacity-95">Search</Button>
 					<CreateUpdate action="create" />
+				</div>
+				<div className="mt-12">
+					{projects.map((project) => {
+						return (
+							<div className="py-3 px-4">
+								<ProjectDetail project={project} />
+							</div>
+						)
+					})}
 				</div>
 			</div>
 		</div>
