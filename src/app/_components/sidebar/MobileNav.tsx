@@ -43,7 +43,9 @@ const MobileNav = () => {
 						</h2>
 					</div>
 					<Link href="/dashboard">
-						<div className="flex items-center py-2 px-6 group">
+						<div
+							onClick={toggleDrawer}
+							className="flex items-center py-2 px-6 group">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
@@ -72,7 +74,9 @@ const MobileNav = () => {
 						</div>
 					</Link>
 					<Link href="/dashboard/daily-loading">
-						<div className="flex items-center py-3 px-6 cursor-pointer ">
+						<div
+							onClick={toggleDrawer}
+							className="flex items-center py-3 px-6 cursor-pointer ">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
