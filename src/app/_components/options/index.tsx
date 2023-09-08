@@ -15,8 +15,8 @@ const Options = ({ projects }: { projects: ProjDetails }) => {
 	return (
 		<Select placeholder="Choose project">
 			{projects.map((project, idx) => {
-				const startDate = dayjs(project.projectStartDate).format('D-MMM-YY')
-				const endDate = dayjs(project.projectEndDate).format('D-MMM-YY')
+				const startDate = dayjs(project.projectStartDate).format('D/MMM/YY')
+				const endDate = dayjs(project.projectEndDate).format('D/MMM/YY')
 				return (
 					<Option
 						key={idx}
