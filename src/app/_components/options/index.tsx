@@ -2,16 +2,10 @@ import React, { useState } from 'react'
 import Select from '@mui/joy/Select'
 import Option from '@mui/joy/Option'
 import dayjs from 'dayjs'
-
-type ProjDetails = {
-	name: string
-	projectStartDate: Date
-	projectEndDate: Date
-}[]
+import { ProjDetails } from '@/utils/types'
 
 const Options = ({ projects }: { projects: ProjDetails }) => {
 	const [selectedValue, setSelectedValue] = useState('')
-	console.log(selectedValue)
 	return (
 		<Select placeholder="Choose project">
 			{projects.map((project, idx) => {
