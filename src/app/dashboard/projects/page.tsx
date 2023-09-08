@@ -23,9 +23,9 @@ const MyProjects = () => {
 					<CreateUpdate action="create" />
 				</div>
 				<div className="mt-12">
-					{projects.map((project) => {
+					{projects.map((project, idx) => {
 						return (
-							<div className="py-3 px-4">
+							<div key={idx} className="py-3 px-4">
 								<ProjectDetail project={project} />
 							</div>
 						)

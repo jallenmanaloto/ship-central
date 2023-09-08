@@ -1,6 +1,7 @@
 import { ProjDetail } from '@/utils/types'
 import React from 'react'
 import dayjs from 'dayjs'
+import MoreDetails from '../accordion/my-projects/MoreDetails'
 
 const ProjectDetail = ({ project }: { project: ProjDetail }) => {
 	return (
@@ -13,6 +14,7 @@ const ProjectDetail = ({ project }: { project: ProjDetail }) => {
 					project.projectEndDate
 				).format('MMM DD, YYYY')})`}
 			</h4>
+			<MoreDetails />
 		</div>
 	)
 }
