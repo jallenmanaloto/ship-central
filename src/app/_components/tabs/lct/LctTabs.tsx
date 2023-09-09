@@ -92,7 +92,7 @@ const LctTabs = () => {
 				<TabsContent value="LCT">
 					{/* Content#1 here */}
 					<LctSearch type="lct" />
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
 						<SampleCards />
 						<SampleCards />
 						<SampleCards />
@@ -103,7 +103,7 @@ const LctTabs = () => {
 				<TabsContent value="Trips">
 					{/* Content#2 here */}
 					<LctSearch type="lctTrip" />
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
 						<SampleTripCard />
 						<SampleTripCard />
 						<SampleTripCard />
