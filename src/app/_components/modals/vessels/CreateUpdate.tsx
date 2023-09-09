@@ -89,7 +89,7 @@ const UpdateRecord = () => {
 				viewBox="0 0 24 24"
 				strokeWidth={1.5}
 				stroke="currentColor"
-				className="absolute right-7 w-5 h-5 stroke-slate-600">
+				className="absolute right-7 w-5 h-5 stroke-slate-600 invisible group-hover:visible cursor-pointer">
 				<path
 					strokeLinecap="round"
 					strokeLinejoin="round"

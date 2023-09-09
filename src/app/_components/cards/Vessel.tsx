@@ -8,7 +8,7 @@ type VesselProps = {
 
 const Vessel = ({ vessel }: { vessel: VesselProps }) => {
 	return (
-		<div className="block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)">
+		<div className="block group rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)">
 			<div className="relative">
 				<CreateUpdate action="update" />
 				<svg
@@ -17,7 +17,7 @@ const Vessel = ({ vessel }: { vessel: VesselProps }) => {
 					viewBox="0 0 24 24"
 					strokeWidth={1.5}
 					stroke="currentColor"
-					className="absolute right-0 w-5 h-5 stroke-slate-600">
+					className="absolute right-0 w-5 h-5 stroke-slate-600 invisible group-hover:visible cursor-pointer">
 					<path
 						strokeLinecap="round"
 						strokeLinejoin="round"
