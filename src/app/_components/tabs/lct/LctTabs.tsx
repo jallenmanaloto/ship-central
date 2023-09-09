@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import LctSearch from '../../search/LctSearch'
 import CreateUpdate from '../../modals/lct/CreateUpdate'
+import MoreDetails from '../../accordion/lct/MoreDetails'
 
 const SampleCards = () => {
 	return (
@@ -39,13 +40,14 @@ const SampleCards = () => {
 				</div>
 				<CardDescription>Cargo capacity: 5000</CardDescription>
 			</CardHeader>
+			<MoreDetails />
 		</Card>
 	)
 }
 
 const LctTabs = () => {
 	return (
-		<div className="pt-5 pb-28 w-full">
+		<div className="pt-5 w-full">
 			<Tabs defaultValue="LCT" className="w-full">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger className="font-bold" value="LCT">
