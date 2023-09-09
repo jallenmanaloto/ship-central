@@ -16,7 +16,7 @@ import CreateUpdate from '../../modals/lct/CreateUpdate'
 
 const SampleCards = () => {
 	return (
-		<Card className="relative group">
+		<Card className="group">
 			<CardHeader>
 				<div className="relative">
 					<h2 className="text-base font-semibold text-neutral-800">
