@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 
 const LctSearch = () => {
 	return (
-		<div className="grid grid-cols-1 grid-rows-2 gap-2 md:grid-cols-2 md:grid-rows-none pt-2 pb-20">
+		<div className="grid grid-cols-1 grid-rows-2 gap-2 md:grid-cols-2 md:grid-rows-none pt-2 pb-8">
 			<Input
 				className="bg-slate-50 outline-none"
 				id="name"

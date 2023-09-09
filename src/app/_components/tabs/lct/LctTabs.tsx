@@ -26,8 +26,8 @@ const SampleCards = () => {
 
 const LctTabs = () => {
 	return (
-		<div className="pt-5 pb-52 w-full">
-			<Tabs defaultValue="lct" className="w-full">
+		<div className="pt-5 pb-28 w-full">
+			<Tabs defaultValue="LCT" className="w-full">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger className="font-bold" value="LCT">
 						LCTs
