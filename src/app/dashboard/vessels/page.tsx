@@ -20,7 +20,7 @@ const Vessels = () => {
 						<CreateUpdate action="create" />
 					</div>
 				</div>
-				<div className="mt-12 py-3 px-4">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 py-3 px-4">
 					{vessels.map((vessel, idx) => {
 						return (
 							<div key={idx} className="py-2">
