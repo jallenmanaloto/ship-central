@@ -3,6 +3,8 @@ import React from 'react'
 import { projects } from '@/app/faker/data/projects'
 import { Button } from '@/components/ui/button'
 import CreateUpdate from '@/app/_components/modals/vessels/CreateUpdate'
+import Vessel from '@/app/_components/cards/Vessel'
+import vessels from '@/app/faker/data/vessels'
 
 const Vessels = () => {
 	return (
@@ -17,6 +19,15 @@ const Vessels = () => {
 						<Button className="py-4 bg-midnight opacity-95">Search</Button>
 						<CreateUpdate action="create" />
 					</div>
+				</div>
+				<div className="mt-12 py-3 px-4">
+					{vessels.map((vessel, idx) => {
+						return (
+							<div key={idx} className="py-2">
+								<Vessel vessel={vessel} />
+							</div>
+						)
+					})}
 				</div>
 			</div>
 		</div>
