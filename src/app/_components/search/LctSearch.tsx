@@ -1,6 +1,7 @@
 import React from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import CreateUpdate from '../modals/lct/CreateUpdate'
 
 const LctSearch = () => {
 	return (
@@ -27,7 +28,7 @@ const LctSearch = () => {
 					</svg>
 					Search
 				</Button>
-				<h1>Create New</h1>
+				<CreateUpdate action="create" />
 			</div>
 		</div>
 	)
