@@ -59,7 +59,7 @@ const LctTabs = () => {
 				</TabsList>
 				<TabsContent value="LCT">
 					{/* Content#1 here */}
-					<LctSearch />
+					<LctSearch type="lct" />
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 						<SampleCards />
 						<SampleCards />
@@ -70,27 +70,7 @@ const LctTabs = () => {
 				</TabsContent>
 				<TabsContent value="Trips">
 					{/* Content#2 here */}
-					<Card>
-						<CardHeader>
-							<CardTitle>Password</CardTitle>
-							<CardDescription>
-								Change your password here. After saving, you'll be logged out.
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="space-y-2">
-							<div className="space-y-1">
-								<Label htmlFor="current">Current password</Label>
-								<Input id="current" type="password" />
-							</div>
-							<div className="space-y-1">
-								<Label htmlFor="new">New password</Label>
-								<Input id="new" type="password" />
-							</div>
-						</CardContent>
-						<CardFooter>
-							<Button>Save password</Button>
-						</CardFooter>
-					</Card>
+					<LctSearch type="lctTrip" />
 				</TabsContent>
 			</Tabs>
 		</div>

@@ -2,8 +2,9 @@ import React from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import CreateUpdate from '../modals/lct/CreateUpdate'
+import CreateUpdateTrip from '../modals/lct/CreateUpdateTrip'
 
-const LctSearch = () => {
+const LctSearch = ({ type }: { type: string }) => {
 	return (
 		<div className="grid grid-cols-1 grid-rows-2 gap-2 md:grid-cols-2 md:grid-rows-none pt-2 pb-8">
 			<Input
@@ -28,7 +29,11 @@ const LctSearch = () => {
 					</svg>
 					Search
 				</Button>
-				<CreateUpdate action="create" />
+				{type === 'lct' ? (
+					<CreateUpdate action="create" />
+				) : (
+					<CreateUpdateTrip action="create" />
+				)}
 			</div>
 		</div>
 	)
