@@ -8,6 +8,7 @@ import { Vessel as VesselModel } from '@prisma/client'
 import { trpc } from '../../_trpc/client'
 import { TVessel } from '@/utils/types'
 import { useVesselNameStore, useVesselListStore } from '@/utils/store'
+import Loading from '@/app/_components/loading/Loading'
 import {
 	Select,
 	SelectContent,
@@ -66,15 +67,17 @@ const Vessels: React.FunctionComponent = () => {
 					</div>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 py-3 px-4">
-					{isLoading
-						? 'LOADING ....'
-						: vessels?.map((vessel: TVessel, idx) => {
-								return (
-									<div key={idx} className="py-2">
-										<Vessel key={idx} vessel={vessel} />
-									</div>
-								)
-						  })}
+					{isLoading ? (
+						<Loading />
+					) : (
+						vessels?.map((vessel: TVessel, idx) => {
+							return (
+								<div key={idx} className="py-2">
+									<Vessel key={idx} vessel={vessel} />
+								</div>
+							)
+						})
+					)}
 				</div>
 			</div>
 		</div>
