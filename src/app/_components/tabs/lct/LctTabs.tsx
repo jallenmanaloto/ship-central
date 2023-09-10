@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -15,15 +17,22 @@ import LctSearch from '../../search/LctSearch'
 import CreateUpdate from '../../modals/lct/CreateUpdate'
 import MoreDetails from '../../accordion/lct/MoreDetails'
 import Trips from '../../accordion/lct/Trips'
+import { trpc } from '@/app/_trpc/client'
+import { Lct, Projects } from '@prisma/client'
+import { ProjectProp } from '@/utils/types'
+
+type LctProps = Lct & {
+	project: Projects
+}
 
 //Transfer this to a separate card file component
-const SampleCards = () => {
+const SampleCards = ({ lct, project }: { lct: Lct; project: ProjectProp }) => {
 	return (
 		<Card className="group">
 			<CardHeader>
 				<div className="relative">
 					<h2 className="text-base font-semibold text-neutral-800">
-						Sample LCT
+						{lct.name}
 					</h2>
 					<CreateUpdate action="update" />
 					<svg
@@ -40,9 +49,9 @@ const SampleCards = () => {
 						/>
 					</svg>
 				</div>
-				<CardDescription>Cargo capacity: 5000</CardDescription>
+				<CardDescription>Cargo capacity: {lct.cargoCapacity}</CardDescription>
 			</CardHeader>
-			<MoreDetails />
+			<MoreDetails project={project} />
 		</Card>
 	)
 }
@@ -78,6 +87,12 @@ const SampleTripCard = () => {
 }
 
 const LctTabs = () => {
+	const {
+		data: lcts,
+		isLoading,
+		refetch,
+	} = trpc.getLcts.useQuery({ lctName: null })
+	console.log(lcts)
 	return (
 		<div className="pt-5 w-full">
 			<Tabs defaultValue="LCT" className="w-full">
@@ -93,11 +108,9 @@ const LctTabs = () => {
 					{/* Content#1 here */}
 					<LctSearch type="lct" />
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
-						<SampleCards />
-						<SampleCards />
-						<SampleCards />
-						<SampleCards />
-						<SampleCards />
+						{lcts?.map((lct, idx) => {
+							return <SampleCards key={idx} lct={lct} project={lct.project} />
+						})}
 					</div>
 				</TabsContent>
 				<TabsContent value="Trips">

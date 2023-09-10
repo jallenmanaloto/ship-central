@@ -8,11 +8,12 @@ datasource db {
 }
 
 model Vessel {
-  id              String    @id @default(uuid())
-  name            String
-  totalCargoLoad  Int
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime? @updatedAt
+  id             String     @id @default(uuid())
+  name           String
+  totalCargoLoad Int
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime?  @updatedAt
+  project        Projects[]
 }
 
 model LoadingReport {
@@ -21,54 +22,37 @@ model LoadingReport {
   actualActivity String?
   activityFrom   DateTime
   activityTo     DateTime
-  hourMins        Int
-  totalHours      Float
+  hourMins       Int
+  totalHours     Float
   createdAt      DateTime  @default(now())
   updatedAt      DateTime? @updatedAt
   vesselId       String
-  project        Projects  @relation(fields: [projectId], references: [id])
   projectId      String
 }
 
 model Projects {
-  id                     String          @id @default(uuid())
-  laytimeDays            Float           @default(0)
-  totalCargo             Int             @default(0)
-  cargoRate               Int @default(0)
-  projectStartDate       DateTime?
-  projectEndDate         DateTime?
-  monitored              Boolean         @default(false)
-  createdAt              DateTime        @default(now())
-  updatedAt              DateTime?       @updatedAt
-  vesselId               String
-  loadingReports         LoadingReport[]
-  lctTrips               LctTrips[]
-  lct                    Lct[]
+  id               String     @id @default(uuid())
+  laytimeDays      Float      @default(0)
+  totalCargo       Int        @default(0)
+  cargoRate        Int        @default(0)
+  projectStartDate DateTime?
+  projectEndDate   DateTime?
+  monitored        Boolean    @default(false)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime?  @updatedAt
+  vesselId         String
+  vesselName       String
+  vessel           Vessel     @relation(fields: [vesselId], references: [id])
+  lcts             Lct[]
+  lctTrips         LctTrips[]
 }
-
-//view
-// model ProjectSummary {
-//   projectId               String @id
-//   laytime                Float           @default(0)
-//   laytimeAsOf            Float           @default(0)
-//   laytimeConsumed        Float           @default(0)
-//   totalCargo             Int             @default(0)
-//   totalCargoLoaded       Int             @default(0)
-//   totalCargoToLoad       Int             @default(0)
-//   estTotalTimeFinish     Float           @default(0)
-//   estDispatch            Float           @default(0)
-//   estTimeToFinishLoading Float           @default(0)
-// projectStartDate       DateTime?
-// projectEndDate         DateTime?
-// monitored              Boolean         @default(false)
-// }
 
 model Lct {
   id            String   @id @default(uuid())
   name          String
   cargoCapacity Int
-  project       Projects @relation(fields: [projectId], references: [id])
   projectId     String
+  project      Projects @relation(fields: [projectId], references: [id])
 }
 
 model LctTrips {
@@ -78,6 +62,6 @@ model LctTrips {
   createdAt    DateTime? @default(now())
   updatedAt    DateTime? @updatedAt
   lctId        String
-  project      Projects  @relation(fields: [projectId], references: [id])
   projectId    String
+  projects     Projects  @relation(fields: [projectId], references: [id])
 }

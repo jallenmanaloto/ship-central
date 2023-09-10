@@ -17,3 +17,17 @@ export type TVessel = {
   createdAt: string
   updatedAt?: string | null
 }
+
+export type ProjectProp = {
+  vesselName: string;
+  id: string;
+  createdAt: string;
+  updatedAt: string | null;
+  laytimeDays: number;
+  totalCargo: number;
+  cargoRate: number;
+  projectStartDate: string | null;
+  projectEndDate: string | null;
+  monitored: boolean;
+  vesselId: string;
+}

@@ -17,6 +17,16 @@ export const appRouter = router({
     const vesselNames = vessels.map(vessel => vessel.name)
 
     return vesselNames;
+  }),
+  getLcts: publicProcedure.input(z.object({ lctName: z.string().nullable() })).query(async (opts?) => {
+    // if (opts?.input?.lctName !== null) {
+    //   const lct = await prisma.lct.findFirst({ where: { name: { contains: opts?.input?.lctName } }, include: { projects: true } })
+    //   const lctArray = lct ? [lct] : []
+
+    //   return lctArray
+    // }
+
+    return await prisma.lct.findMany({ select: { id: true, name: true, cargoCapacity: true, projectId: true, project: true } })
   })
 });
 
