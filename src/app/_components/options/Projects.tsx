@@ -5,11 +5,14 @@ import Select from '@mui/joy/Select'
 import Option from '@mui/joy/Option'
 import dayjs from 'dayjs'
 import { ProjDetails } from '@/utils/types'
+import { trpc } from '@/app/_trpc/client'
 
-const ProjectNames = ({ details }: { details: string[] }) => {
+const ProjectNames = () => {
+	const { data: vesselNames } = trpc.getVesselNames.useQuery()
+
 	return (
 		<Select placeholder="Choose a vessel">
-			{details.map((name, idx) => {
+			{vesselNames?.map((name, idx) => {
 				return (
 					<Option key={idx} value={name}>
 						{name}
@@ -58,7 +61,7 @@ const Projects = ({
 	return (
 		<>
 			{option === 'projectName' ? (
-				<ProjectNames details={details} />
+				<ProjectNames />
 			) : (
 				<ProjectDates details={details} />
 			)}

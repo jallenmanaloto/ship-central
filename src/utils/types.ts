@@ -9,3 +9,11 @@ export type ProjDetail = {
   projectStartDate: Date
   projectEndDate: Date
 }
+
+export type TVessel = {
+  id: string
+  name: string
+  totalCargoLoad: number
+  createdAt: string
+  updatedAt?: string | null
+}
