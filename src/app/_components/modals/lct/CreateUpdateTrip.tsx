@@ -64,7 +64,7 @@ const CreateRecord = () => {
 								<h2 className="text-bottom w-24">Project</h2>
 							</div>
 							<div className="w-full overflow-hidden">
-								<Select>
+								<Select placeholder="Choose a project">
 									{projectList.map((project, idx) => {
 										return (
 											<Option key={idx} value={project}>
