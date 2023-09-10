@@ -2,24 +2,14 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Card, CardDescription, CardHeader } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import LctSearch from '../../search/LctSearch'
 import CreateUpdate from '../../modals/lct/CreateUpdate'
 import MoreDetails from '../../accordion/lct/MoreDetails'
 import Trips from '../../accordion/lct/Trips'
 import { trpc } from '@/app/_trpc/client'
-import { Lct, Projects } from '@prisma/client'
-import { ProjectProp } from '@/utils/types'
+import { Lct } from '@prisma/client'
 
 type ProjectsProps = {
 	id: string
@@ -40,15 +30,9 @@ type ProjectsProps = {
 }[]
 
 //Transfer this to a separate card file component
-const SampleCards = ({
-	lct,
-	projects,
-}: {
-	lct: Lct
-	projects: ProjectsProps
-}) => {
+const LctCards = ({ lct, projects }: { lct: Lct; projects: ProjectsProps }) => {
 	return (
-		<Card className="group">
+		<Card className="group h-fit ">
 			<CardHeader>
 				<div className="relative">
 					<h2 className="text-base font-semibold text-neutral-800">
@@ -128,7 +112,7 @@ const LctTabs = () => {
 					<LctSearch type="lct" />
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
 						{lcts?.map((lct, idx) => {
-							return <SampleCards key={idx} lct={lct} projects={lct.project} />
+							return <LctCards key={idx} lct={lct} projects={lct.project} />
 						})}
 					</div>
 				</TabsContent>

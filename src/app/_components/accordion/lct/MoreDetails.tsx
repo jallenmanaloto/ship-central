@@ -27,7 +27,6 @@ type ProjectsProps = {
 }[]
 
 const MoreDetails = ({ projects }: { projects: ProjectsProps }) => {
-	console.log(projects)
 	return (
 		<div className="px-6">
 			<Accordion type="single" collapsible>
