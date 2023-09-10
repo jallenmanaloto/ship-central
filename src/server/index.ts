@@ -26,7 +26,7 @@ export const appRouter = router({
     //   return lctArray
     // }
 
-    return await prisma.lct.findMany({ select: { id: true, name: true, cargoCapacity: true, projectId: true, project: true } })
+    return await prisma.lct.findMany({ select: { id: true, name: true, cargoCapacity: true, projectId: true, project: { include: { project: true } } } })
   })
 });
 

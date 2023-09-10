@@ -21,12 +21,32 @@ import { trpc } from '@/app/_trpc/client'
 import { Lct, Projects } from '@prisma/client'
 import { ProjectProp } from '@/utils/types'
 
-type LctProps = Lct & {
-	project: Projects
-}
+type ProjectsProps = {
+	id: string
+	lctId: string
+	project: {
+		id: string
+		laytimeDays: number
+		totalCargo: number
+		cargoRate: number
+		projectStartDate: string | null
+		projectEndDate: string | null
+		monitored: boolean
+		createdAt: string
+		updatedAt: string | null
+		vesselId: string
+		vesselName: string
+	}
+}[]
 
 //Transfer this to a separate card file component
-const SampleCards = ({ lct, project }: { lct: Lct; project: ProjectProp }) => {
+const SampleCards = ({
+	lct,
+	projects,
+}: {
+	lct: Lct
+	projects: ProjectsProps
+}) => {
 	return (
 		<Card className="group">
 			<CardHeader>
@@ -51,7 +71,7 @@ const SampleCards = ({ lct, project }: { lct: Lct; project: ProjectProp }) => {
 				</div>
 				<CardDescription>Cargo capacity: {lct.cargoCapacity}</CardDescription>
 			</CardHeader>
-			<MoreDetails project={project} />
+			<MoreDetails projects={projects} />
 		</Card>
 	)
 }
@@ -92,7 +112,6 @@ const LctTabs = () => {
 		isLoading,
 		refetch,
 	} = trpc.getLcts.useQuery({ lctName: null })
-	console.log(lcts)
 	return (
 		<div className="pt-5 w-full">
 			<Tabs defaultValue="LCT" className="w-full">
@@ -109,7 +128,7 @@ const LctTabs = () => {
 					<LctSearch type="lct" />
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
 						{lcts?.map((lct, idx) => {
-							return <SampleCards key={idx} lct={lct} project={lct.project} />
+							return <SampleCards key={idx} lct={lct} projects={lct.project} />
 						})}
 					</div>
 				</TabsContent>
