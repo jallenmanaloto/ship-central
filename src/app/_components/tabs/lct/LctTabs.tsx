@@ -18,7 +18,7 @@ const SampleTripCard = () => {
 			<CardHeader>
 				<div className="relative">
 					<h2 className="text-base font-semibold text-neutral-800">LCT# 1</h2>
-					<CreateUpdate action="update" />
+					<CreateUpdate action="update" lct={null} />
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
