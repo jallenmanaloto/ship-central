@@ -7,9 +7,37 @@ import ModalClose from '@mui/joy/ModalClose'
 import Typography from '@mui/joy/Typography'
 import Sheet from '@mui/joy/Sheet'
 import { Input } from '@/components/ui/input'
+import { trpc } from '@/app/_trpc/client'
+import { ReloadIcon } from '@radix-ui/react-icons'
 
 const CreateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
+	const [creating, setCreating] = useState<boolean>(false)
+
+	const [vesselDetails, setVesselDetails] = useState({
+		name: '',
+		totalCargoLoad: '',
+	})
+	const utils = trpc.useContext()
+	const vessel = trpc.createVessel.useMutation({
+		onSuccess: (input) => {
+			utils.getVessels.invalidate()
+		},
+		onSettled: () => {
+			setCreating(false)
+			setOpen(false)
+			setVesselDetails({
+				name: '',
+				totalCargoLoad: '',
+			})
+		},
+	})
+
+	const handleCreateVessel = () => {
+		vessel.mutate(vesselDetails)
+		setCreating(true)
+	}
+
 	return (
 		<>
 			<Button
@@ -52,7 +80,12 @@ const CreateRecord = () => {
 								<h2 className="text-bottom w-24">Name</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={vesselDetails.name}
+									onChange={(e) =>
+										setVesselDetails({ ...vesselDetails, name: e.target.value })
+									}
+								/>
 							</div>
 						</div>
 						<div className="flex py-4">
@@ -60,12 +93,28 @@ const CreateRecord = () => {
 								<h2 className="text-bottom w-24">Cargo capacity</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={vesselDetails.totalCargoLoad}
+									onChange={(e) =>
+										setVesselDetails({
+											...vesselDetails,
+											totalCargoLoad: e.target.value,
+										})
+									}
+								/>
 							</div>
 						</div>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
-						<Button className="bg-sky-950 opacity-75">Save</Button>
+						<Button
+							onClick={handleCreateVessel}
+							className="bg-sky-950 opacity-75">
+							{creating ? (
+								<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+							) : (
+								'Save'
+							)}
+						</Button>
 						<Button
 							onClick={() => setOpen(false)}
 							className="bg-red-950 opacity-75">
