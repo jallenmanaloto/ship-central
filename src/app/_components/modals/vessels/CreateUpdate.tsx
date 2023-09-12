@@ -270,13 +270,14 @@ const CreateUpdate = ({
 	vessel,
 }: {
 	action: string
-	vessel: TVessel
+	vessel: TVessel | null
 }) => {
 	return (
 		<>
 			{action === 'create' ? (
 				<CreateRecord />
 			) : (
+				//@ts-ignore
 				<UpdateRecord vessel={vessel} />
 			)}
 		</>
