@@ -140,7 +140,7 @@ const UpdateRecord = ({ vessel }: { vessel: TVessel }) => {
 
 	const updateVessel = trpc.updateVessel.useMutation({
 		onSuccess: () => {
-			utils.getVessels.invalidate
+			utils.getVessels.invalidate()
 		},
 		onSettled: () => {
 			setUpdating(false)
