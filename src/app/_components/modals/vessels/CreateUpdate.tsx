@@ -9,6 +9,7 @@ import Sheet from '@mui/joy/Sheet'
 import { Input } from '@/components/ui/input'
 import { trpc } from '@/app/_trpc/client'
 import { ReloadIcon } from '@radix-ui/react-icons'
+import { TVessel } from '@/utils/types'
 
 const CreateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
@@ -20,7 +21,7 @@ const CreateRecord = () => {
 	})
 	const utils = trpc.useContext()
 	const vessel = trpc.createVessel.useMutation({
-		onSuccess: (input) => {
+		onSuccess: () => {
 			utils.getVessels.invalidate()
 		},
 		onSettled: () => {
@@ -127,12 +128,49 @@ const CreateRecord = () => {
 	)
 }
 
-const UpdateRecord = () => {
+const UpdateRecord = ({ vessel }: { vessel: TVessel }) => {
+	const utils = trpc.useContext()
 	const [open, setOpen] = useState<boolean>(false)
+	const [updating, setUpdating] = useState<boolean>(false)
+	const [vesselDetails, setVesselDetails] = useState({
+		id: '',
+		name: '',
+		totalCargoLoad: '',
+	})
+
+	const updateVessel = trpc.updateVessel.useMutation({
+		onSuccess: () => {
+			utils.getVessels.invalidate
+		},
+		onSettled: () => {
+			setUpdating(false)
+			setOpen(false)
+			setVesselDetails({
+				id: '',
+				name: '',
+				totalCargoLoad: '',
+			})
+		},
+	})
+
+	const handleOpen = () => {
+		setOpen(true)
+		setVesselDetails({
+			id: vessel.id,
+			name: vessel.name,
+			totalCargoLoad: String(vessel.totalCargoLoad),
+		})
+	}
+
+	const handleUpdateVessel = () => {
+		updateVessel.mutate(vesselDetails)
+		setUpdating(true)
+	}
 	return (
 		<>
 			<svg
-				onClick={() => setOpen(true)}
+				// onClick={() => console.log(vessel)}
+				onClick={() => handleOpen()}
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
 				viewBox="0 0 24 24"
@@ -180,7 +218,12 @@ const UpdateRecord = () => {
 								<h2 className="text-bottom w-24">Name</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={vesselDetails.name}
+									onChange={(e) =>
+										setVesselDetails({ ...vesselDetails, name: e.target.value })
+									}
+								/>
 							</div>
 						</div>
 						<div className="flex py-4">
@@ -188,12 +231,28 @@ const UpdateRecord = () => {
 								<h2 className="text-bottom w-24">Cargo capacity</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={vesselDetails.totalCargoLoad}
+									onChange={(e) =>
+										setVesselDetails({
+											...vesselDetails,
+											totalCargoLoad: e.target.value,
+										})
+									}
+								/>
 							</div>
 						</div>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
-						<Button className="bg-sky-950 opacity-75">Save</Button>
+						<Button
+							onClick={handleUpdateVessel}
+							className="bg-sky-950 opacity-75">
+							{updating ? (
+								<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+							) : (
+								'Save'
+							)}
+						</Button>
 						<Button
 							onClick={() => setOpen(false)}
 							className="bg-red-950 opacity-75">
@@ -206,8 +265,22 @@ const UpdateRecord = () => {
 	)
 }
 
-const CreateUpdate = ({ action }: { action: string }) => {
-	return <>{action === 'create' ? <CreateRecord /> : <UpdateRecord />}</>
+const CreateUpdate = ({
+	action,
+	vessel,
+}: {
+	action: string
+	vessel: TVessel
+}) => {
+	return (
+		<>
+			{action === 'create' ? (
+				<CreateRecord />
+			) : (
+				<UpdateRecord vessel={vessel} />
+			)}
+		</>
+	)
 }
 
 export default CreateUpdate

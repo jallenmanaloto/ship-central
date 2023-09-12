@@ -9,7 +9,7 @@ const Vessel = ({ vessel }: { vessel: TVessel }) => {
 			key={vessel.id}
 			className="block group rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)">
 			<div className="relative">
-				<CreateUpdate action="update" />
+				<CreateUpdate action="update" vessel={vessel} />
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"

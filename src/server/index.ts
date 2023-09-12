@@ -27,6 +27,18 @@ export const appRouter = router({
       }
     })
   }),
+  updateVessel: publicProcedure.input(z.object({ id: z.string(), name: z.string(), totalCargoLoad: z.string() })).mutation(async (opts) => {
+    await prisma.vessel.update({
+      where: {
+        id: opts.input.id
+      },
+      data: {
+        id: opts.input.id,
+        name: opts.input.name,
+        totalCargoLoad: parseInt(opts.input.totalCargoLoad)
+      }
+    })
+  }),
   //LCTs Api
   getLcts: publicProcedure.input(z.object({ lctName: z.string().nullable() })).query(async (opts?) => {
     if (opts?.input?.lctName !== null) {
