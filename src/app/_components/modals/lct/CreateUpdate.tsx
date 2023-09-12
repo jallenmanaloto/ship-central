@@ -7,9 +7,37 @@ import ModalClose from '@mui/joy/ModalClose'
 import Typography from '@mui/joy/Typography'
 import Sheet from '@mui/joy/Sheet'
 import { Input } from '@/components/ui/input'
+import { trpc } from '@/app/_trpc/client'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { Lct } from '@prisma/client'
 
 const CreateRecord = () => {
+	const utils = trpc.useContext()
 	const [open, setOpen] = useState<boolean>(false)
+	const [creating, setCreating] = useState(false)
+	const [lctDetails, setLctDetails] = useState({
+		name: '',
+		cargoCapacity: '',
+	})
+
+	const createLct = trpc.createLct.useMutation({
+		onSuccess: () => {
+			utils.getLcts.invalidate()
+		},
+		onSettled: () => {
+			setOpen(false)
+			setCreating(false)
+			setLctDetails({
+				name: '',
+				cargoCapacity: '',
+			})
+		},
+	})
+
+	const handleCreateLct = () => {
+		createLct.mutate(lctDetails)
+		setCreating(true)
+	}
 	return (
 		<>
 			<Button
@@ -52,7 +80,12 @@ const CreateRecord = () => {
 								<h2 className="text-bottom w-24">Name</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={lctDetails.name}
+									onChange={(e) =>
+										setLctDetails({ ...lctDetails, name: e.target.value })
+									}
+								/>
 							</div>
 						</div>
 						<div className="flex py-4">
@@ -60,12 +93,26 @@ const CreateRecord = () => {
 								<h2 className="text-bottom w-24">Cargo capacity</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={lctDetails.cargoCapacity}
+									onChange={(e) =>
+										setLctDetails({
+											...lctDetails,
+											cargoCapacity: e.target.value,
+										})
+									}
+								/>
 							</div>
 						</div>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
-						<Button className="bg-sky-950 opacity-75">Save</Button>
+						<Button onClick={handleCreateLct} className="bg-sky-950 opacity-75">
+							{creating ? (
+								<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+							) : (
+								'Save'
+							)}
+						</Button>
 						<Button
 							onClick={() => setOpen(false)}
 							className="bg-red-950 opacity-75">
@@ -78,12 +125,48 @@ const CreateRecord = () => {
 	)
 }
 
-const UpdateRecord = () => {
-	const [open, setOpen] = useState<boolean>(false)
+const UpdateRecord = ({ lct }: { lct: Lct }) => {
+	const utils = trpc.useContext()
+	const [open, setOpen] = useState(false)
+	const [updating, setUpdating] = useState(false)
+	const [lctDetails, setLctDetails] = useState({
+		id: '',
+		name: '',
+		cargoCapacity: '',
+	})
+
+	const handleOpen = () => {
+		setOpen(true)
+		setLctDetails({
+			id: lct.id,
+			name: lct.name,
+			cargoCapacity: String(lct.cargoCapacity),
+		})
+	}
+	const updateLct = trpc.updateLct.useMutation({
+		onSuccess: () => {
+			utils.getLcts.invalidate()
+		},
+		onSettled: () => {
+			setOpen(false)
+			setUpdating(false)
+			setLctDetails({
+				id: '',
+				name: '',
+				cargoCapacity: '',
+			})
+		},
+	})
+
+	const handleLctUpdate = () => {
+		updateLct.mutate(lctDetails)
+		setUpdating(true)
+	}
+
 	return (
 		<div className="group top-0 right-4">
 			<svg
-				onClick={() => setOpen(true)}
+				onClick={handleOpen}
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
 				viewBox="0 0 24 24"
@@ -131,7 +214,12 @@ const UpdateRecord = () => {
 								<h2 className="text-bottom w-24">Name</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={lctDetails.name}
+									onChange={(e) =>
+										setLctDetails({ ...lctDetails, name: e.target.value })
+									}
+								/>
 							</div>
 						</div>
 						<div className="flex py-4">
@@ -139,12 +227,26 @@ const UpdateRecord = () => {
 								<h2 className="text-bottom w-24">Cargo capacity</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={lctDetails.cargoCapacity}
+									onChange={(e) =>
+										setLctDetails({
+											...lctDetails,
+											cargoCapacity: e.target.value,
+										})
+									}
+								/>
 							</div>
 						</div>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
-						<Button className="bg-sky-950 opacity-75">Save</Button>
+						<Button onClick={handleLctUpdate} className="bg-sky-950 opacity-75">
+							{updating ? (
+								<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+							) : (
+								'Save'
+							)}
+						</Button>
 						<Button
 							onClick={() => setOpen(false)}
 							className="bg-red-950 opacity-75">
@@ -157,8 +259,17 @@ const UpdateRecord = () => {
 	)
 }
 
-const CreateUpdate = ({ action }: { action: string }) => {
-	return <>{action === 'create' ? <CreateRecord /> : <UpdateRecord />}</>
+const CreateUpdate = ({ action, lct }: { action: string; lct: Lct | null }) => {
+	return (
+		<>
+			{action === 'create' ? (
+				<CreateRecord />
+			) : (
+				//@ts-ignore
+				<UpdateRecord lct={lct} />
+			)}
+		</>
+	)
 }
 
 export default CreateUpdate

@@ -23,15 +23,21 @@ type ProjectsProps = {
 	}
 }[]
 
-const LctCard = ({ lct, projects }: { lct: Lct; projects: ProjectsProps }) => {
+const LctCard = ({
+	lct,
+	projects,
+}: {
+	lct: Lct | null
+	projects: ProjectsProps
+}) => {
 	return (
 		<Card className="group h-fit ">
 			<CardHeader>
 				<div className="relative">
 					<h2 className="text-base font-semibold text-neutral-800">
-						{lct.name}
+						{lct?.name}
 					</h2>
-					<CreateUpdate action="update" />
+					<CreateUpdate action="update" lct={lct} />
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -46,7 +52,7 @@ const LctCard = ({ lct, projects }: { lct: Lct; projects: ProjectsProps }) => {
 						/>
 					</svg>
 				</div>
-				<CardDescription>Cargo capacity: {lct.cargoCapacity}</CardDescription>
+				<CardDescription>Cargo capacity: {lct?.cargoCapacity}</CardDescription>
 			</CardHeader>
 			<MoreDetails projects={projects} />
 		</Card>

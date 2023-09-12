@@ -76,6 +76,26 @@ export const appRouter = router({
         }
       }
     })
+  }),
+  createLct: publicProcedure.input(z.object({ name: z.string(), cargoCapacity: z.string() })).mutation(async (opts) => {
+    await prisma.lct.create({
+      data: {
+        name: opts.input.name,
+        cargoCapacity: parseInt(opts.input.cargoCapacity)
+      }
+    })
+  }),
+  updateLct: publicProcedure.input(z.object({ id: z.string(), name: z.string(), cargoCapacity: z.string() })).mutation(async (opts) => {
+    await prisma.lct.update({
+      where: {
+        id: opts.input.id,
+      },
+      data: {
+        id: opts.input.id,
+        name: opts.input.name,
+        cargoCapacity: parseInt(opts.input.cargoCapacity)
+      }
+    })
   })
 });
 

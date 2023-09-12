@@ -30,7 +30,7 @@ const LctSearch = ({ type }: { type: string }) => {
 					Search
 				</Button>
 				{type === 'lct' ? (
-					<CreateUpdate action="create" />
+					<CreateUpdate action="create" lct={null} />
 				) : (
 					<CreateUpdateTrip action="create" />
 				)}
