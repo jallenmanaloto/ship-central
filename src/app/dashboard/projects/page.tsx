@@ -33,8 +33,6 @@ const MyProjects = () => {
 				<div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
 					{isLoading ? (
 						<Loading />
-					) : projects?.length === 0 ? (
-						<h3 className="text-center">No data to show</h3>
 					) : (
 						projects?.map((project: IProject, idx: number) => {
 							return (
@@ -45,6 +43,11 @@ const MyProjects = () => {
 						})
 					)}
 				</div>
+				{projects?.length === 0 ? (
+					<h3 className="text-center">No data to show</h3>
+				) : (
+					''
+				)}
 			</div>
 		</div>
 	)
