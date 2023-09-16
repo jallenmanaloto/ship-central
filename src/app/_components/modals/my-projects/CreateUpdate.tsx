@@ -12,12 +12,12 @@ import { projects } from '@/app/faker/data/projects'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
-import { useCreateProjectStore } from '@/utils/store'
+import { useProjectStore } from '@/utils/store'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { trpc } from '@/app/_trpc/client'
 
 const DatePicker = ({ type }: { type: string }) => {
-	const { setProjectStartDate, setProjectEndDate } = useCreateProjectStore()
+	const { setProjectStartDate, setProjectEndDate } = useProjectStore()
 	const handleProjectDate = (dateVal: Date | null) => {
 		const date = dayjs(dateVal)
 		if (type === 'start') {
@@ -41,8 +41,7 @@ const CreateRecord = () => {
 	const [creating, setCreating] = useState<boolean>(false)
 
 	const utils = trpc.useContext()
-	const { chosenVesselId, projectStartDate, projectEndDate } =
-		useCreateProjectStore()
+	const { chosenVesselId, projectStartDate, projectEndDate } = useProjectStore()
 	const [newProject, setNewProject] = useState({
 		vesselId: chosenVesselId,
 		projectStartDate: projectStartDate,
@@ -107,7 +106,7 @@ const CreateRecord = () => {
 						<div className="flex">
 							<h2 className="text-bottom w-24">Vessel:</h2>
 							<div className="w-full">
-								<Projects projects={projects} option="projectName" />
+								<Projects option="projectName" />
 							</div>
 						</div>
 					</div>

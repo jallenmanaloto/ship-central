@@ -111,7 +111,7 @@ export const appRouter = router({
   }),
   getProjects: publicProcedure.input(z.string()).query(async (opts) => {
     if (opts.input === '') {
-      return 'One project'
+      return await prisma.projects.findMany()
     }
 
     return await prisma.projects.findMany({

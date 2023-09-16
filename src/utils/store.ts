@@ -45,7 +45,7 @@ type CreateProject = {
   setProjectEndDate: (projectDate: any) => void
 }
 
-export const useCreateProjectStore = create<CreateProject>((set) => ({
+export const useProjectStore = create<CreateProject>((set) => ({
   chosenVessel: '',
   chosenVesselId: '',
   projectStartDate: '',

@@ -31,3 +31,17 @@ export type ProjectProp = {
   monitored: boolean;
   vesselId: string;
 }
+
+export interface IProject {
+  vesselName: string | null
+  id: string
+  vesselId: string
+  projectStartDate: string | null
+  projectEndDate: string | null
+  createdAt: string
+  updatedAt: string | null
+  laytimeDays: number
+  totalCargo: number
+  cargoRate: number
+  monitored: boolean
+}
