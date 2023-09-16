@@ -108,6 +108,17 @@ export const appRouter = router({
         projectEndDate: opts.input.projectEndDate
       }
     })
+  }),
+  getProjects: publicProcedure.input(z.string()).query(async (opts) => {
+    if (opts.input === '') {
+      return 'One project'
+    }
+
+    return await prisma.projects.findMany({
+      where: {
+        vesselId: opts.input
+      }
+    })
   })
 });
 

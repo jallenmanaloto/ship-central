@@ -6,8 +6,13 @@ import { projects } from '../../faker/data/projects'
 import { Button } from '@/components/ui/button'
 import CreateUpdate from '@/app/_components/modals/my-projects/CreateUpdate'
 import ProjectDetail from '@/app/_components/cards/ProjectDetail'
+import { trpc } from '@/app/_trpc/client'
 
 const MyProjects = () => {
+	const { data: projectsss } = trpc.getProjects.useQuery(
+		'98d39dfa-4f93-11ee-be56-0242ac120002'
+	)
+	console.log(projectsss)
 	return (
 		<div className="flex h-screen max-h-screen md:ml-[240px]">
 			<div className="w-screen h-screen pb-56 px-6 bg-slate-200 overflow-y-scroll">

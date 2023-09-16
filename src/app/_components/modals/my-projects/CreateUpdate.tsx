@@ -13,6 +13,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import { useCreateProjectStore } from '@/utils/store'
+import { ReloadIcon } from '@radix-ui/react-icons'
 import { trpc } from '@/app/_trpc/client'
 
 const DatePicker = ({ type }: { type: string }) => {
@@ -37,6 +38,7 @@ const DatePicker = ({ type }: { type: string }) => {
 
 const CreateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
+	const [creating, setCreating] = useState<boolean>(false)
 
 	const utils = trpc.useContext()
 	const { chosenVesselId, projectStartDate, projectEndDate } =
@@ -47,15 +49,22 @@ const CreateRecord = () => {
 		projectEndDate: projectEndDate,
 	})
 
-	const createProject = trpc.createProject.useMutation()
+	const createProject = trpc.createProject.useMutation({
+		onSuccess: () => {
+			utils.getProjects.invalidate()
+		},
+		onSettled: () => {
+			setOpen(false)
+			setCreating(false)
+			setNewProject({
+				vesselId: '',
+				projectStartDate: new Date(),
+				projectEndDate: new Date(),
+			})
+		},
+	})
 	const handleCreateProject = () => {
-		// setNewProject({
-		// 	//@ts-expect-error
-		// 	vesselId: chosenVesselId,
-		// 	projectStartDate: new Date(projectStartDate),
-		// 	projectEndDate: new Date(projectEndDate),
-		// })
-		console.log(newProject)
+		setCreating(true)
 		createProject.mutate(newProject)
 	}
 	return (
@@ -118,7 +127,11 @@ const CreateRecord = () => {
 						<Button
 							onClick={handleCreateProject}
 							className="bg-sky-950 opacity-75">
-							Save
+							{creating ? (
+								<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+							) : (
+								'Save'
+							)}
 						</Button>
 						<Button
 							onClick={() => setOpen(false)}
