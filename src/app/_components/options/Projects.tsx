@@ -1,40 +1,76 @@
 'use client'
 
 import React, { useState } from 'react'
-import Select from '@mui/joy/Select'
-import Option from '@mui/joy/Option'
 import dayjs from 'dayjs'
 import { ProjDetails } from '@/utils/types'
 import { trpc } from '@/app/_trpc/client'
+import { useCreateProjectStore } from '@/utils/store'
+import Select from '@mui/joy/Select'
+import Option from '@mui/joy/Option'
+// import {
+// 	Select,
+// 	SelectContent,
+// 	SelectItem,
+// 	SelectTrigger,
+// 	SelectValue,
+// } from '@/components/ui/select'
 
 const ProjectNames = () => {
-	const { data: vesselNames } = trpc.getVesselNames.useQuery()
+	const { data: vessels } = trpc.getVessels.useQuery({ vesselName: null })
+	const { setChosenVesselId, chosenVesselId } = useCreateProjectStore()
+	const handleChange = (
+		event: React.SyntheticEvent | null,
+		newValue: string | null
+	) => {
+		setChosenVesselId(newValue as string)
+	}
 
+	// console.log(chosenVesselId)
 	return (
-		<Select placeholder="Choose a vessel">
-			{vesselNames?.map((name, idx) => {
+		<Select onChange={handleChange} placeholder="Choose a vessel">
+			{vessels?.map((vessel, idx) => {
 				return (
-					<Option key={idx} value={name}>
-						{name}
+					<Option key={idx} value={vessel.id}>
+						{vessel.name}
 					</Option>
 				)
 			})}
 		</Select>
+		// <Select onValueChange={(field) => setChosenVesselId(field)}>
+		// 	<SelectTrigger className="w-full bg-white outline-none">
+		// 		<SelectValue placeholder="Select a vessel" />
+		// 	</SelectTrigger>
+		// 	<SelectContent className="min-w-full">
+		// 		{vessels?.map((vessel, idx) => {
+		// 			return (
+		// 				<SelectItem key={idx} value={vessel.id}>
+		// 					{vessel.name}
+		// 				</SelectItem>
+		// 			)
+		// 		})}
+		// 	</SelectContent>
+		// </Select>
 	)
 }
 
 const ProjectDates = ({ details }: { details: string[] | [] }) => {
 	const isEmpty = details.length === 0
 	return (
-		<Select placeholder="Choose a date" disabled={isEmpty}>
-			{details.map((date, idx) => {
-				return (
-					<Option key={idx} value={date}>
-						{date}
-					</Option>
-				)
-			})}
-		</Select>
+		<></>
+		// <Select disabled={isEmpty}>
+		// 	<SelectTrigger className="w-full bg-white outline-none">
+		// 		<SelectValue placeholder="Select project date" />
+		// 	</SelectTrigger>
+		// 	<SelectContent className="min-w-full">
+		// 		{details?.map((dates, idx) => {
+		// 			return (
+		// 				<SelectItem key={idx} value={dates}>
+		// 					{dates}
+		// 				</SelectItem>
+		// 			)
+		// 		})}
+		// 	</SelectContent>
+		// </Select>
 	)
 }
 

@@ -7,11 +7,15 @@ import { trpc } from './client'
 
 export default function Provider({ children }: { children: React.ReactNode }) {
 	const [queryClient] = useState(() => new QueryClient({}))
+	const appUrl =
+		process.env.NODE_ENV === 'production'
+			? process.env.PRODUCTION_APP_URL || ''
+			: process.env.LOCAL_APP_URL || ''
 	const [trpcClient] = useState(() =>
 		trpc.createClient({
 			links: [
 				httpBatchLink({
-					url: 'https://ship-central.vercel.app/api/trpc', //'http://localhost:3000/api/trpc',  // change domain on prod to ship-central.vercel.app
+					url: 'http://localhost:3000/api/trpc', // change domain on prod to ship-central.vercel.app
 					fetch(url, options) {
 						return fetch(url, {
 							...options,

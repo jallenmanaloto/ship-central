@@ -1,6 +1,7 @@
 import { publicProcedure, router } from './trpc';
 import prisma from '@/utils/prisma';
 import z from 'zod'
+import dayjs from 'dayjs';
 
 export const appRouter = router({
   // Vessels API
@@ -94,6 +95,17 @@ export const appRouter = router({
         id: opts.input.id,
         name: opts.input.name,
         cargoCapacity: parseInt(opts.input.cargoCapacity)
+      }
+    })
+  }),
+  //Projects Api
+  createProject: publicProcedure.input(z.object({ vesselId: z.string(), projectStartDate: z.any(), projectEndDate: z.any() })).mutation(async (opts) => {
+    await prisma.projects.create({
+      data: {
+        vesselId: opts.input.vesselId,
+        vesselName: 'SAMPLE',
+        projectStartDate: opts.input.projectStartDate,
+        projectEndDate: opts.input.projectEndDate
       }
     })
   })

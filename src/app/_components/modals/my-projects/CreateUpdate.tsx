@@ -7,23 +7,57 @@ import Sheet from '@mui/joy/Sheet'
 import Textarea from '@mui/joy/Textarea'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import Projects from '../../options/Projects'
 import { projects } from '@/app/faker/data/projects'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
+import { useCreateProjectStore } from '@/utils/store'
+import { trpc } from '@/app/_trpc/client'
 
-const DatePicker = () => {
-	const currentDate = new Date()
+const DatePicker = ({ type }: { type: string }) => {
+	const { setProjectStartDate, setProjectEndDate } = useCreateProjectStore()
+	const handleProjectDate = (dateVal: Date | null) => {
+		const date = dayjs(dateVal)
+		if (type === 'start') {
+			setProjectStartDate(date)
+		} else {
+			setProjectEndDate(date)
+		}
+	}
+
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
-			<MobileDatePicker />
+			<MobileDatePicker
+				onChange={(newVal: Date | null) => handleProjectDate(newVal)}
+			/>
 		</LocalizationProvider>
 	)
 }
 
 const CreateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
+
+	const utils = trpc.useContext()
+	const { chosenVesselId, projectStartDate, projectEndDate } =
+		useCreateProjectStore()
+	const [newProject, setNewProject] = useState({
+		vesselId: chosenVesselId,
+		projectStartDate: projectStartDate,
+		projectEndDate: projectEndDate,
+	})
+
+	const createProject = trpc.createProject.useMutation()
+	const handleCreateProject = () => {
+		// setNewProject({
+		// 	//@ts-expect-error
+		// 	vesselId: chosenVesselId,
+		// 	projectStartDate: new Date(projectStartDate),
+		// 	projectEndDate: new Date(projectEndDate),
+		// })
+		console.log(newProject)
+		createProject.mutate(newProject)
+	}
 	return (
 		<>
 			<Button
@@ -71,17 +105,21 @@ const CreateRecord = () => {
 					<div className="mt-1 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Project start:</h2>
-							<DatePicker />
+							<DatePicker type="start" />
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Project end:</h2>
-							<DatePicker />
+							<DatePicker type="end" />
 						</div>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
-						<Button className="bg-sky-950 opacity-75">Save</Button>
+						<Button
+							onClick={handleCreateProject}
+							className="bg-sky-950 opacity-75">
+							Save
+						</Button>
 						<Button
 							onClick={() => setOpen(false)}
 							className="bg-red-950 opacity-75">
@@ -144,13 +182,13 @@ const UpdateRecord = () => {
 					<div className="mt-8 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity start:</h2>
-							<DatePicker />
+							<DatePicker type="start" />
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity end:</h2>
-							<DatePicker />
+							<DatePicker type="end" />
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
