@@ -8,10 +8,12 @@ import ProjectDetail from '@/app/_components/cards/ProjectDetail'
 import { trpc } from '@/app/_trpc/client'
 import { IProject } from '@/utils/types'
 import { useProjectStore } from '@/utils/store'
+import Loading from '@/app/_components/loading/Loading'
 
 const MyProjects = () => {
 	const { chosenVesselId } = useProjectStore()
-	const { data: projects } = trpc.getProjects.useQuery(chosenVesselId)
+	const { data: projects, isLoading } =
+		trpc.getProjects.useQuery(chosenVesselId)
 	return (
 		<div className="flex h-screen max-h-screen md:ml-[240px]">
 			<div className="w-screen h-screen pb-56 px-6 bg-slate-200 overflow-y-scroll">
@@ -29,13 +31,19 @@ const MyProjects = () => {
 					</div>
 				</div>
 				<div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
-					{projects?.map((project: IProject, idx: number) => {
-						return (
-							<div key={idx} className="py-3 px-4">
-								<ProjectDetail project={project} />
-							</div>
-						)
-					})}
+					{isLoading ? (
+						<Loading />
+					) : projects?.length === 0 ? (
+						<h3 className="text-center">No data to show</h3>
+					) : (
+						projects?.map((project: IProject, idx: number) => {
+							return (
+								<div key={idx} className="py-3 px-4">
+									<ProjectDetail project={project} />
+								</div>
+							)
+						})
+					)}
 				</div>
 			</div>
 		</div>
