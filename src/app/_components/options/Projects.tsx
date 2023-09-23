@@ -77,7 +77,7 @@ const ProjectDates = () => {
 		<div>
 			<Select
 				onChange={handleChange}
-				placeholder="Choose a vessel"
+				placeholder="Choose date period"
 				disabled={isEmpty}>
 				{details?.map((dates, idx) => {
 					return (

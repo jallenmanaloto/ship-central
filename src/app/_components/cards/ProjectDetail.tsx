@@ -12,7 +12,7 @@ const ProjectDetail = ({ project }: { project: IProject }) => {
 				<h2 className="text-base font-semibold text-neutral-800">
 					{project.vesselName}
 				</h2>
-				<Switch />
+				<Switch checked={project.monitored} />
 			</div>
 			<h4 className="text-sm text-neutral-800">
 				{`(${dayjs(project.projectStartDate).format('MMM DD, YYYY')} - ${dayjs(

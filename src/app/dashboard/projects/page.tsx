@@ -19,9 +19,7 @@ const MyProjects = () => {
 	}
 
 	const { data: projects, isLoading } = trpc.getProjects.useQuery(projectData)
-	console.log(projectData)
 	console.log(projects)
-
 	const handleSearchProject = () => {}
 	return (
 		<div className="flex h-screen max-h-screen md:ml-[240px]">
