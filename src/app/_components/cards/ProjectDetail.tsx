@@ -4,7 +4,6 @@ import MoreDetails from '../accordion/my-projects/MoreDetails'
 import { Switch } from '@/components/ui/switch'
 import { IProject } from '@/utils/types'
 import { trpc } from '@/app/_trpc/client'
-import { projects } from '../../faker/data/projects'
 
 const ProjectDetail = ({ project }: { project: IProject }) => {
 	const [monitoring, setMonitoring] = useState<boolean>(project.monitored)
