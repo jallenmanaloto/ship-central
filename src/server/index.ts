@@ -112,17 +112,6 @@ export const appRouter = router({
       })
     }
   }),
-  // getProjects: publicProcedure.input(z.string()).query(async (opts) => {
-  //   if (opts.input === '') {
-  //     return await prisma.projects.findMany()
-  //   }
-
-  //   return await prisma.projects.findMany({
-  //     where: {
-  //       vesselId: opts.input
-  //     }
-  //   })
-  // }),
   getProjects: publicProcedure.input(
     z.object({
       vesselId: z.string().nullable(),
