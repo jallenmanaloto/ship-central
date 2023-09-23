@@ -1,7 +1,7 @@
 import { publicProcedure, router } from './trpc';
 import prisma from '@/utils/prisma';
 import z from 'zod'
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const appRouter = router({
   // Vessels API
@@ -99,27 +99,66 @@ export const appRouter = router({
     })
   }),
   //Projects Api
-  createProject: publicProcedure.input(z.object({ vesselId: z.string(), projectStartDate: z.any(), projectEndDate: z.any() })).mutation(async (opts) => {
-    await prisma.projects.create({
-      data: {
-        vesselId: opts.input.vesselId,
-        vesselName: 'SAMPLE',
-        projectStartDate: opts.input.projectStartDate,
-        projectEndDate: opts.input.projectEndDate
-      }
-    })
-  }),
-  getProjects: publicProcedure.input(z.string()).query(async (opts) => {
-    if (opts.input === '') {
-      return await prisma.projects.findMany()
-    }
+  createProject: publicProcedure.input(z.object({ vesselId: z.string().nullable(), projectStartDate: z.string(), projectEndDate: z.string() })).mutation(async (opts) => {
 
-    return await prisma.projects.findMany({
-      where: {
-        vesselId: opts.input
+    if (opts.input.vesselId !== null) {
+      await prisma.projects.create({
+        data: {
+          vesselId: opts.input.vesselId,
+          vesselName: 'SAMPLE',
+          projectStartDate: opts.input.projectStartDate,
+          projectEndDate: opts.input.projectEndDate
+        }
+      })
+    }
+  }),
+  // getProjects: publicProcedure.input(z.string()).query(async (opts) => {
+  //   if (opts.input === '') {
+  //     return await prisma.projects.findMany()
+  //   }
+
+  //   return await prisma.projects.findMany({
+  //     where: {
+  //       vesselId: opts.input
+  //     }
+  //   })
+  // }),
+  getProjects: publicProcedure.input(
+    z.object({
+      vesselId: z.string().nullable(),
+      projectStartDate: z.any().nullable(),
+      projectEndDate: z.any().nullable()
+    })
+  )
+    .query(async (opts) => {
+      if (opts.input.vesselId === null
+        && opts.input.projectStartDate === null
+        && opts.input.projectEndDate === null
+      ) {
+
+        return await prisma.projects.findMany()
+
+      } else if (opts.input.vesselId !== null
+        && opts.input.projectStartDate === null
+        && opts.input.projectEndDate === null
+      ) {
+
+        return await prisma.projects.findMany({
+          where: {
+            vesselId: opts.input.vesselId
+          }
+        })
+      } else if (opts.input.vesselId !== null) {
+
+        return await prisma.projects.findMany({
+          where: {
+            vesselId: opts.input.vesselId,
+            projectStartDate: opts.input.projectStartDate,
+            projectEndDate: opts.input.projectEndDate
+          }
+        })
       }
     })
-  })
 });
 
 export type AppRouter = typeof appRouter;

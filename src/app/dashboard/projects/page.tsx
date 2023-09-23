@@ -11,9 +11,18 @@ import { useProjectStore } from '@/utils/store'
 import Loading from '@/app/_components/loading/Loading'
 
 const MyProjects = () => {
-	const { chosenVesselId } = useProjectStore()
-	const { data: projects, isLoading } =
-		trpc.getProjects.useQuery(chosenVesselId)
+	const { chosenVesselId, startDateSearch, endDateSearch } = useProjectStore()
+	const projectData = {
+		vesselId: chosenVesselId,
+		projectStartDate: startDateSearch,
+		projectEndDate: endDateSearch,
+	}
+
+	const { data: projects, isLoading } = trpc.getProjects.useQuery(projectData)
+	console.log(projectData)
+	console.log(projects)
+
+	const handleSearchProject = () => {}
 	return (
 		<div className="flex h-screen max-h-screen md:ml-[240px]">
 			<div className="w-screen h-screen pb-56 px-6 bg-slate-200 overflow-y-scroll">

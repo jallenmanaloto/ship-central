@@ -56,7 +56,7 @@ const CreateRecord = () => {
 			setOpen(false)
 			setCreating(false)
 			setNewProject({
-				vesselId: '',
+				vesselId: null,
 				projectStartDate: new Date(),
 				projectEndDate: new Date(),
 			})
@@ -82,6 +82,7 @@ const CreateRecord = () => {
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
+					zIndex: 100,
 				}}>
 				<Sheet
 					variant="outlined"

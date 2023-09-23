@@ -1,5 +1,6 @@
 import { Vessel } from '@prisma/client'
 import { create } from 'zustand'
+import dayjs, { Dayjs } from 'dayjs'
 
 type ToggleDrawer = {
   display: boolean,
@@ -36,22 +37,30 @@ export const useVesselListStore = create<VesselList>((set) => ({
 
 type CreateProject = {
   chosenVessel: string
-  chosenVesselId: string
+  chosenVesselId: string | null
   projectStartDate: any
   projectEndDate: any
+  startDateSearch: string | null
+  endDateSearch: string | null
   setChosenVessel: (chosenVessel: string) => void
   setChosenVesselId: (chosenVesselId: string) => void
   setProjectStartDate: (projectDate: any) => void
   setProjectEndDate: (projectDate: any) => void
+  setStartDateSearch: (startDateSearch: string | null) => void
+  setEndDateSearch: (startDateSearch: string | null) => void
 }
 
 export const useProjectStore = create<CreateProject>((set) => ({
   chosenVessel: '',
-  chosenVesselId: '',
+  chosenVesselId: null,
   projectStartDate: '',
   projectEndDate: '',
+  startDateSearch: null,
+  endDateSearch: null,
   setChosenVessel: (vessel: string) => set({ chosenVessel: vessel }),
   setChosenVesselId: (chosenVesselId: string) => set({ chosenVesselId: chosenVesselId }),
   setProjectStartDate: (projectStartDate: any) => set({ projectStartDate: projectStartDate }),
-  setProjectEndDate: (projectEndDate: any) => set({ projectEndDate: projectEndDate })
+  setProjectEndDate: (projectEndDate: any) => set({ projectEndDate: projectEndDate }),
+  setStartDateSearch: (startDateSearch: string | null) => set({ startDateSearch: startDateSearch }),
+  setEndDateSearch: (endDateSearch: string | null) => set({ endDateSearch: endDateSearch }),
 }))
