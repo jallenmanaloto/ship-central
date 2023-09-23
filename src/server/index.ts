@@ -117,8 +117,7 @@ export const appRouter = router({
       vesselId: z.string().nullable(),
       projectStartDate: z.any().nullable(),
       projectEndDate: z.any().nullable()
-    })
-  )
+    }))
     .query(async (opts) => {
       if (opts.input.vesselId === null
         && opts.input.projectStartDate === null
@@ -147,7 +146,31 @@ export const appRouter = router({
           }
         })
       }
+    }),
+  updateMonitoring: publicProcedure.input(z.object({ id: z.string(), monitored: z.boolean() })).mutation(async (opts) => {
+    const project = await prisma.projects.findFirst({
+      where: {
+        id: opts.input.id
+      }
     })
+
+    if (project) {
+      await prisma.projects.update({
+        where: {
+          id: project.id,
+        },
+        data: {
+          monitored: opts.input.monitored
+        }
+      })
+
+      return {
+        status: 201,
+        message: 'Project updated successfully',
+        body: JSON.stringify(project)
+      }
+    }
+  })
 });
 
 export type AppRouter = typeof appRouter;
