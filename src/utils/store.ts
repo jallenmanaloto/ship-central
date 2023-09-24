@@ -15,14 +15,14 @@ export const useDrawerStore = create<ToggleDrawer>((set) => ({
 type VesselName = {
   vesselName: string | null,
   projectVesselName: string | null,
-  setVesselName: (vesselName: string) => void,
+  setVesselName: (vesselName: string | null) => void,
   setProjectVesselName: (projectVesselName: string) => void
 }
 
 export const useVesselNameStore = create<VesselName>((set) => ({
   vesselName: null,
   projectVesselName: null,
-  setVesselName: (vesselName: string) => set({ vesselName: vesselName }),
+  setVesselName: (vesselName: string | null) => set({ vesselName: vesselName }),
   setProjectVesselName: (projectVesselName: string) => set({ projectVesselName: projectVesselName }),
 }))
 

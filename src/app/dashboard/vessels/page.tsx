@@ -1,40 +1,34 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
 import CreateUpdate from '@/app/_components/modals/vessels/CreateUpdate'
 import Vessel from '@/app/_components/cards/Vessel'
-import { Vessel as VesselModel } from '@prisma/client'
 import { trpc } from '../../_trpc/client'
 import { TVessel } from '@/utils/types'
-import { useVesselNameStore, useVesselListStore } from '@/utils/store'
+import { useVesselNameStore } from '@/utils/store'
 import Loading from '@/app/_components/loading/Loading'
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select'
+import Select from '@mui/joy/Select'
+import Option from '@mui/joy/Option'
 
 const VesselOptions = () => {
 	const { data: vesselNames } = trpc.getVesselNames.useQuery()
 	const { setVesselName } = useVesselNameStore()
+	const handleChange = (
+		event: React.SyntheticEvent | null,
+		newValue: string | null
+	) => {
+		setVesselName(newValue)
+	}
 
 	return (
-		<Select onValueChange={(field) => setVesselName(field)}>
-			<SelectTrigger className="w-full bg-white outline-none">
-				<SelectValue placeholder="Select a vessel" />
-			</SelectTrigger>
-			<SelectContent className="min-w-full">
-				{vesselNames?.map((name, idx) => {
-					return (
-						<SelectItem key={idx} value={name}>
-							{name}
-						</SelectItem>
-					)
-				})}
-			</SelectContent>
+		<Select onChange={handleChange} placeholder="Choose a vessel">
+			{vesselNames?.map((name, idx) => {
+				return (
+					<Option key={idx} value={name}>
+						{name}
+					</Option>
+				)
+			})}
 		</Select>
 	)
 }
