@@ -75,19 +75,19 @@ const LctTabs = () => {
 							})}
 						</div>
 					)}
+					{isLoading ? '' : <LctPagination totalPage={totalPage} />}
 				</TabsContent>
 				<TabsContent value="Trips">
 					{/* Content#2 here */}
 					<LctSearch type="lctTrip" />
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
-						{/* <SampleTripCard />
 						<SampleTripCard />
 						<SampleTripCard />
-						<SampleTripCard /> */}
+						<SampleTripCard />
+						<SampleTripCard />
 					</div>
 				</TabsContent>
 			</Tabs>
-			{isLoading ? '' : <LctPagination totalPage={totalPage} />}
 		</div>
 	)
 }

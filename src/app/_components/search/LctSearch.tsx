@@ -14,8 +14,13 @@ const LctSearch = ({ type }: { type: string }) => {
 	}
 
 	const handleSearch = () => {
-		setLctPage(1)
-		setLctName(input)
+		if (input === '') {
+			setLctName(null)
+			setLctPage(1)
+		} else {
+			setLctPage(1)
+			setLctName(input)
+		}
 	}
 	return (
 		<div className="grid grid-cols-1 grid-rows-2 gap-2 md:grid-cols-2 md:grid-rows-none pt-2 pb-8">
