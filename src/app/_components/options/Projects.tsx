@@ -9,16 +9,16 @@ import Option from '@mui/joy/Option'
 const ProjectNames = () => {
 	const { data: vessels } = trpc.getVessels.useQuery({ vesselName: null })
 	const {
-		setChosenVesselId,
 		setStartDateSearch,
 		setEndDateSearch,
 		setProjectPage,
+		setChosenVesselIdForCreate,
 	} = useProjectStore()
 	const handleChange = (
 		event: React.SyntheticEvent | null,
 		newValue: string | null
 	) => {
-		setChosenVesselId(newValue as string)
+		setChosenVesselIdForCreate(newValue as string)
 		setStartDateSearch(null)
 		setEndDateSearch(null)
 		setProjectPage(1)

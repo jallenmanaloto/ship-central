@@ -41,12 +41,8 @@ const CreateRecord = () => {
 	const [creating, setCreating] = useState<boolean>(false)
 
 	const utils = trpc.useContext()
-	const { chosenVesselId, projectStartDate, projectEndDate } = useProjectStore()
-	const [newProject, setNewProject] = useState({
-		vesselId: chosenVesselId,
-		projectStartDate: projectStartDate,
-		projectEndDate: projectEndDate,
-	})
+	const { chosenVesselIdForCreate, projectStartDate, projectEndDate } =
+		useProjectStore()
 
 	const createProject = trpc.createProject.useMutation({
 		onSuccess: () => {
@@ -55,17 +51,12 @@ const CreateRecord = () => {
 		onSettled: () => {
 			setOpen(false)
 			setCreating(false)
-			setNewProject({
-				vesselId: null,
-				projectStartDate: new Date(),
-				projectEndDate: new Date(),
-			})
 		},
 	})
 	const handleCreateProject = () => {
 		setCreating(true)
 		createProject.mutate({
-			vesselId: chosenVesselId,
+			vesselId: chosenVesselIdForCreate,
 			projectStartDate: projectStartDate,
 			projectEndDate: projectEndDate,
 		})

@@ -41,6 +41,7 @@ export const useVesselStore = create<VesselStore>((set) => ({
 type CreateProject = {
   chosenVessel: string
   chosenVesselId: string | null
+  chosenVesselIdForCreate: string | null
   projectStartDate: any
   projectEndDate: any
   startDateSearch: string | null
@@ -49,6 +50,7 @@ type CreateProject = {
   limit: number
   setChosenVessel: (chosenVessel: string) => void
   setChosenVesselId: (chosenVesselId: string) => void
+  setChosenVesselIdForCreate: (chosenVesselIdForCreate: string | null) => void
   setProjectStartDate: (projectDate: any) => void
   setProjectEndDate: (projectDate: any) => void
   setStartDateSearch: (startDateSearch: string | null) => void
@@ -60,6 +62,7 @@ type CreateProject = {
 export const useProjectStore = create<CreateProject>((set) => ({
   chosenVessel: '',
   chosenVesselId: null,
+  chosenVesselIdForCreate: null,
   projectStartDate: '',
   projectEndDate: '',
   startDateSearch: null,
@@ -68,6 +71,7 @@ export const useProjectStore = create<CreateProject>((set) => ({
   limit: 6,
   setChosenVessel: (vessel: string) => set({ chosenVessel: vessel }),
   setChosenVesselId: (chosenVesselId: string) => set({ chosenVesselId: chosenVesselId }),
+  setChosenVesselIdForCreate: (chosenVesselIdForCreate: string | null) => set({ chosenVesselIdForCreate: chosenVesselIdForCreate }),
   setProjectStartDate: (projectStartDate: any) => set({ projectStartDate: projectStartDate }),
   setProjectEndDate: (projectEndDate: any) => set({ projectEndDate: projectEndDate }),
   setStartDateSearch: (startDateSearch: string | null) => set({ startDateSearch: startDateSearch }),
@@ -76,7 +80,7 @@ export const useProjectStore = create<CreateProject>((set) => ({
   setProjectLimit: (limit: number) => set({ limit: limit })
 }))
 
-/** END OF VESSEL STORE */
+/** END OF PROJECT STORE */
 
 
 /** START OF LCT STORE */
