@@ -50,7 +50,7 @@ const CreateRecord = () => {
 
 	const createProject = trpc.createProject.useMutation({
 		onSuccess: () => {
-			utils.getProjects.invalidate()
+			utils.getPaginatedProjects.invalidate()
 		},
 		onSettled: () => {
 			setOpen(false)

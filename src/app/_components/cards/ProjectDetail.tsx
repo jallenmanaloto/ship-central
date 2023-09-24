@@ -11,7 +11,7 @@ const ProjectDetail = ({ project }: { project: IProject }) => {
 	const utils = trpc.useContext()
 	const updateProjectMonitoring = trpc.updateMonitoring.useMutation({
 		onSettled: () => {
-			utils.getProjects.invalidate()
+			utils.getPaginatedProjects.invalidate()
 		},
 	})
 

@@ -22,7 +22,7 @@ const CreateRecord = () => {
 
 	const createLct = trpc.createLct.useMutation({
 		onSuccess: () => {
-			utils.getLcts.invalidate()
+			utils.getPaginatedLcts.invalidate()
 		},
 		onSettled: () => {
 			setOpen(false)
@@ -145,7 +145,7 @@ const UpdateRecord = ({ lct }: { lct: Lct }) => {
 	}
 	const updateLct = trpc.updateLct.useMutation({
 		onSuccess: () => {
-			utils.getLcts.invalidate()
+			utils.getPaginatedLcts.invalidate()
 		},
 		onSettled: () => {
 			setOpen(false)

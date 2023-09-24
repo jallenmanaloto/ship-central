@@ -22,7 +22,7 @@ const CreateRecord = () => {
 	const utils = trpc.useContext()
 	const vessel = trpc.createVessel.useMutation({
 		onSuccess: () => {
-			utils.getVessels.invalidate()
+			utils.getPaginatedVessels.invalidate()
 		},
 		onSettled: () => {
 			setCreating(false)
@@ -140,7 +140,7 @@ const UpdateRecord = ({ vessel }: { vessel: TVessel }) => {
 
 	const updateVessel = trpc.updateVessel.useMutation({
 		onSuccess: () => {
-			utils.getVessels.invalidate()
+			utils.getPaginatedVessels.invalidate()
 		},
 		onSettled: () => {
 			setUpdating(false)
