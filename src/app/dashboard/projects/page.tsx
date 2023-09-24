@@ -32,14 +32,10 @@ const MyProjects = () => {
 				<h1 className="text-xl text-neutral-800 font-bold py-5 px-4">
 					My Projects
 				</h1>
-				<div className="grid grid-cols-1 grid-rows-2 md:grid-cols-3 md:grid-rows-none gap-4 px-4 pb-4">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4 pb-4">
 					<Projects option="projectName" />
 					<Projects option="projectDate" />
-					<div className="grid grid-cols-1 grid-rows-1 md:grid-cols-1 md:grid-rows-none gap-4">
-						<div className="grid grid-cols-1 gap-4">
-							<CreateUpdate action="create" />
-						</div>
-					</div>
+					<CreateUpdate action="create" />
 				</div>
 				<div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
 					{isLoading ? (
