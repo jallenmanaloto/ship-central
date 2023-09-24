@@ -220,6 +220,17 @@ export const appRouter = router({
       }
     })
   }),
+  getPaginatedLctTrips: publicProcedure.input(
+    z.object({
+      lctName: z.string().nullable(),
+      page: z.number(),
+      limit: z.number()
+    }))
+    .query(async (opts) => {
+      if (opts.input.lctName === null) {
+        // const lcts = ?
+      }
+    }),
 
   // Projects Api
   createProject: publicProcedure.input(z.object({ vesselId: z.string().nullable(), projectStartDate: z.string(), projectEndDate: z.string() })).mutation(async (opts) => {

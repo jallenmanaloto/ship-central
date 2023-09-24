@@ -72,7 +72,7 @@ const Vessels: React.FunctionComponent = () => {
 						})
 					)}
 				</div>
-				<VesselsPagination totalPage={totalPage} />
+				{isLoading ? '' : <VesselsPagination totalPage={totalPage} />}
 			</div>
 		</div>
 	)
