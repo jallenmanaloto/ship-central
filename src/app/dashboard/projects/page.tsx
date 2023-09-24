@@ -36,8 +36,7 @@ const MyProjects = () => {
 					<Projects option="projectName" />
 					<Projects option="projectDate" />
 					<div className="grid grid-cols-1 grid-rows-1 md:grid-cols-1 md:grid-rows-none gap-4">
-						<div className="grid grid-cols-2 gap-4">
-							<Button className="py-4 bg-midnight opacity-95">Search</Button>
+						<div className="grid grid-cols-1 gap-4">
 							<CreateUpdate action="create" />
 						</div>
 					</div>
