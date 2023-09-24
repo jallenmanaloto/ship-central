@@ -24,10 +24,8 @@ const MyProjects = () => {
 
 	const { data: projects, isLoading } =
 		trpc.getPaginatedProjects.useQuery(projectData)
-
-	let totalCount = projects?.totalCount ?? 0
 	let totalPage = projects?.totalPage ?? 1
-	console.log(projects)
+
 	return (
 		<div className="flex h-screen max-h-screen md:ml-[240px]">
 			<div className="w-screen h-screen pb-56 px-6 bg-slate-200 overflow-y-scroll">

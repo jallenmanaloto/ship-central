@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import dayjs from 'dayjs'
 import { trpc } from '@/app/_trpc/client'
 import { useProjectStore } from '@/utils/store'
 import Select from '@mui/joy/Select'
@@ -32,11 +31,6 @@ const ProjectNames = () => {
 	)
 }
 
-interface ProjectsDetail {
-	display: string
-	vals: string
-}
-
 const ProjectDates = () => {
 	const {
 		chosenVesselId,
@@ -45,24 +39,11 @@ const ProjectDates = () => {
 		startDateSearch,
 		endDateSearch,
 	} = useProjectStore()
-	const projectData = {
-		vesselId: chosenVesselId,
-		projectStartDate: startDateSearch,
-		projectEndDate: endDateSearch,
-	}
-	const { data: projects } = trpc.getProjects.useQuery(projectData)
-	const [displayDate, setDisplayDate] = useState<string | null>()
-	const isEmpty = projects?.length === 0
 
-	let details: ProjectsDetail[] = []
-	const projectsDetail = projects?.map((project) => {
-		details.push({
-			display: `${dayjs(project.projectStartDate).format(
-				'MMM D, YYYY'
-			)} - ${dayjs(project.projectEndDate).format('MMM D, YYYY')}`,
-			vals: `${project.projectStartDate} - ${project.projectEndDate}`,
-		})
-	})
+	const { data: projectDates } = trpc.getProjectDates.useQuery(chosenVesselId)
+
+	const [displayDate, setDisplayDate] = useState<string | null>()
+	const isEmpty = projectDates?.length === 0
 
 	const handleChange = (
 		event: React.SyntheticEvent | null,
@@ -82,7 +63,7 @@ const ProjectDates = () => {
 				onChange={handleChange}
 				placeholder="Choose date period"
 				disabled={isEmpty}>
-				{details?.map((dates, idx) => {
+				{projectDates?.map((dates, idx) => {
 					return (
 						<Option key={idx} value={dates.vals}>
 							{dates.display}

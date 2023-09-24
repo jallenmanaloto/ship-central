@@ -229,6 +229,26 @@ export const appRouter = router({
         }
       }
     }),
+  getProjectDates: publicProcedure.input(z.string().nullable()).query(async (opts) => {
+    if (opts.input !== null) {
+      const projects = await prisma.projects.findMany({
+        where: {
+          vesselId: opts.input
+        }
+      })
+
+      const projectDates = projects.map(project => {
+        return {
+          display: `${dayjs(project.projectStartDate).format('MMM D, YYYY')} - ${dayjs(project.projectEndDate).format('MMM D, YYYY')}`,
+          vals: `${dayjs(project.projectStartDate).toISOString()} - ${dayjs(project.projectEndDate).toISOString()}`
+        }
+      })
+
+      return projectDates;
+    }
+
+    return []
+  }),
   updateMonitoring: publicProcedure.input(z.object({ id: z.string(), monitored: z.boolean() })).mutation(async (opts) => {
     const project = await prisma.projects.findFirst({
       where: {
