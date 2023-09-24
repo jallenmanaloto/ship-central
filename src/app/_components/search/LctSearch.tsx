@@ -6,7 +6,7 @@ import CreateUpdateTrip from '../modals/lct/CreateUpdateTrip'
 import { useLctStore } from '@/utils/store'
 
 const LctSearch = ({ type }: { type: string }) => {
-	const { lctName, setLctName } = useLctStore()
+	const { setLctName, setLctPage } = useLctStore()
 	const [input, setInput] = useState('')
 
 	const handleInput = (value: string) => {
@@ -14,6 +14,7 @@ const LctSearch = ({ type }: { type: string }) => {
 	}
 
 	const handleSearch = () => {
+		setLctPage(1)
 		setLctName(input)
 	}
 	return (

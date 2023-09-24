@@ -11,6 +11,7 @@ import { trpc } from '@/app/_trpc/client'
 import LctCard from '../../cards/lct/LctCard'
 import LctLoading from '../../loading/LctLoading'
 import { useLctStore } from '@/utils/store'
+import LctPagination from '../../pagination/LctPagination'
 
 //Transfer this to a separate card file component
 const SampleTripCard = () => {
@@ -44,12 +45,13 @@ const SampleTripCard = () => {
 }
 
 const LctTabs = () => {
-	const { lctName } = useLctStore()
+	const { lctName, page, limit } = useLctStore()
 	const { data: lcts, isLoading } = trpc.getPaginatedLcts.useQuery({
 		lctName: lctName,
-		page: 1,
-		limit: 6,
+		page: page,
+		limit: limit,
 	})
+	let totalPage = lcts?.totalPage ?? 1
 	return (
 		<div className="pt-5 w-full">
 			<Tabs defaultValue="LCT" className="w-full">
@@ -85,6 +87,7 @@ const LctTabs = () => {
 					</div>
 				</TabsContent>
 			</Tabs>
+			{isLoading ? '' : <LctPagination totalPage={totalPage} />}
 		</div>
 	)
 }
