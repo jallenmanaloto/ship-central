@@ -8,8 +8,12 @@ import Option from '@mui/joy/Option'
 
 const ProjectNames = () => {
 	const { data: vessels } = trpc.getVessels.useQuery({ vesselName: null })
-	const { setChosenVesselId, setStartDateSearch, setEndDateSearch } =
-		useProjectStore()
+	const {
+		setChosenVesselId,
+		setStartDateSearch,
+		setEndDateSearch,
+		setProjectPage,
+	} = useProjectStore()
 	const handleChange = (
 		event: React.SyntheticEvent | null,
 		newValue: string | null
@@ -17,6 +21,7 @@ const ProjectNames = () => {
 		setChosenVesselId(newValue as string)
 		setStartDateSearch(null)
 		setEndDateSearch(null)
+		setProjectPage(1)
 	}
 	return (
 		<Select onChange={handleChange} placeholder="Choose a vessel">
