@@ -19,7 +19,7 @@ type ProjectsProps = {
 		createdAt: string
 		updatedAt: string | null
 		vesselId: string
-		vesselName: string
+		vesselName: string | null
 	}
 }[]
 

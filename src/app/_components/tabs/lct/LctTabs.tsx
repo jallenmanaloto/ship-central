@@ -66,9 +66,9 @@ const LctTabs = () => {
 						<LctLoading />
 					) : (
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
-							{/* {lcts?.map((lct, idx) => {
+							{lcts?.map((lct, idx) => {
 								return <LctCard key={idx} lct={lct} projects={lct.project} />
-							})} */}
+							})}
 						</div>
 					)}
 				</TabsContent>
