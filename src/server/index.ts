@@ -123,7 +123,6 @@ export const appRouter = router({
         && opts.input.projectStartDate === null
         && opts.input.projectEndDate === null
       ) {
-
         return await prisma.projects.findMany()
 
       } else if (opts.input.vesselId !== null
@@ -145,6 +144,89 @@ export const appRouter = router({
             projectEndDate: opts.input.projectEndDate
           }
         })
+      }
+    }),
+  getPaginatedProjects: publicProcedure.input
+    (z.object({
+      vesselId: z.string().nullable(),
+      projectStartDate: z.string().nullable(),
+      projectEndDate: z.string().nullable(),
+      page: z.number(),
+      limit: z.number(),
+    })
+    ).query(async (opts) => {
+      const { page, limit } = opts.input
+      const offset = (page - 1) * limit
+
+      if (opts.input.vesselId === null
+        && opts.input.projectStartDate === null
+        && opts.input.projectEndDate === null
+      ) {
+        const projectCount = await prisma.projects.count()
+        const projects = await prisma.projects.findMany({
+          skip: offset,
+          take: limit
+        })
+        const totalPageCount = Math.ceil(projectCount / limit)
+
+        return {
+          projects: projects,
+          totalCount: projectCount,
+          totalPage: totalPageCount
+        }
+      } else if (opts.input.vesselId !== null
+        && opts.input.projectStartDate === null
+        && opts.input.projectEndDate === null
+      ) {
+
+        const projects = await prisma.projects.findMany({
+          skip: offset,
+          take: limit,
+          where: {
+            vesselId: opts.input.vesselId
+          }
+        })
+
+        const projectCount = await prisma.projects.count({
+          where: {
+            vesselId: opts.input.vesselId
+          }
+        })
+
+        const totalPageCount = Math.ceil(projectCount / limit)
+
+        return {
+          projects: projects,
+          totalCount: projectCount,
+          totalPage: totalPageCount
+        }
+      } else if (opts.input.vesselId !== null) {
+
+        const projects = await prisma.projects.findMany({
+          skip: offset,
+          take: limit,
+          where: {
+            vesselId: opts.input.vesselId,
+            projectStartDate: opts.input.projectStartDate,
+            projectEndDate: opts.input.projectEndDate
+          }
+        })
+
+        const projectCount = await prisma.projects.count({
+          where: {
+            vesselId: opts.input.vesselId,
+            projectStartDate: opts.input.projectStartDate,
+            projectEndDate: opts.input.projectEndDate
+          }
+        })
+
+        const totalPageCount = Math.ceil(projectCount / limit)
+
+        return {
+          projects: projects,
+          totalCount: projectCount,
+          totalPage: totalPageCount
+        }
       }
     }),
   updateMonitoring: publicProcedure.input(z.object({ id: z.string(), monitored: z.boolean() })).mutation(async (opts) => {

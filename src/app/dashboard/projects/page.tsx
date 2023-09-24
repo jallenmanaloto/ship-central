@@ -9,17 +9,25 @@ import { trpc } from '@/app/_trpc/client'
 import { IProject } from '@/utils/types'
 import { useProjectStore } from '@/utils/store'
 import Loading from '@/app/_components/loading/Loading'
+import ProjectPagination from '@/app/_components/pagination/ProjectPagination'
 
 const MyProjects = () => {
-	const { chosenVesselId, startDateSearch, endDateSearch } = useProjectStore()
+	const { chosenVesselId, startDateSearch, endDateSearch, page, limit } =
+		useProjectStore()
 	const projectData = {
 		vesselId: chosenVesselId,
 		projectStartDate: startDateSearch,
 		projectEndDate: endDateSearch,
+		page: page,
+		limit: limit,
 	}
 
-	const { data: projects, isLoading } = trpc.getProjects.useQuery(projectData)
+	const { data: projects, isLoading } =
+		trpc.getPaginatedProjects.useQuery(projectData)
 
+	let totalCount = projects?.totalCount ?? 0
+	let totalPage = projects?.totalPage ?? 1
+	console.log(projects)
 	return (
 		<div className="flex h-screen max-h-screen md:ml-[240px]">
 			<div className="w-screen h-screen pb-56 px-6 bg-slate-200 overflow-y-scroll">
@@ -40,7 +48,7 @@ const MyProjects = () => {
 					{isLoading ? (
 						<Loading />
 					) : (
-						projects?.map((project: IProject, idx: number) => {
+						projects?.projects?.map((project: IProject, idx: number) => {
 							return (
 								<div key={idx} className="py-3 px-4">
 									<ProjectDetail project={project} />
@@ -49,11 +57,12 @@ const MyProjects = () => {
 						})
 					)}
 				</div>
-				{projects?.length === 0 ? (
+				{projects?.projects?.length === 0 ? (
 					<h3 className="text-center">No data to show</h3>
 				) : (
 					''
 				)}
+				{isLoading ? '' : <ProjectPagination totalPage={totalPage} />}
 			</div>
 		</div>
 	)

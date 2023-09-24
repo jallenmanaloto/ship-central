@@ -1,6 +1,7 @@
 import { Vessel } from '@prisma/client'
 import { create } from 'zustand'
 import dayjs, { Dayjs } from 'dayjs'
+import { lime } from '@mui/material/colors'
 
 type ToggleDrawer = {
   display: boolean,
@@ -42,12 +43,16 @@ type CreateProject = {
   projectEndDate: any
   startDateSearch: string | null
   endDateSearch: string | null
+  page: number
+  limit: number
   setChosenVessel: (chosenVessel: string) => void
   setChosenVesselId: (chosenVesselId: string) => void
   setProjectStartDate: (projectDate: any) => void
   setProjectEndDate: (projectDate: any) => void
   setStartDateSearch: (startDateSearch: string | null) => void
   setEndDateSearch: (startDateSearch: string | null) => void
+  setProjectPage: (page: number) => void
+  setProjectLimit: (limit: number) => void
 }
 
 export const useProjectStore = create<CreateProject>((set) => ({
@@ -57,10 +62,14 @@ export const useProjectStore = create<CreateProject>((set) => ({
   projectEndDate: '',
   startDateSearch: null,
   endDateSearch: null,
+  page: 1,
+  limit: 6,
   setChosenVessel: (vessel: string) => set({ chosenVessel: vessel }),
   setChosenVesselId: (chosenVesselId: string) => set({ chosenVesselId: chosenVesselId }),
   setProjectStartDate: (projectStartDate: any) => set({ projectStartDate: projectStartDate }),
   setProjectEndDate: (projectEndDate: any) => set({ projectEndDate: projectEndDate }),
   setStartDateSearch: (startDateSearch: string | null) => set({ startDateSearch: startDateSearch }),
   setEndDateSearch: (endDateSearch: string | null) => set({ endDateSearch: endDateSearch }),
+  setProjectPage: (page: number) => set({ page: page }),
+  setProjectLimit: (limit: number) => set({ limit: limit })
 }))

@@ -51,6 +51,7 @@ const ProjectDates = () => {
 		projectEndDate: endDateSearch,
 	}
 	const { data: projects } = trpc.getProjects.useQuery(projectData)
+	const [displayDate, setDisplayDate] = useState<string | null>()
 	const isEmpty = projects?.length === 0
 
 	let details: ProjectsDetail[] = []
@@ -71,11 +72,13 @@ const ProjectDates = () => {
 		if (dates !== undefined) {
 			setStartDateSearch(dates[0])
 			setEndDateSearch(dates[1])
+			setDisplayDate(newValue)
 		}
 	}
 	return (
 		<div>
 			<Select
+				value={displayDate}
 				onChange={handleChange}
 				placeholder="Choose date period"
 				disabled={isEmpty}>
