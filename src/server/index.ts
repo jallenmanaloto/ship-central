@@ -126,6 +126,80 @@ export const appRouter = router({
       }
     })
   }),
+  getPaginatedLcts: publicProcedure.input(
+    z.object({
+      lctName: z.string().nullable(),
+      page: z.number(),
+      limit: z.number()
+    }))
+    .query(async (opts) => {
+      const { page, limit } = opts.input
+      const offset = (page - 1) * limit
+
+      if (opts.input.lctName === null) {
+        const lcts = await prisma.lct.findMany({
+          skip: offset,
+          take: limit,
+          select: {
+            id: true,
+            name: true,
+            cargoCapacity: true,
+            projectId: true,
+            project: {
+              include: {
+                project: true
+              }
+            }
+          }
+        })
+        const lctsCount = await prisma.lct.count()
+        const totalPageCount = Math.ceil(lctsCount / limit)
+
+        return {
+          lcts: lcts,
+          totalPage: totalPageCount,
+          totalCount: lctsCount
+        }
+      } else {
+        const lcts = await prisma.lct.findMany({
+          skip: offset,
+          take: limit,
+          where: {
+            name: {
+              contains: opts.input.lctName
+            }
+          },
+          select: {
+            id: true,
+            name: true,
+            cargoCapacity: true,
+            projectId: true,
+            project: {
+              include: {
+                project: true
+              }
+            }
+          }
+        })
+
+        const lctsCount = await prisma.lct.count({
+          where: {
+            name: {
+              contains: opts.input.lctName
+            }
+          }
+        })
+
+        const totalPageCount = Math.ceil(lctsCount / limit)
+
+        return {
+          lcts: lcts,
+          totalPage: totalPageCount,
+          totalCount: lctsCount
+        }
+      }
+
+    }),
   createLct: publicProcedure.input(z.object({ name: z.string(), cargoCapacity: z.string() })).mutation(async (opts) => {
     await prisma.lct.create({
       data: {

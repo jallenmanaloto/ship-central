@@ -10,6 +10,7 @@ import Trips from '../../accordion/lct/Trips'
 import { trpc } from '@/app/_trpc/client'
 import LctCard from '../../cards/lct/LctCard'
 import LctLoading from '../../loading/LctLoading'
+import { useLctStore } from '@/utils/store'
 
 //Transfer this to a separate card file component
 const SampleTripCard = () => {
@@ -43,11 +44,12 @@ const SampleTripCard = () => {
 }
 
 const LctTabs = () => {
-	const {
-		data: lcts,
-		isLoading,
-		refetch,
-	} = trpc.getLcts.useQuery({ lctName: null })
+	const { lctName } = useLctStore()
+	const { data: lcts, isLoading } = trpc.getPaginatedLcts.useQuery({
+		lctName: lctName,
+		page: 1,
+		limit: 6,
+	})
 	return (
 		<div className="pt-5 w-full">
 			<Tabs defaultValue="LCT" className="w-full">
@@ -66,7 +68,7 @@ const LctTabs = () => {
 						<LctLoading />
 					) : (
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
-							{lcts?.map((lct, idx) => {
+							{lcts?.lcts?.map((lct, idx) => {
 								return <LctCard key={idx} lct={lct} projects={lct.project} />
 							})}
 						</div>

@@ -1,19 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import CreateUpdate from '../modals/lct/CreateUpdate'
 import CreateUpdateTrip from '../modals/lct/CreateUpdateTrip'
+import { useLctStore } from '@/utils/store'
 
 const LctSearch = ({ type }: { type: string }) => {
+	const { lctName, setLctName } = useLctStore()
+	const [input, setInput] = useState('')
+
+	const handleInput = (value: string) => {
+		setInput(value)
+	}
+
+	const handleSearch = () => {
+		setLctName(input)
+	}
 	return (
 		<div className="grid grid-cols-1 grid-rows-2 gap-2 md:grid-cols-2 md:grid-rows-none pt-2 pb-8">
 			<Input
+				onChange={(e) => handleInput(e.target.value)}
 				className="bg-slate-50 outline-none"
 				id="name"
 				placeholder="Search LCT here"
 			/>
 			<div className="grid grid-cols-2 gap-4">
-				<Button className="bg-midnight">
+				<Button onClick={handleSearch} className="bg-midnight">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

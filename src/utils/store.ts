@@ -1,7 +1,4 @@
-import { Vessel } from '@prisma/client'
 import { create } from 'zustand'
-import dayjs, { Dayjs } from 'dayjs'
-import { lime } from '@mui/material/colors'
 
 /** START OF DRAWER STORE */
 type ToggleDrawer = {
@@ -80,3 +77,16 @@ export const useProjectStore = create<CreateProject>((set) => ({
 }))
 
 /** END OF VESSEL STORE */
+
+
+/** START OF LCT STORE */
+type LctStore = {
+  lctName: string | null
+  setLctName: (lctName: string | null) => void
+}
+
+export const useLctStore = create<LctStore>((set) => ({
+  lctName: null,
+  setLctName: (lctName: string | null) => set({ lctName: lctName })
+}))
+/** END OF LCT STORE */
