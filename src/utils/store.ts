@@ -12,35 +12,10 @@ export const useDrawerStore = create<ToggleDrawer>((set) => ({
   display: true,
   toggleDrawer: () => set((state) => ({ display: !state.display }))
 }))
-
 /** END OF DRAWER STORE */
 
 
 /** START OF VESSEL STORE */
-type VesselName = {
-  vesselName: string | null,
-  projectVesselName: string | null,
-  setVesselName: (vesselName: string | null) => void,
-  setProjectVesselName: (projectVesselName: string) => void
-}
-
-export const useVesselNameStore = create<VesselName>((set) => ({
-  vesselName: null,
-  projectVesselName: null,
-  setVesselName: (vesselName: string | null) => set({ vesselName: vesselName }),
-  setProjectVesselName: (projectVesselName: string) => set({ projectVesselName: projectVesselName }),
-}))
-
-type VesselList = {
-  vesselList: []
-  setVesselList: (vesselList: any) => void
-}
-
-export const useVesselListStore = create<VesselList>((set) => ({
-  vesselList: [],
-  setVesselList: (vesselList: any) => set({ vesselList: vesselList }),
-}))
-
 type VesselStore = {
   vesselName: string | null
   projectVesselname: string | null
