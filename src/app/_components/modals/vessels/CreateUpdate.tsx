@@ -43,7 +43,7 @@ const CreateRecord = () => {
 		<>
 			<Button
 				onClick={() => setOpen(true)}
-				className="py-4 bg-sky-950 opacity-75">
+				className="py-4 bg-sky-950 opacity-75 w-full">
 				New vessel
 			</Button>
 			<Modal

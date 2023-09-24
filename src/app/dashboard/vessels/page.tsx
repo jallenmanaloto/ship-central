@@ -59,10 +59,11 @@ const Vessels: React.FunctionComponent = () => {
 				<h1 className="text-xl text-neutral-800 font-bold py-5 px-4">
 					Vessels
 				</h1>
-				<div className="grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-none gap-4 px-4 pb-4">
-					<VesselOptions />
-					<div className="grid grid-cols-2 gap-4">
-						<Button className="py-4 bg-midnight opacity-95">Search</Button>
+				<div className="grid grid-cols-1 grid-rows-2 md:grid-cols-3 md:grid-rows-none gap-4 px-4 pb-4">
+					<div className="col-span-3 md:col-span-2">
+						<VesselOptions />
+					</div>
+					<div className="col-span-3 md:col-span-1 w-full">
 						<CreateUpdate action="create" vessel={null} />
 					</div>
 				</div>
