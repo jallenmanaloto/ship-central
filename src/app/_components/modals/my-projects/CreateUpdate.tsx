@@ -64,7 +64,11 @@ const CreateRecord = () => {
 	})
 	const handleCreateProject = () => {
 		setCreating(true)
-		createProject.mutate(newProject)
+		createProject.mutate({
+			vesselId: chosenVesselId,
+			projectStartDate: projectStartDate,
+			projectEndDate: projectEndDate,
+		})
 	}
 	return (
 		<>

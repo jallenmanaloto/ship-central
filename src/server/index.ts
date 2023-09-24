@@ -236,10 +236,16 @@ export const appRouter = router({
   createProject: publicProcedure.input(z.object({ vesselId: z.string().nullable(), projectStartDate: z.string(), projectEndDate: z.string() })).mutation(async (opts) => {
 
     if (opts.input.vesselId !== null) {
-      await prisma.projects.create({
+      const vessel = await prisma.vessel.findFirst({
+        where: {
+          id: opts.input.vesselId
+        }
+      })
+
+      return await prisma.projects.create({
         data: {
           vesselId: opts.input.vesselId,
-          vesselName: 'SAMPLE',
+          vesselName: vessel?.name,
           projectStartDate: opts.input.projectStartDate,
           projectEndDate: opts.input.projectEndDate
         }

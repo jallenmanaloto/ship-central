@@ -52,6 +52,7 @@ const LctTabs = () => {
 		limit: limit,
 	})
 	let totalPage = lcts?.totalPage ?? 1
+	const lctCount = lcts?.totalCount ?? 0
 	return (
 		<div className="pt-5 w-full">
 			<Tabs defaultValue="LCT" className="w-full">
@@ -75,7 +76,14 @@ const LctTabs = () => {
 							})}
 						</div>
 					)}
-					{isLoading ? '' : <LctPagination totalPage={totalPage} />}
+
+					{isLoading ? (
+						''
+					) : lctCount === 0 ? (
+						<div className="text-center">No data to show</div>
+					) : (
+						<LctPagination totalPage={totalPage} />
+					)}
 				</TabsContent>
 				<TabsContent value="Trips">
 					{/* Content#2 here */}

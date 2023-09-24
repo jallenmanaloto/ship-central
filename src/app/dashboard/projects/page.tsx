@@ -50,12 +50,13 @@ const MyProjects = () => {
 						})
 					)}
 				</div>
-				{projects?.projects?.length === 0 ? (
+				{isLoading ? (
+					''
+				) : projects?.projects?.length === 0 ? (
 					<h3 className="text-center">No data to show</h3>
 				) : (
-					''
+					<ProjectPagination totalPage={totalPage} />
 				)}
-				{isLoading ? '' : <ProjectPagination totalPage={totalPage} />}
 			</div>
 		</div>
 	)
