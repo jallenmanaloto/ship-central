@@ -15,6 +15,7 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import { useProjectStore } from '@/utils/store'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { trpc } from '@/app/_trpc/client'
+import CreateProject from '../../options/CreateProject'
 
 const DatePicker = ({ type }: { type: string }) => {
 	const { setProjectStartDate, setProjectEndDate } = useProjectStore()
@@ -102,7 +103,7 @@ const CreateRecord = () => {
 						<div className="flex">
 							<h2 className="text-bottom w-24">Vessel:</h2>
 							<div className="w-full">
-								<Projects option="projectName" />
+								<CreateProject />
 							</div>
 						</div>
 					</div>
