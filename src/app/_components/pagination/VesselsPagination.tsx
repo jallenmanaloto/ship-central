@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import Pagination from '@mui/material/Pagination'
-import { useProjectStore } from '@/utils/store'
+import { useVesselStore } from '@/utils/store'
 
-export default function ProjectPagination({
+export default function VesselsPagination({
 	totalPage,
 }: {
 	totalPage: number
 }) {
-	const { page, setProjectPage } = useProjectStore()
+	const { page, setVesselPage } = useVesselStore()
 	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-		setProjectPage(value)
+		setVesselPage(value)
 	}
 
 	return (

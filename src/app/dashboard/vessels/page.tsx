@@ -5,19 +5,21 @@ import CreateUpdate from '@/app/_components/modals/vessels/CreateUpdate'
 import Vessel from '@/app/_components/cards/Vessel'
 import { trpc } from '../../_trpc/client'
 import { TVessel } from '@/utils/types'
-import { useVesselNameStore } from '@/utils/store'
+import { useVesselStore } from '@/utils/store'
 import Loading from '@/app/_components/loading/Loading'
 import Select from '@mui/joy/Select'
 import Option from '@mui/joy/Option'
+import VesselsPagination from '@/app/_components/pagination/VesselsPagination'
 
 const VesselOptions = () => {
 	const { data: vesselNames } = trpc.getVesselNames.useQuery()
-	const { setVesselName } = useVesselNameStore()
+	const { setVesselname, setVesselPage } = useVesselStore()
 	const handleChange = (
 		event: React.SyntheticEvent | null,
 		newValue: string | null
 	) => {
-		setVesselName(newValue)
+		setVesselname(newValue)
+		setVesselPage(1)
 	}
 
 	return (
@@ -34,18 +36,14 @@ const VesselOptions = () => {
 }
 
 const Vessels: React.FunctionComponent = () => {
-	const { vesselName } = useVesselNameStore()
-	const {
-		data: vessels,
-		isLoading,
-		refetch,
-	} = trpc.getVessels.useQuery({
-		vesselName: vesselName,
-	})
+	const { vesselName, page, limit } = useVesselStore()
 
-	useEffect(() => {
-		refetch()
-	}, [vesselName])
+	const { data: vessels, isLoading } = trpc.getPaginatedVessels.useQuery({
+		vesselName: vesselName,
+		page: page,
+		limit: limit,
+	})
+	let totalPage = vessels?.totalPage ?? 1
 
 	return (
 		<div className="flex h-screen max-h-screen md:ml-[240px]">
@@ -65,7 +63,7 @@ const Vessels: React.FunctionComponent = () => {
 					{isLoading ? (
 						<Loading />
 					) : (
-						vessels?.map((vessel: TVessel, idx) => {
+						vessels?.vessels?.map((vessel: TVessel, idx) => {
 							return (
 								<div key={idx} className="py-2">
 									<Vessel key={idx} vessel={vessel} />
@@ -74,6 +72,7 @@ const Vessels: React.FunctionComponent = () => {
 						})
 					)}
 				</div>
+				<VesselsPagination totalPage={totalPage} />
 			</div>
 		</div>
 	)

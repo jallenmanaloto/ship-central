@@ -14,6 +14,53 @@ export const appRouter = router({
     }
     return await prisma.vessel.findMany();
   }),
+  getPaginatedVessels: publicProcedure.input(
+    z.object({
+      page: z.number(),
+      limit: z.number(),
+      vesselName: z.string().nullable()
+    }))
+    .query(async (opts) => {
+      const { page, limit } = opts.input
+
+      if (opts?.input.vesselName === null) {
+        const offset = (page - 1) * limit
+        const vesselsCount = await prisma.vessel.count()
+        const totalPageCount = Math.ceil(vesselsCount / limit)
+        const vessels = await prisma.vessel.findMany({
+          skip: offset,
+          take: limit
+        })
+
+        return {
+          vessels: vessels,
+          totalPage: totalPageCount,
+          totalCount: vesselsCount
+        }
+      } else {
+        const offset = (page - 1) * limit
+        const vesselsCount = await prisma.vessel.count({
+          where: {
+            name: opts?.input?.vesselName
+          }
+        })
+        const totalPageCount = Math.ceil(vesselsCount / limit)
+        const vessels = await prisma.vessel.findMany({
+          skip: offset,
+          take: limit,
+          where: {
+            name: opts?.input?.vesselName
+          }
+        })
+        return {
+          vessels: vessels,
+          totalPage: totalPageCount,
+          totalCount: vesselsCount
+        }
+      }
+
+
+    }),
   getVesselNames: publicProcedure.query(async () => {
     const vessels = await prisma.vessel.findMany();
     const vesselNames = vessels.map(vessel => vessel.name)
@@ -40,7 +87,8 @@ export const appRouter = router({
       }
     })
   }),
-  //LCTs Api
+
+  // LCTs Api
   getLcts: publicProcedure.input(z.object({ lctName: z.string().nullable() })).query(async (opts?) => {
     if (opts?.input?.lctName !== null) {
       const lct = await prisma.lct.findFirst({
@@ -98,7 +146,8 @@ export const appRouter = router({
       }
     })
   }),
-  //Projects Api
+
+  // Projects Api
   createProject: publicProcedure.input(z.object({ vesselId: z.string().nullable(), projectStartDate: z.string(), projectEndDate: z.string() })).mutation(async (opts) => {
 
     if (opts.input.vesselId !== null) {

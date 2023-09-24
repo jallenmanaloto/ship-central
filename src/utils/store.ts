@@ -3,6 +3,7 @@ import { create } from 'zustand'
 import dayjs, { Dayjs } from 'dayjs'
 import { lime } from '@mui/material/colors'
 
+/** START OF DRAWER STORE */
 type ToggleDrawer = {
   display: boolean,
   toggleDrawer: () => void
@@ -12,6 +13,10 @@ export const useDrawerStore = create<ToggleDrawer>((set) => ({
   toggleDrawer: () => set((state) => ({ display: !state.display }))
 }))
 
+/** END OF DRAWER STORE */
+
+
+/** START OF VESSEL STORE */
 type VesselName = {
   vesselName: string | null,
   projectVesselName: string | null,
@@ -36,6 +41,31 @@ export const useVesselListStore = create<VesselList>((set) => ({
   setVesselList: (vesselList: any) => set({ vesselList: vesselList }),
 }))
 
+type VesselStore = {
+  vesselName: string | null
+  projectVesselname: string | null
+  page: number
+  limit: number
+  setVesselname: (vesselName: string | null) => void
+  setProjectVesselName: (projectVesselName: string | null) => void
+  setVesselPage: (page: number) => void
+  setVesselLimit: (limit: number) => void
+}
+
+export const useVesselStore = create<VesselStore>((set) => ({
+  vesselName: null,
+  projectVesselname: null,
+  page: 1,
+  limit: 6,
+  setVesselname: (vesselName: string | null) => set({ vesselName: vesselName }),
+  setProjectVesselName: (projectVesselName: string | null) => set({ projectVesselname: projectVesselName }),
+  setVesselPage: (page: number) => set({ page: page }),
+  setVesselLimit: (limit: number) => set({ limit: limit })
+}))
+/** END OF VESSEL STORE */
+
+
+/** START OF PROJECT STORE */
 type CreateProject = {
   chosenVessel: string
   chosenVesselId: string | null
@@ -73,3 +103,5 @@ export const useProjectStore = create<CreateProject>((set) => ({
   setProjectPage: (page: number) => set({ page: page }),
   setProjectLimit: (limit: number) => set({ limit: limit })
 }))
+
+/** END OF VESSEL STORE */
