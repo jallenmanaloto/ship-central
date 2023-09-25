@@ -231,6 +231,30 @@ export const appRouter = router({
         // const lcts = ?
       }
     }),
+  createLctTrip: publicProcedure.input(
+    z.object({
+      cargoLoad: z.number(),
+      projectId: z.string(),
+      lctId: z.string(),
+    }))
+    .mutation(async (opts) => {
+      const project = await prisma.projects.findFirst({
+        where: {
+          id: opts.input.projectId
+        }
+      })
+
+      const projectName = project?.vesselName ?? ''
+
+      return await prisma.lctTrips.create({
+        data: {
+          cargoLoad: opts.input.cargoLoad,
+          projectId: opts.input.projectId,
+          lctId: opts.input.lctId,
+          tripToVessel: projectName
+        }
+      })
+    }),
 
   // Projects Api
   createProject: publicProcedure.input(z.object({ vesselId: z.string().nullable(), projectStartDate: z.string(), projectEndDate: z.string() })).mutation(async (opts) => {

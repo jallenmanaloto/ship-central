@@ -12,6 +12,7 @@ import LctCard from '../../cards/lct/LctCard'
 import LctLoading from '../../loading/LctLoading'
 import { useLctStore } from '@/utils/store'
 import LctPagination from '../../pagination/LctPagination'
+import LctTripSearch from '../../search/LctTripSearch'
 
 //Transfer this to a separate card file component
 const SampleTripCard = () => {
@@ -65,7 +66,7 @@ const LctTabs = () => {
 					</TabsTrigger>
 				</TabsList>
 				<TabsContent value="LCT">
-					{/* Content#1 here */}
+					{/* Content#1 here - LCT Collection */}
 					<LctSearch type="lct" />
 					{isLoading ? (
 						<LctLoading />
@@ -86,8 +87,9 @@ const LctTabs = () => {
 					)}
 				</TabsContent>
 				<TabsContent value="Trips">
-					{/* Content#2 here */}
-					<LctSearch type="lctTrip" />
+					{/* Content#2 here - LCT TRIP */}
+					{/* <LctSearch type="lctTrip" /> */}
+					<LctTripSearch />
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
 						<SampleTripCard />
 						<SampleTripCard />

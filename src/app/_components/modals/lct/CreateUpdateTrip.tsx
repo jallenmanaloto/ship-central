@@ -8,20 +8,79 @@ import Typography from '@mui/joy/Typography'
 import Sheet from '@mui/joy/Sheet'
 import { Input } from '@/components/ui/input'
 import Lct from '../../options/Lct'
-import { projects } from '@/app/faker/data/projects'
 import dayjs from 'dayjs'
 import Select from '@mui/joy/Select'
 import Option from '@mui/joy/Option'
-
-const lctNames = ['LCT #1', 'LCT #2', 'LCT #3', 'LCT #4']
+import { trpc } from '@/app/_trpc/client'
+import { useLctStore } from '@/utils/store'
+import { ReloadIcon } from '@radix-ui/react-icons'
 
 const CreateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
-	const projectList = projects.map((project) => {
-		return `${project.name} (${dayjs(project.projectStartDate).format(
-			'DD/MM/YYYY'
-		)} - ${dayjs(project.projectEndDate).format('DD/MM/YYYY')})`
+	const [cargoLoad, setCargoLoad] = useState<string>('0')
+	const [creating, setCreating] = useState(false)
+	const {
+		lctTripProject,
+		lctTripFromLct,
+		setLctTripProject,
+		setLctTripFromLct,
+	} = useLctStore()
+	const { data: projects } = trpc.getProjects.useQuery({
+		vesselId: null,
+		projectStartDate: null,
+		projectEndDate: null,
 	})
+
+	const { data: lcts } = trpc.getLcts.useQuery({
+		lctName: null,
+	})
+
+	const projectList = projects?.map((project) => {
+		return {
+			display: `${project.vesselName} (${dayjs(project.projectStartDate).format(
+				'DD/MM/YYYY'
+			)} - ${dayjs(project.projectEndDate).format('DD/MM/YYYY')})`,
+			vals: project.id,
+		}
+	})
+
+	const lctList =
+		lcts?.map((lct) => {
+			return {
+				display: lct.name,
+				vals: lct.id,
+			}
+		}) ?? []
+
+	const handleChange = (
+		event: React.SyntheticEvent | null,
+		newValue: string | null
+	) => {
+		setLctTripProject(newValue as string)
+	}
+
+	const createTrip = trpc.createLctTrip.useMutation({
+		onSuccess: () => {
+			// invalidate getLctTrips collection
+		},
+		onSettled: () => {
+			setCreating(false)
+			setOpen(false)
+			setLctTripProject('')
+			setLctTripFromLct('')
+			setCargoLoad('0')
+		},
+	})
+
+	const handleCreateTrip = () => {
+		setCreating(true)
+		createTrip.mutate({
+			cargoLoad: parseInt(cargoLoad),
+			projectId: lctTripProject,
+			lctId: lctTripFromLct,
+		})
+	}
+
 	return (
 		<>
 			<Button
@@ -64,11 +123,11 @@ const CreateRecord = () => {
 								<h2 className="text-bottom w-24">Project</h2>
 							</div>
 							<div className="w-full overflow-hidden">
-								<Select placeholder="Choose a project">
-									{projectList.map((project, idx) => {
+								<Select onChange={handleChange} placeholder="Choose a project">
+									{projectList?.map((project, idx) => {
 										return (
-											<Option key={idx} value={project}>
-												{project}
+											<Option key={idx} value={project.vals}>
+												{project.display}
 											</Option>
 										) //Needs to use projectId as the value
 									})}
@@ -80,7 +139,7 @@ const CreateRecord = () => {
 								<h2 className="text-bottom w-24">LCT</h2>
 							</div>
 							<div className="w-full overflow-hidden">
-								<Lct lctNames={lctNames} />
+								<Lct lctList={lctList} />
 							</div>
 						</div>
 						<div className="flex py-4">
@@ -88,12 +147,23 @@ const CreateRecord = () => {
 								<h2 className="text-bottom w-24">Cargo load</h2>
 							</div>
 							<div className="w-full">
-								<Input />
+								<Input
+									value={cargoLoad}
+									onChange={(e) => setCargoLoad(e.target.value)}
+								/>
 							</div>
 						</div>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
-						<Button className="bg-sky-950 opacity-75">Save</Button>
+						<Button
+							onClick={handleCreateTrip}
+							className="bg-sky-950 opacity-75">
+							{creating ? (
+								<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+							) : (
+								'Save'
+							)}
+						</Button>
 						<Button
 							onClick={() => setOpen(false)}
 							className="bg-red-950 opacity-75">

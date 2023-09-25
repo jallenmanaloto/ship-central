@@ -88,17 +88,25 @@ type LctStore = {
   lctName: string | null
   page: number
   limit: number
+  lctTripProject: string
+  lctTripFromLct: string
   setLctName: (lctName: string | null) => void
   setLctPage: (page: number) => void
   setLectlimit: (limit: number) => void
+  setLctTripProject: (lctTripProject: string) => void
+  setLctTripFromLct: (lctTripFromLct: string) => void
 }
 
 export const useLctStore = create<LctStore>((set) => ({
   lctName: null,
   page: 1,
   limit: 6,
+  lctTripProject: '',
+  lctTripFromLct: '',
   setLctName: (lctName: string | null) => set({ lctName: lctName }),
   setLctPage: (page: number) => set({ page: page }),
-  setLectlimit: (limit: number) => set({ limit: limit })
+  setLectlimit: (limit: number) => set({ limit: limit }),
+  setLctTripProject: (lctTripProject: string) => set({ lctTripProject: lctTripProject }),
+  setLctTripFromLct: (lctTripFromLct: string) => set({ lctTripFromLct: lctTripFromLct })
 }))
 /** END OF LCT STORE */
