@@ -66,15 +66,15 @@ const LctTabs = () => {
 				<TabsContent value="Trips">
 					{/* Content#2 here - LCT TRIP */}
 					<LctTripSearch />
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
-						{tripLoading ? (
-							<LctLoading />
-						) : (
-							lctTrips.map((trip, idx) => {
+					{tripLoading ? (
+						<LctLoading />
+					) : (
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
+							{lctTrips.map((trip, idx) => {
 								return <LctTripsCard key={idx} lctProj={trip} />
-							})
-						)}
-					</div>
+							})}
+						</div>
+					)}
 				</TabsContent>
 			</Tabs>
 		</div>
