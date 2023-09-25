@@ -1,8 +1,7 @@
 import { Card, CardDescription, CardHeader } from '@/components/ui/card'
-import CreateUpdate from '../../modals/lct/CreateUpdate'
 import Trips from '../../accordion/lct/Trips'
-import { Lct, Projects } from '@prisma/client'
 import dayjs from 'dayjs'
+import UpdateTripRecord from '../../modals/lct/UpdateTripRecord'
 
 type LctProjProps = {
 	id: string
@@ -28,13 +27,16 @@ const LctTripsCard = ({ lctProj }: { lctProj: LctProjProps }) => {
 	const end = dayjs(lctProj.project.projectEndDate).format('MM/DD/YYYY')
 	const project = `${lctProj.project.vesselName} (${start} - ${end})`
 	return (
-		<Card className="group">
+		<Card className="group h-fit">
 			<CardHeader>
 				<div className="relative">
 					<h2 className="text-base font-semibold text-neutral-800">
 						{lctProj.lctName}
 					</h2>
-					<CreateUpdate action="update" lct={null} />
+					<UpdateTripRecord
+						trips={lctProj.project.lctTrips}
+						lctName={lctProj.lctName}
+					/>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

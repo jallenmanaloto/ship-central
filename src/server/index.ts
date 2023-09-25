@@ -340,6 +340,16 @@ export const appRouter = router({
         }
       })
     }),
+  updateLctTrip: publicProcedure.input(z.object({ tripId: z.string(), cargoLoad: z.number() })).mutation(async (opts) => {
+    return await prisma.lctTrips.update({
+      where: {
+        id: opts.input.tripId
+      },
+      data: {
+        cargoLoad: opts.input.cargoLoad
+      }
+    })
+  }),
 
   // Projects Api
   createProject: publicProcedure.input(z.object({ vesselId: z.string().nullable(), projectStartDate: z.string(), projectEndDate: z.string() })).mutation(async (opts) => {
