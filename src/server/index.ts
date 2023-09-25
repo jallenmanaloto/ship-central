@@ -223,12 +223,31 @@ export const appRouter = router({
   getPaginatedLctTrips: publicProcedure.input(
     z.object({
       lctName: z.string().nullable(),
+      projectId: z.string().nullable(),
       page: z.number(),
       limit: z.number()
     }))
     .query(async (opts) => {
+      const { page, limit } = opts.input
+      const offset = (page - 1) * limit
+
       if (opts.input.lctName === null) {
-        // const lcts = ?
+        const lctProj = await prisma.lctProjects.findMany({
+          skip: offset,
+          take: limit,
+          select: {
+            id: true,
+            lctName: true,
+            project: true,
+            lct: {
+              include: {
+                trips: true
+              }
+            }
+          }
+        })
+
+        return lctProj
       }
     }),
   createLctTrip: publicProcedure.input(
@@ -245,6 +264,21 @@ export const appRouter = router({
       })
 
       const projectName = project?.vesselName ?? ''
+      const lctProjectRelation = await prisma.lctProjects.create({
+        data: {
+          projectId: opts.input.projectId,
+          lctId: opts.input.lctId
+        }
+      })
+
+      await prisma.lct.update({
+        where: {
+          id: opts.input.lctId
+        },
+        data: {
+          projectId: lctProjectRelation.id
+        }
+      })
 
       return await prisma.lctTrips.create({
         data: {

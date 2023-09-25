@@ -60,6 +60,7 @@ model LctProjects {
   id        String   @id @default(uuid())
   projectId String
   lctId     String
+  lctName String?
   project   Projects @relation(fields: [projectId], references: [id])
   lct       Lct      @relation(fields: [lctId], references: [id])
 }
