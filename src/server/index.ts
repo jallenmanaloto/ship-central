@@ -88,6 +88,13 @@ export const appRouter = router({
       }
     })
   }),
+  deleteVessel: publicProcedure.input(z.string()).mutation(async (opts) => {
+    return await prisma.vessel.delete({
+      where: {
+        id: opts.input
+      }
+    })
+  }),
 
   // LCTs Api
   getLcts: publicProcedure.input(z.object({ lctName: z.string().nullable() })).query(async (opts?) => {
