@@ -5,7 +5,7 @@ import CreateUpdateTrip from '../modals/lct/CreateUpdateTrip'
 import { useLctStore } from '@/utils/store'
 
 const LctTripSearch = () => {
-	const { setLctName, setLctPage } = useLctStore()
+	const { setLctPage, setLctTripName } = useLctStore()
 	const [input, setInput] = useState('')
 
 	const handleInput = (value: string) => {
@@ -14,13 +14,14 @@ const LctTripSearch = () => {
 
 	const handleSearch = () => {
 		if (input === '') {
-			setLctName(null)
+			setLctTripName(null)
 			setLctPage(1)
 		} else {
 			setLctPage(1)
-			setLctName(input)
+			setLctTripName(input)
 		}
 	}
+
 	return (
 		<div className="grid grid-cols-1 grid-rows-2 gap-2 md:grid-cols-2 md:grid-rows-none pt-2 pb-8">
 			<Input

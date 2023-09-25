@@ -10,26 +10,27 @@ import { useLctStore } from '@/utils/store'
 import LctPagination from '../../pagination/LctPagination'
 import LctTripSearch from '../../search/LctTripSearch'
 import LctTripsCard from '../../cards/lct/LctTripsCard'
+import Loading from '../../loading/Loading'
 
 const LctTabs = () => {
-	const { lctName, page, limit } = useLctStore()
+	const { lctName, lctTripName, page, limit } = useLctStore()
 	const { data: lcts, isLoading } = trpc.getPaginatedLcts.useQuery({
 		lctName: lctName,
 		page: page,
 		limit: limit,
 	})
 
-	const { data: lctProj } = trpc.getPaginatedLctTrips.useQuery({
-		page: 1,
-		limit: 6,
-		lctName: null,
-		projectId: null,
-	})
+	const { data: lctProj, isLoading: tripLoading } =
+		trpc.getPaginatedLctTrips.useQuery({
+			page: 1,
+			limit: 6,
+			lctName: lctTripName,
+		})
 
 	const lctTrips = lctProj ?? []
 	let totalPage = lcts?.totalPage ?? 1
 	const lctCount = lcts?.totalCount ?? 0
-	console.log(lctTrips)
+
 	return (
 		<div className="pt-5 w-full">
 			<Tabs defaultValue="LCT" className="w-full">
@@ -66,9 +67,13 @@ const LctTabs = () => {
 					{/* Content#2 here - LCT TRIP */}
 					<LctTripSearch />
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
-						{lctTrips.map((trip, idx) => {
-							return <LctTripsCard key={idx} lctProj={trip} />
-						})}
+						{tripLoading ? (
+							<LctLoading />
+						) : (
+							lctTrips.map((trip, idx) => {
+								return <LctTripsCard key={idx} lctProj={trip} />
+							})
+						)}
 					</div>
 				</TabsContent>
 			</Tabs>

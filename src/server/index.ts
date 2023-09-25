@@ -224,16 +224,16 @@ export const appRouter = router({
   getPaginatedLctTrips: publicProcedure.input(
     z.object({
       lctName: z.string().nullable(),
-      projectId: z.string().nullable(),
       page: z.number(),
       limit: z.number()
     }))
     .query(async (opts) => {
       const { page, limit } = opts.input
       const offset = (page - 1) * limit
+      let lctProj;
 
       if (opts.input.lctName === null) {
-        const lctProj = await prisma.lctProjects.findMany({
+        lctProj = await prisma.lctProjects.findMany({
           skip: offset,
           take: limit,
           select: {
@@ -249,20 +249,43 @@ export const appRouter = router({
             }
           }
         })
-        const lctProjectCombination = new Map()
-        const filteredLctProject = lctProj.filter((proj) => {
-          const combinationKey = `${proj.projectId}-${proj.lctId}`
-          if (!lctProjectCombination.has(combinationKey)) {
-            lctProjectCombination.set(combinationKey, true)
-
-            return true
+      } else {
+        lctProj = await prisma.lctProjects.findMany({
+          skip: offset,
+          take: limit,
+          where: {
+            lctName: {
+              contains: opts.input.lctName
+            }
+          },
+          select: {
+            id: true,
+            projectId: true,
+            lctId: true,
+            lctName: true,
+            project: true,
+            lct: {
+              include: {
+                trips: true
+              }
+            }
           }
-
-          return false
         })
-
-        return filteredLctProject
       }
+
+      const lctProjectCombination = new Map()
+      const filteredLctProject = lctProj.filter((proj) => {
+        const combinationKey = `${proj.projectId}-${proj.lctId}`
+        if (!lctProjectCombination.has(combinationKey)) {
+          lctProjectCombination.set(combinationKey, true)
+
+          return true
+        }
+
+        return false
+      })
+
+      return filteredLctProject
     }),
   createLctTrip: publicProcedure.input(
     z.object({
