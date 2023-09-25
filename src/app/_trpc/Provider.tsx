@@ -15,7 +15,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
 		trpc.createClient({
 			links: [
 				httpBatchLink({
-					url: 'https://ship-central.vercel.app/api/trpc', // change domain on prod to ship-central.vercel.app
+					url: 'https://ship-central.vercel.app', // change domain on prod to ship-central.vercel.app
 					fetch(url, options) {
 						return fetch(url, {
 							...options,
