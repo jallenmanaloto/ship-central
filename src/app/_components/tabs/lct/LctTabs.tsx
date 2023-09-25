@@ -11,9 +11,11 @@ import LctPagination from '../../pagination/LctPagination'
 import LctTripSearch from '../../search/LctTripSearch'
 import LctTripsCard from '../../cards/lct/LctTripsCard'
 import Loading from '../../loading/Loading'
+import LctTripPagination from '../../pagination/LctTripPagination'
 
 const LctTabs = () => {
-	const { lctName, lctTripName, page, limit } = useLctStore()
+	const { lctName, lctTripName, page, limit, tripPage, tripLimit } =
+		useLctStore()
 	const { data: lcts, isLoading } = trpc.getPaginatedLcts.useQuery({
 		lctName: lctName,
 		page: page,
@@ -22,14 +24,15 @@ const LctTabs = () => {
 
 	const { data: lctProj, isLoading: tripLoading } =
 		trpc.getPaginatedLctTrips.useQuery({
-			page: 1,
-			limit: 6,
+			page: tripPage,
+			limit: tripLimit,
 			lctName: lctTripName,
 		})
 
-	const lctTrips = lctProj ?? []
+	const lctTrips = lctProj?.lctProj ?? []
 	let totalPage = lcts?.totalPage ?? 1
 	const lctCount = lcts?.totalCount ?? 0
+	let tripTotalPage = lctProj?.totalPage ?? 1
 
 	return (
 		<div className="pt-5 w-full">
@@ -74,6 +77,14 @@ const LctTabs = () => {
 								return <LctTripsCard key={idx} lctProj={trip} />
 							})}
 						</div>
+					)}
+
+					{tripLoading ? (
+						''
+					) : lctTrips.length === 0 ? (
+						<div className="text-center">No data to show</div>
+					) : (
+						<LctTripPagination totalPage={tripTotalPage} />
 					)}
 				</TabsContent>
 			</Tabs>

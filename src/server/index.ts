@@ -234,25 +234,20 @@ export const appRouter = router({
 
       if (opts.input.lctName === null) {
         lctProj = await prisma.lctProjects.findMany({
-          skip: offset,
-          take: limit,
           select: {
             id: true,
             projectId: true,
             lctId: true,
             lctName: true,
-            project: true,
-            lct: {
+            project: {
               include: {
-                trips: true
+                lctTrips: true
               }
-            }
+            },
           }
         })
       } else {
         lctProj = await prisma.lctProjects.findMany({
-          skip: offset,
-          take: limit,
           where: {
             lctName: {
               contains: opts.input.lctName
@@ -263,12 +258,12 @@ export const appRouter = router({
             projectId: true,
             lctId: true,
             lctName: true,
-            project: true,
-            lct: {
-              include: {
-                trips: true
+            project: {
+              include:
+              {
+                lctTrips: true
               }
-            }
+            },
           }
         })
       }
@@ -285,7 +280,18 @@ export const appRouter = router({
         return false
       })
 
-      return filteredLctProject
+      const lctProjCount = filteredLctProject.length
+      const totalPageCount = Math.ceil(lctProjCount / limit)
+
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+
+
+      return {
+        lctProj: filteredLctProject.slice(startIndex, endIndex),
+        totalPage: totalPageCount,
+        totalCount: lctProjCount
+      }
     }),
   createLctTrip: publicProcedure.input(
     z.object({

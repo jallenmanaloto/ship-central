@@ -6,26 +6,20 @@ import dayjs from 'dayjs'
 
 type LctProjProps = {
 	id: string
-	lct: {
-		id: string
-		name: string
-		cargoCapacity: number
-		projectId: string | null
-		trips: {
-			id: string
-			projectId: string
-			cargoLoad: number
-			lctId: string
-			createdAt: string | null
-			updatedAt: string | null
-			tripToVessel: string
-		}[]
-	}
 	lctName: string | null
 	project: {
 		vesselName: string | null
 		projectStartDate: string | null
 		projectEndDate: string | null
+		lctTrips: {
+			id: string
+			cargoLoad: number
+			projectId: string
+			lctId: string
+			createdAt: string | null
+			updatedAt: string | null
+			tripToVessel: string
+		}[]
 	}
 }
 
@@ -56,7 +50,7 @@ const LctTripsCard = ({ lctProj }: { lctProj: LctProjProps }) => {
 					</svg>
 				</div>
 				<CardDescription className="max-w-[180px]">{project}</CardDescription>
-				<Trips trips={lctProj.lct.trips} />
+				<Trips trips={lctProj.project.lctTrips} />
 			</CardHeader>
 		</Card>
 	)
