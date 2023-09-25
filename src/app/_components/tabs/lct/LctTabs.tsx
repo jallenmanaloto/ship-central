@@ -26,10 +26,10 @@ const LctTabs = () => {
 		projectId: null,
 	})
 
-	// console.log(lctTrips)
 	const lctTrips = lctProj ?? []
 	let totalPage = lcts?.totalPage ?? 1
 	const lctCount = lcts?.totalCount ?? 0
+	console.log(lctTrips)
 	return (
 		<div className="pt-5 w-full">
 			<Tabs defaultValue="LCT" className="w-full">
@@ -66,10 +66,6 @@ const LctTabs = () => {
 					{/* Content#2 here - LCT TRIP */}
 					<LctTripSearch />
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-10">
-						{/* <SampleTripCard />
-						<SampleTripCard />
-						<SampleTripCard />
-						<SampleTripCard /> */}
 						{lctTrips.map((trip, idx) => {
 							return <LctTripsCard key={idx} lctProj={trip} />
 						})}

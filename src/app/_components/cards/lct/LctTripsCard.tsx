@@ -30,7 +30,6 @@ type LctProjProps = {
 }
 
 const LctTripsCard = ({ lctProj }: { lctProj: LctProjProps }) => {
-	console.log(lctProj)
 	const start = dayjs(lctProj.project.projectStartDate).format('MM/DD/YYYY')
 	const end = dayjs(lctProj.project.projectEndDate).format('MM/DD/YYYY')
 	const project = `${lctProj.project.vesselName} (${start} - ${end})`
@@ -57,7 +56,7 @@ const LctTripsCard = ({ lctProj }: { lctProj: LctProjProps }) => {
 					</svg>
 				</div>
 				<CardDescription className="max-w-[180px]">{project}</CardDescription>
-				<Trips />
+				<Trips trips={lctProj.lct.trips} />
 			</CardHeader>
 		</Card>
 	)

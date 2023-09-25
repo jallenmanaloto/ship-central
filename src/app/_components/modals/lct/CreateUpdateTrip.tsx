@@ -19,6 +19,7 @@ const CreateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
 	const [cargoLoad, setCargoLoad] = useState<string>('0')
 	const [creating, setCreating] = useState(false)
+	const utils = trpc.useContext()
 	const {
 		lctTripProject,
 		lctTripFromLct,
@@ -61,7 +62,7 @@ const CreateRecord = () => {
 
 	const createTrip = trpc.createLctTrip.useMutation({
 		onSuccess: () => {
-			// invalidate getLctTrips collection
+			utils.getPaginatedLctTrips.invalidate()
 		},
 		onSettled: () => {
 			setCreating(false)

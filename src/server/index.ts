@@ -2,6 +2,7 @@ import { publicProcedure, router } from './trpc';
 import prisma from '@/utils/prisma';
 import z from 'zod'
 import dayjs, { Dayjs } from 'dayjs';
+import { LctProjects } from '@prisma/client';
 
 export const appRouter = router({
   // Vessels API
@@ -237,6 +238,8 @@ export const appRouter = router({
           take: limit,
           select: {
             id: true,
+            projectId: true,
+            lctId: true,
             lctName: true,
             project: true,
             lct: {
@@ -246,8 +249,19 @@ export const appRouter = router({
             }
           }
         })
+        const lctProjectCombination = new Map()
+        const filteredLctProject = lctProj.filter((proj) => {
+          const combinationKey = `${proj.projectId}-${proj.lctId}`
+          if (!lctProjectCombination.has(combinationKey)) {
+            lctProjectCombination.set(combinationKey, true)
 
-        return lctProj
+            return true
+          }
+
+          return false
+        })
+
+        return filteredLctProject
       }
     }),
   createLctTrip: publicProcedure.input(
@@ -263,11 +277,19 @@ export const appRouter = router({
         }
       })
 
+      const lct = await prisma.lct.findFirst({
+        where: {
+          id: opts.input.lctId
+        }
+      })
+
       const projectName = project?.vesselName ?? ''
+      const lctName = lct?.name ?? ''
       const lctProjectRelation = await prisma.lctProjects.create({
         data: {
           projectId: opts.input.projectId,
-          lctId: opts.input.lctId
+          lctId: opts.input.lctId,
+          lctName: lctName
         }
       })
 
