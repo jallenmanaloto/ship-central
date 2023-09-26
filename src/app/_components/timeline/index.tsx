@@ -16,6 +16,7 @@ const Timeline = () => {
 			limit: limit,
 		})
 	const totalPage = dailyLoading?.totalPage ?? 0
+	console.log(dailyLoading?.dailyLoading[0])
 	return (
 		<>
 			{dailyLoading?.totalCount === 0 ? (
@@ -27,6 +28,12 @@ const Timeline = () => {
 					<ol className="border-l border-neutral-900 dark:border-neutral-500 pb-12">
 						{dailyLoading?.dailyLoading?.map((dates, idx) => {
 							const records = Object.values(dates)[0] as LoadingReport[]
+							records.sort((a, b) => {
+								const aDate = new Date(a.activityFrom)
+								const bDate = new Date(a.activityTo)
+
+								return bDate.getTime() - aDate.getTime()
+							})
 							return (
 								<li key={idx}>
 									<div className="flex-start flex items-center pt-3">
@@ -41,11 +48,14 @@ const Timeline = () => {
 												key={idx}
 												className="group flex justify-between my-2 ml-4 md:w-3/4 hover:cursor-pointer">
 												<div className="max-w-[230px]">
-													<h4 className="mb-1.5 text-base font-medium">
-														{`${dayjs(record.activityFrom).format(
-															'h:MMA'
-														)} - ${dayjs(record.activityTo).format('h:MMA')}`}
-													</h4>
+													<div className="flex">
+														<h4 className="mb-1.5 text-base font-medium">
+															{`${dayjs(record.activityFrom).format(
+																'h:MMA'
+															)} - ${dayjs(record.activityTo).format('h:MMA')}`}
+														</h4>
+														<h5 className="px-1">{`(1h45m)`}</h5>
+													</div>
 													<p className="mb-3 text-neutral-500 dark:text-neutral-300">
 														{record.activity}
 													</p>
