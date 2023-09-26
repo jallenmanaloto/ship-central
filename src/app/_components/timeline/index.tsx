@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CreateUpdate from '../modals/daily-loading/CreateUpdate'
 import { trpc } from '@/app/_trpc/client'
 import { useDailyLoadingStore } from '@/utils/store'
@@ -8,13 +8,21 @@ import DailyLoadingPagination from '../pagination/DailyLoadingPagination'
 import Loading from '../loading/Loading'
 
 const Timeline = () => {
-	const { dailyLoadingProjectId, page, limit } = useDailyLoadingStore()
+	const { dailyLoadingProjectId, setDailyLoadingProjectId, page, limit } =
+		useDailyLoadingStore()
+
+	useEffect(() => {
+		setDailyLoadingProjectId(null)
+	}, [])
 	const { data: dailyLoading, isLoading } =
-		trpc.getPaginatedDailyLoading.useQuery({
-			projectId: dailyLoadingProjectId,
-			page: page,
-			limit: limit,
-		})
+		trpc.getPaginatedDailyLoading.useQuery(
+			{
+				projectId: dailyLoadingProjectId,
+				page: page,
+				limit: limit,
+			},
+			{ cacheTime: 0 }
+		)
 	const totalPage = dailyLoading?.totalPage ?? 0
 	return (
 		<>
