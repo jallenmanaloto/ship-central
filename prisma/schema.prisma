@@ -22,8 +22,10 @@ model LoadingReport {
   actualActivity String?
   activityFrom   DateTime
   activityTo     DateTime
-  hourMins       Int
-  totalHours     Float
+  hourMins       String
+  totalHours     Float     @default(0)
+  days           Float     @default(0)
+  layTimeDays    Float
   createdAt      DateTime  @default(now())
   updatedAt      DateTime? @updatedAt
   vesselId       String
@@ -60,7 +62,7 @@ model LctProjects {
   id        String   @id @default(uuid())
   projectId String
   lctId     String
-  lctName String?
+  lctName   String?
   project   Projects @relation(fields: [projectId], references: [id])
   lct       Lct      @relation(fields: [lctId], references: [id])
 }
