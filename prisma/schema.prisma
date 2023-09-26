@@ -19,13 +19,11 @@ model Vessel {
 model LoadingReport {
   id             String    @id @default(uuid())
   activity       String?
-  actualActivity String?
   activityFrom   DateTime
   activityTo     DateTime
   hourMins       String
   totalHours     Float     @default(0)
   days           Float     @default(0)
-  layTimeDays    Float
   createdAt      DateTime  @default(now())
   updatedAt      DateTime? @updatedAt
   vesselId       String
