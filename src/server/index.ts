@@ -635,6 +635,26 @@ export const appRouter = router({
 
         return { dailyLoading: groupedResults, totalPage: totalPageCount, totalCount: dailyLoadingCount }
       }
+    }),
+  updateDailyLoading: publicProcedure.input(
+    z.object({
+      activityFrom: z.string(),
+      activityTo: z.string(),
+      activity: z.string(),
+      reportId: z.string()
+    }))
+    .mutation(async (opts) => {
+      const { activityFrom, activityTo, activity, reportId } = opts.input
+      return await prisma.loadingReport.update({
+        where: {
+          id: reportId
+        },
+        data: {
+          activityFrom: activityFrom,
+          activityTo: activityTo,
+          activity: activity,
+        }
+      })
     })
 });
 

@@ -8,26 +8,51 @@ import Textarea from '@mui/joy/Textarea'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import { trpc } from '@/app/_trpc/client'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useDailyLoadingStore } from '@/utils/store'
 
-const DatePicker = ({
-	type,
-	action,
-}: {
-	type: string
-	action: Dispatch<SetStateAction<string>>
-}) => {
+type DatePickerProps =
+	| {
+			kind: 'update'
+			value: Date
+			type: string
+			action: Dispatch<SetStateAction<string>>
+	  }
+	| {
+			kind: 'create'
+			value?: never
+			type: string
+			action: Dispatch<SetStateAction<string>>
+	  }
+
+const DatePicker = ({ kind, type, action, value }: DatePickerProps) => {
+	const date = dayjs(value) as unknown as string
+	const [dateValue, setDateValue] = useState<string>(date)
+
+	if (kind === 'update') {
+		// const day = dayjs(val).format('YYYY-MM-DDTHH:mm:ssZ')
+		action(dayjs(dateValue).format('YYYY-MM-DDTHH:mm:ssZ'))
+	}
+
 	const handleChange = (val: string | null) => {
-		const day = dayjs(val).format('YYYY-MM-DDTHH:mm:ssZ')
-		action(day)
+		if (kind === 'update') {
+			setDateValue(val as string)
+			const day = dayjs(val).format('YYYY-MM-DDTHH:mm:ssZ')
+			action(day)
+		} else {
+			const day = dayjs(val).format('YYYY-MM-DDTHH:mm:ssZ')
+			action(day)
+		}
 	}
 
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
-			<DateTimePicker onChange={(val: string | null) => handleChange(val)} />
+			<DateTimePicker
+				value={kind === 'update' ? dateValue : null}
+				onChange={(val: string | null) => handleChange(val)}
+			/>
 		</LocalizationProvider>
 	)
 }
@@ -104,13 +129,13 @@ const CreateRecord = () => {
 					<div className="mt-8 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity start:</h2>
-							<DatePicker type="start" action={setActivityFrom} />
+							<DatePicker kind="create" type="start" action={setActivityFrom} />
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity end:</h2>
-							<DatePicker type="end" action={setActivityTo} />
+							<DatePicker kind="create" type="end" action={setActivityTo} />
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
@@ -142,8 +167,60 @@ const CreateRecord = () => {
 	)
 }
 
-const UpdateRecord = () => {
+interface RecordProp {
+	id: string
+	activity: string | null
+	activityFrom: Date
+	activityTo: Date
+	hourMins: string
+	totalHours: number
+	days: number
+	createdAt: Date
+	updatedAt: Date | null
+	vesselId: string
+	projectId: string
+}
+
+const UpdateRecord = ({ dailyLoading }: { dailyLoading: RecordProp }) => {
 	const [open, setOpen] = useState<boolean>(false)
+	const [updating, setUpdating] = useState<boolean>(false)
+	const [activityFrom, setActivityFrom] = useState<string>('')
+	const [activityTo, setActivityTo] = useState<string>('')
+	const [activity, setActivity] = useState<string>('')
+
+	const utils = trpc.useContext()
+
+	const updateReport = trpc.updateDailyLoading.useMutation({
+		onSuccess: () => {
+			// invalidate paginated daily loading
+			utils.getPaginatedDailyLoading.invalidate()
+		},
+		onSettled: () => {
+			setOpen(false)
+			setUpdating(false)
+			setActivityFrom('')
+			setActivityTo('')
+			setActivity('')
+		},
+	})
+
+	const handleCloseModal = () => {
+		setActivityFrom('')
+		setActivityTo('')
+		setActivity('')
+		setOpen(false)
+	}
+
+	const handleUpdate = () => {
+		setUpdating(true)
+		updateReport.mutate({
+			activityFrom: activityFrom,
+			activityTo: activityTo,
+			activity: activity,
+			reportId: dailyLoading.id,
+		})
+	}
+
 	return (
 		<>
 			<svg
@@ -192,23 +269,44 @@ const UpdateRecord = () => {
 					<div className="mt-8 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity start:</h2>
-							{/* <DatePicker type='start' action={} /> */}
+							<DatePicker
+								kind="update"
+								value={dailyLoading.activityFrom}
+								type="start"
+								action={setActivityFrom}
+							/>
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity end:</h2>
-							{/* <DatePicker type='end' action={} /> */}
+							<DatePicker
+								kind="update"
+								value={dailyLoading.activityTo}
+								type="end"
+								action={setActivityTo}
+							/>
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
 						<h2 className="pb-2">Activity:</h2>
-						<Textarea minRows={2} placeholder="Type activity.." />
+						<Textarea
+							onChange={(e) => setActivity(e.target.value)}
+							value={activity}
+							minRows={2}
+							placeholder="Type activity.."
+						/>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
-						<Button className="bg-sky-950 opacity-75">Save</Button>
+						<Button onClick={handleUpdate} className="bg-sky-950 opacity-75">
+							{updating ? (
+								<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+							) : (
+								'Save'
+							)}
+						</Button>
 						<Button
-							onClick={() => setOpen(false)}
+							onClick={handleCloseModal}
 							className="bg-red-950 opacity-75">
 							Cancel
 						</Button>
@@ -219,8 +317,23 @@ const UpdateRecord = () => {
 	)
 }
 
-const CreateUpdate = ({ action }: { action: string }) => {
-	return <>{action === 'create' ? <CreateRecord /> : <UpdateRecord />}</>
+type DailyLoadingProps =
+	| {
+			action: 'create'
+			dailyLoading?: never
+	  }
+	| { action: 'update'; dailyLoading: RecordProp }
+
+const CreateUpdate = ({ action, dailyLoading }: DailyLoadingProps) => {
+	return (
+		<>
+			{action === 'create' ? (
+				<CreateRecord />
+			) : (
+				<UpdateRecord dailyLoading={dailyLoading} />
+			)}
+		</>
+	)
 }
 
 export default CreateUpdate

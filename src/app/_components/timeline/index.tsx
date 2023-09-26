@@ -50,8 +50,8 @@ const Timeline = () => {
 													<div className="flex">
 														<h4 className="mb-1.5 text-base font-medium">
 															{`${dayjs(record.activityFrom).format(
-																'h:MMA'
-															)} - ${dayjs(record.activityTo).format('h:MMA')}`}
+																'h:mmA'
+															)} - ${dayjs(record.activityTo).format('h:mmA')}`}
 														</h4>
 														<h5 className="px-1">{`(1h45m)`}</h5>
 													</div>
@@ -60,7 +60,7 @@ const Timeline = () => {
 													</p>
 												</div>
 												<div className="invisible group-hover:visible flex justify-between w-14 items-center pr-1 mt-4">
-													<CreateUpdate action="update" />
+													<CreateUpdate action="update" dailyLoading={record} />
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"
