@@ -5,11 +5,8 @@ import { useDailyLoadingStore } from '@/utils/store'
 import dayjs from 'dayjs'
 import { LoadingReport } from '@prisma/client'
 
-type TLoadingGroup = {}[]
-
 const Timeline = () => {
 	const { dailyLoadingProjectId } = useDailyLoadingStore()
-
 	const { data: dailyLoading } = trpc.getPaginatedDailyLoading.useQuery({
 		projectId: dailyLoadingProjectId,
 		page: 1,

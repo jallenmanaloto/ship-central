@@ -573,7 +573,6 @@ export const appRouter = router({
           activityFrom: opts.input.activityFrom,
           activityTo: opts.input.activityTo,
           activity: opts.input.activity,
-          baseDate: dayjs(opts.input.activityFrom).format('YYYY-MM-DD'),
           hourMins: hourMins,
           totalHours: parseFloat(totalHours),
           projectId: opts.input.projectId,
