@@ -122,3 +122,24 @@ export const useLctStore = create<LctStore>((set) => ({
   setLctTripFromLct: (lctTripFromLct: string) => set({ lctTripFromLct: lctTripFromLct })
 }))
 /** END OF LCT STORE */
+
+
+/** START OF DAILY LOADING STORE */
+type DailyLoadingStore = {
+  dailyLoadingProjectId: string | null
+  page: number
+  limit: number
+  setDailyLoadingProjectId: (projectId: string | null) => void
+  setPage: (page: number) => void
+  setLimit: (limit: number) => void
+}
+
+export const useDailyLoadingStore = create<DailyLoadingStore>((set) => ({
+  dailyLoadingProjectId: null,
+  page: 1,
+  limit: 6,
+  setDailyLoadingProjectId: (projectId: string | null) => set({ dailyLoadingProjectId: projectId }),
+  setPage: (page: number) => set({ page: page }),
+  setLimit: (limit: number) => set({ limit: limit })
+}))
+/** END OF DAILY LOADING STORE */
