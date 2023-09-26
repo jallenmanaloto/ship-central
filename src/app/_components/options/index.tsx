@@ -8,7 +8,7 @@ import { trpc } from '@/app/_trpc/client'
 import { useDailyLoadingStore } from '@/utils/store'
 
 const Options = () => {
-	const { setDailyLoadingProjectId } = useDailyLoadingStore()
+	const { setDailyLoadingProjectIdForSearch } = useDailyLoadingStore()
 	const { data: projects } = trpc.getProjects.useQuery({
 		vesselId: null,
 		projectEndDate: null,
@@ -19,7 +19,7 @@ const Options = () => {
 		event: React.SyntheticEvent | null,
 		newValue: string | null
 	) => {
-		setDailyLoadingProjectId(newValue)
+		setDailyLoadingProjectIdForSearch(newValue)
 	}
 
 	return (

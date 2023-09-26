@@ -16,7 +16,6 @@ const Timeline = () => {
 			limit: limit,
 		})
 	const totalPage = dailyLoading?.totalPage ?? 0
-	console.log(dailyLoading?.dailyLoading[0])
 	return (
 		<>
 			{dailyLoading?.totalCount === 0 ? (

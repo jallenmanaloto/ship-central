@@ -127,18 +127,22 @@ export const useLctStore = create<LctStore>((set) => ({
 /** START OF DAILY LOADING STORE */
 type DailyLoadingStore = {
   dailyLoadingProjectId: string | null
+  dailyLoadingProjectIdForSearch: string | null
   page: number
   limit: number
   setDailyLoadingProjectId: (projectId: string | null) => void
+  setDailyLoadingProjectIdForSearch: (projectId: string | null) => void
   setPage: (page: number) => void
   setLimit: (limit: number) => void
 }
 
 export const useDailyLoadingStore = create<DailyLoadingStore>((set) => ({
   dailyLoadingProjectId: null,
+  dailyLoadingProjectIdForSearch: null,
   page: 1,
   limit: 25,
   setDailyLoadingProjectId: (projectId: string | null) => set({ dailyLoadingProjectId: projectId }),
+  setDailyLoadingProjectIdForSearch: (projectId: string | null) => set({ dailyLoadingProjectIdForSearch: projectId }),
   setPage: (page: number) => set({ page: page }),
   setLimit: (limit: number) => set({ limit: limit })
 }))
