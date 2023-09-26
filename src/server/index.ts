@@ -596,6 +596,7 @@ export const appRouter = router({
           totalCount: 0
         }
       } else {
+        const offset = (page - 1) * limit
         const dailyLoadingCount = await prisma.loadingReport.count({
           where: {
             projectId: projectId as unknown as Prisma.StringFilter<"LoadingReport">
@@ -603,9 +604,16 @@ export const appRouter = router({
         })
 
         const dailyLoading = await prisma.loadingReport.findMany({
+          skip: offset,
+          take: limit,
           where: {
             projectId: projectId as unknown as Prisma.StringFilter<"LoadingReport">
-          }
+          },
+          orderBy: [
+            {
+              activityFrom: 'desc'
+            }
+          ]
         })
 
         const totalPageCount = Math.ceil(dailyLoadingCount / limit)

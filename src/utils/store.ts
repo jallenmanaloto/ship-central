@@ -137,7 +137,7 @@ type DailyLoadingStore = {
 export const useDailyLoadingStore = create<DailyLoadingStore>((set) => ({
   dailyLoadingProjectId: null,
   page: 1,
-  limit: 6,
+  limit: 25,
   setDailyLoadingProjectId: (projectId: string | null) => set({ dailyLoadingProjectId: projectId }),
   setPage: (page: number) => set({ page: page }),
   setLimit: (limit: number) => set({ limit: limit })
