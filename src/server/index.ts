@@ -2,7 +2,6 @@ import { publicProcedure, router } from './trpc';
 import prisma from '@/utils/prisma';
 import z from 'zod'
 import dayjs, { Dayjs } from 'dayjs';
-import { LctProjects } from '@prisma/client';
 
 export const appRouter = router({
   // Vessels API
@@ -538,7 +537,63 @@ export const appRouter = router({
         body: JSON.stringify(project)
       }
     }
-  })
+  }),
+
+  // Daily Loading Api
+  createDailyLoading: publicProcedure.input(
+    z.object({
+      activityFrom: z.string(),
+      activityTo: z.string(),
+      activity: z.string(),
+      projectId: z.string()
+    }))
+    .mutation(async (opts) => {
+      const startHour = dayjs(opts.input.activityFrom)
+      const endHour = dayjs(opts.input.activityTo)
+      const diffHour = endHour.diff(startHour, 'minutes')
+      const hour = Math.floor(diffHour / 60)
+      const mins = diffHour % 60
+
+      const project = await prisma.projects.findFirst({
+        where: {
+          id: opts.input.projectId,
+        }
+      })
+
+      const totalCargo = project?.totalCargo ?? 0
+      const vesselId = project?.vesselId ?? ''
+
+      const totalHours = (diffHour / 60).toFixed(2)
+      const hourMins = dayjs().hour(hour).minute(mins).format('HH:mm')
+      const day = parseFloat(((diffHour / 60) / 24).toFixed(2))
+
+      return await prisma.loadingReport.create({
+        data: {
+          activityFrom: opts.input.activityFrom,
+          activityTo: opts.input.activityTo,
+          activity: opts.input.activity,
+          hourMins: hourMins,
+          totalHours: parseFloat(totalHours),
+          projectId: opts.input.projectId,
+          layTimeDays: day - totalCargo,
+          vesselId: vesselId
+        }
+      })
+
+      // return {
+      //   data: {
+      //     activityFrom: opts.input.activityFrom,
+      //     activityTo: opts.input.activityTo,
+      //     activity: opts.input.activity,
+      //     hourMins: hourMins,
+      //     totalHours: parseFloat(totalHours),
+      //     projectId: opts.input.projectId,
+      //     layTimeDays: day - totalCargo,
+      //     vesselId: vesselId
+      //   }
+      // }
+
+    })
 });
 
 export type AppRouter = typeof appRouter;
