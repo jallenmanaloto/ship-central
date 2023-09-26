@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Modal from '@mui/joy/Modal'
 import ModalClose from '@mui/joy/ModalClose'
@@ -8,17 +8,65 @@ import Textarea from '@mui/joy/Textarea'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import dayjs from 'dayjs'
+import { trpc } from '@/app/_trpc/client'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useDailyLoadingStore } from '@/utils/store'
 
-const DatePicker = () => {
+const DatePicker = ({
+	type,
+	action,
+}: {
+	type: string
+	action: Dispatch<SetStateAction<string>>
+}) => {
+	const handleChange = (val: string | null) => {
+		const day = dayjs(val).format('YYYY-MM-DDTHH:mm:ssZ')
+		action(day)
+	}
+
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
-			<DateTimePicker />
+			<DateTimePicker onChange={(val: string | null) => handleChange(val)} />
 		</LocalizationProvider>
 	)
 }
 
 const CreateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
+	const [activityFrom, setActivityFrom] = useState<string>('')
+	const [activityTo, setActivityTo] = useState<string>('')
+	const [activity, setActivity] = useState<string>('')
+	const [creating, setCreating] = useState<boolean>(false)
+
+	const { dailyLoadingProjectId } = useDailyLoadingStore()
+	const utils = trpc.useContext()
+
+	const createDailyLoading = trpc.createDailyLoading.useMutation({
+		onSuccess: () => {
+			utils.getProjects.invalidate()
+		},
+		onSettled: () => {
+			setActivityFrom('')
+			setActivityTo('')
+			setActivity('')
+			setCreating(false)
+			setOpen(false)
+		},
+	})
+
+	const handleCreate = () => {
+		setCreating(true)
+		console.log(
+			createDailyLoading.mutate({
+				projectId: dailyLoadingProjectId as string,
+				activity: activity,
+				activityFrom: activityFrom,
+				activityTo: activityTo,
+			})
+		)
+	}
+
 	return (
 		<>
 			<Button
@@ -58,21 +106,32 @@ const CreateRecord = () => {
 					<div className="mt-8 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity start:</h2>
-							<DatePicker />
+							<DatePicker type="start" action={setActivityFrom} />
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity end:</h2>
-							<DatePicker />
+							<DatePicker type="end" action={setActivityTo} />
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
 						<h2 className="pb-2">Activity:</h2>
-						<Textarea minRows={2} placeholder="Type activity.." />
+						<Textarea
+							value={activity}
+							onChange={(e) => setActivity(e.target.value)}
+							minRows={2}
+							placeholder="Type activity.."
+						/>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
-						<Button className="bg-sky-950 opacity-75">Save</Button>
+						<Button onClick={handleCreate} className="bg-sky-950 opacity-75">
+							{creating ? (
+								<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+							) : (
+								'Save'
+							)}
+						</Button>
 						<Button
 							onClick={() => setOpen(false)}
 							className="bg-red-950 opacity-75">
@@ -135,13 +194,13 @@ const UpdateRecord = () => {
 					<div className="mt-8 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity start:</h2>
-							<DatePicker />
+							{/* <DatePicker type='start' action={} /> */}
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
 						<div className="flex justify-between">
 							<h2 className="text-bottom">Activity end:</h2>
-							<DatePicker />
+							{/* <DatePicker type='end' action={} /> */}
 						</div>
 					</div>
 					<div className="mt-1 w-full py-3">
