@@ -57,14 +57,12 @@ const CreateRecord = () => {
 
 	const handleCreate = () => {
 		setCreating(true)
-		console.log(
-			createDailyLoading.mutate({
-				projectId: dailyLoadingProjectId as string,
-				activity: activity,
-				activityFrom: activityFrom,
-				activityTo: activityTo,
-			})
-		)
+		createDailyLoading.mutate({
+			projectId: dailyLoadingProjectId as string,
+			activity: activity,
+			activityFrom: activityFrom,
+			activityTo: activityTo,
+		})
 	}
 
 	return (

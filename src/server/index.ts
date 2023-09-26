@@ -2,6 +2,7 @@ import { publicProcedure, router } from './trpc';
 import prisma from '@/utils/prisma';
 import z from 'zod'
 import dayjs, { Dayjs } from 'dayjs';
+import { Prisma } from '@prisma/client';
 
 export const appRouter = router({
   // Vessels API
@@ -572,27 +573,61 @@ export const appRouter = router({
           activityFrom: opts.input.activityFrom,
           activityTo: opts.input.activityTo,
           activity: opts.input.activity,
+          baseDate: dayjs(opts.input.activityFrom).format('YYYY-MM-DD'),
           hourMins: hourMins,
           totalHours: parseFloat(totalHours),
           projectId: opts.input.projectId,
-          layTimeDays: day - totalCargo,
+          days: day,
           vesselId: vesselId
         }
       })
+    }),
+  getPaginatedDailyLoading: publicProcedure.input(
+    z.object({
+      projectId: z.string().nullable(),
+      page: z.number(),
+      limit: z.number()
+    }))
+    .query(async (opts) => {
+      const { page, limit, projectId } = opts.input
+      if (projectId === null || projectId === undefined) {
+        return {
+          dailyLoading: [],
+          totalPage: 1,
+          totalCount: 0
+        }
+      } else {
+        const dailyLoadingCount = await prisma.loadingReport.count({
+          where: {
+            projectId: projectId as unknown as Prisma.StringFilter<"LoadingReport">
+          }
+        })
 
-      // return {
-      //   data: {
-      //     activityFrom: opts.input.activityFrom,
-      //     activityTo: opts.input.activityTo,
-      //     activity: opts.input.activity,
-      //     hourMins: hourMins,
-      //     totalHours: parseFloat(totalHours),
-      //     projectId: opts.input.projectId,
-      //     layTimeDays: day - totalCargo,
-      //     vesselId: vesselId
-      //   }
-      // }
+        const dailyLoading = await prisma.loadingReport.findMany({
+          where: {
+            projectId: projectId as unknown as Prisma.StringFilter<"LoadingReport">
+          }
+        })
 
+        const totalPageCount = Math.ceil(dailyLoadingCount / limit)
+
+        const groupedResults: any[] = [];
+        dailyLoading.forEach((record) => {
+          const activityFrom = dayjs(record.activityFrom).format('YYYY-MM-DD'); // Convert to ISO string for grouping
+          const existingEntry = groupedResults.find((entry) => entry[activityFrom]);
+
+          if (existingEntry) {
+            existingEntry[activityFrom].push(record);
+          } else {
+            const newEntry = {
+              [activityFrom]: [record],
+            };
+            groupedResults.push(newEntry);
+          }
+        });
+
+        return { dailyLoading: groupedResults, totalPage: totalPageCount, totalCount: dailyLoadingCount }
+      }
     })
 });
 
