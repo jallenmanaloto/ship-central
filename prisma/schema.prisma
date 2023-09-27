@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -17,17 +18,17 @@ model Vessel {
 }
 
 model LoadingReport {
-  id             String    @id @default(uuid())
-  activity       String?
-  activityFrom   DateTime
-  activityTo     DateTime
-  hourMins       String
-  totalHours     Float     @default(0)
-  days           Float     @default(0)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime? @updatedAt
-  vesselId       String
-  projectId      String
+  id           String    @id @default(uuid())
+  activity     String?
+  activityFrom DateTime
+  activityTo   DateTime
+  hourMins     String
+  totalHours   Float     @default(0)
+  days         Float     @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+  vesselId     String
+  projectId    String
 }
 
 model Projects {
@@ -75,4 +76,19 @@ model LctTrips {
   lct          Lct       @relation(fields: [lctId], references: [id])
   projectId    String
   projects     Projects  @relation(fields: [projectId], references: [id])
+}
+
+view Analytics {
+  id                     String  @id @unique @default(uuid()) @db.VarChar(36)
+  projectId              String?
+  monitored              Boolean? @default(false)
+  totalCargo             Int?     @default(0)
+  laytime                Decimal? @db.Decimal(13, 2)
+  layTimeAsOf            Float?
+  layTimeConsumed        Float?
+  totalLoadedCargo       Decimal? @db.Decimal(32, 0)
+  estTotalTimeFinish     Float?
+  estDespatch            Float?
+  estTimeToFinishLoading Float?
+  totalCargoToBeLoaded   Decimal? @db.Decimal(33, 0)
 }
