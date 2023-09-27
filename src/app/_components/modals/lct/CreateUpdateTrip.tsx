@@ -63,6 +63,8 @@ const CreateRecord = () => {
 	const createTrip = trpc.createLctTrip.useMutation({
 		onSuccess: () => {
 			utils.getPaginatedLctTrips.invalidate()
+			utils.getAnalytic.invalidate()
+			utils.getActiveAnalytics.invalidate()
 		},
 		onSettled: () => {
 			setCreating(false)
