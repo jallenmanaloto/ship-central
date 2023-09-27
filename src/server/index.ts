@@ -655,7 +655,16 @@ export const appRouter = router({
           activity: activity,
         }
       })
+    }),
+
+  // Analytics Api
+  getAnalytic: publicProcedure.input(z.string()).query(async (opts) => {
+    return await prisma.analytics.findFirst({
+      where: {
+        projectId: opts.input
+      }
     })
+  })
 });
 
 export type AppRouter = typeof appRouter;

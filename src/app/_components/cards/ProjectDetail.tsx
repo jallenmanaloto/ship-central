@@ -39,7 +39,7 @@ const ProjectDetail = ({ project }: { project: IProject }) => {
 					project.projectEndDate
 				).format('MMM DD, YYYY')})`}
 			</h4>
-			<MoreDetails />
+			<MoreDetails projectId={project.id} />
 		</div>
 	)
 }
