@@ -79,7 +79,8 @@ model LctTrips {
 }
 
 view Analytics {
-  id                     String  @id @unique @default(uuid()) @db.VarChar(36)
+  id                     String   @id @unique @default(uuid()) @db.VarChar(36)
+  vesselName             String
   projectId              String?
   monitored              Boolean? @default(false)
   totalCargo             Int?     @default(0)
