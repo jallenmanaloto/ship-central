@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import vesselAnalytics from '@/app/faker/data/analytics'
+import { trpc } from '@/app/_trpc/client'
 
 const headers = [
 	'Name',
@@ -15,6 +17,10 @@ const headers = [
 ]
 
 const Table = () => {
+	const { data: activeAnalytics, isLoading } =
+		trpc.getActiveAnalytics.useQuery()
+
+	console.log(activeAnalytics)
 	return (
 		<div className="flex flex-col py-6">
 			<div className="overflow-x-auto">
@@ -25,52 +31,60 @@ const Table = () => {
 								<tr>
 									{headers.map((header, idx) => {
 										return (
-											<>
+											<React.Fragment key={idx}>
 												<th key={idx} scope="col" className="px-6 py-4">
 													{header}
 												</th>
-											</>
+											</React.Fragment>
 										)
 									})}
 								</tr>
 							</thead>
 							<tbody>
-								{vesselAnalytics.map((vesselAnalytic, idx) => {
+								{activeAnalytics?.map((analytic, idx) => {
 									return (
-										<>
+										<React.Fragment key={idx}>
 											<tr className="border-b odd:bg-neutral-100 even:bg-white dark:border-neutral-500 dark:bg-neutral-700">
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.name}
+													{analytic.vesselName}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.laytime}
+													{analytic.laytime}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.laytimeAsOf}
+													{analytic.layTimeAsOf}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.laytimeConsumed}
+													{analytic.layTimeConsumed}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.totalCargo}
+													{analytic?.totalCargo !== null
+														? analytic?.totalCargo.toLocaleString()
+														: 0}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.totalCargoLoaded}
+													{parseFloat(
+														analytic?.totalLoadedCargo ?? ''
+													).toLocaleString() ?? 0}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.totalCargoToBeLoaded}
+													{analytic?.totalCargoToBeLoaded !== null
+														? parseFloat(
+																analytic?.totalCargoToBeLoaded ?? ''
+														  ).toLocaleString()
+														: 0}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.estDispatch}
+													{analytic.estDespatch}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.estTimeToCompleteLoading}
+													{analytic.estTimeToFinishLoading}
 												</td>
 												<td className="whitespace-nowrap px-6 py-4 font-medium">
-													{vesselAnalytic.estTimeToFinish}
+													{analytic.estTotalTimeFinish}
 												</td>
 											</tr>
-										</>
+										</React.Fragment>
 									)
 								})}
 							</tbody>

@@ -664,6 +664,13 @@ export const appRouter = router({
         projectId: opts.input
       }
     })
+  }),
+  getActiveAnalytics: publicProcedure.query(async (opts) => {
+    return await prisma.analytics.findMany({
+      where: {
+        monitored: true
+      }
+    })
   })
 });
 
