@@ -31,10 +31,9 @@ const DatePicker = ({ kind, type, action, value }: DatePickerProps) => {
 	const date = dayjs(value) as unknown as string
 	const [dateValue, setDateValue] = useState<string>(date)
 
-	if (kind === 'update') {
-		// const day = dayjs(val).format('YYYY-MM-DDTHH:mm:ssZ')
-		action(dayjs(dateValue).format('YYYY-MM-DDTHH:mm:ssZ'))
-	}
+	// if (kind === 'update') {
+	// 	action(dayjs(dateValue).format('YYYY-MM-DDTHH:mm:ssZ'))
+	// }
 
 	const handleChange = (val: string | null) => {
 		if (kind === 'update') {
@@ -63,6 +62,7 @@ const CreateRecord = () => {
 	const [activityTo, setActivityTo] = useState<string>('')
 	const [activity, setActivity] = useState<string>('')
 	const [creating, setCreating] = useState<boolean>(false)
+	const [excludeComputation, setExcludeComputation] = useState<boolean>(false)
 
 	const { dailyLoadingProjectId } = useDailyLoadingStore()
 	const utils = trpc.useContext()
@@ -80,6 +80,10 @@ const CreateRecord = () => {
 		},
 	})
 
+	const handleExclude = () => {
+		setExcludeComputation(!excludeComputation)
+	}
+
 	const handleCreate = () => {
 		setCreating(true)
 		createDailyLoading.mutate({
@@ -87,9 +91,9 @@ const CreateRecord = () => {
 			activity: activity,
 			activityFrom: activityFrom,
 			activityTo: activityTo,
+			exclude: excludeComputation,
 		})
 	}
-
 	return (
 		<>
 			<Button
@@ -147,6 +151,16 @@ const CreateRecord = () => {
 							placeholder="Type activity.."
 						/>
 					</div>
+					<div
+						onClick={handleExclude}
+						className="flex items-center mt-1 w-full pt-1 mb-5 cursor-pointer">
+						<input
+							onChange={handleExclude}
+							checked={excludeComputation}
+							type="checkbox"
+						/>
+						<h5 className="pl-1 text-xs">Exclude day on computation</h5>
+					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
 						<Button onClick={handleCreate} className="bg-sky-950 opacity-75">
 							{creating ? (
@@ -179,6 +193,7 @@ interface RecordProp {
 	updatedAt: Date | null
 	vesselId: string
 	projectId: string
+	exclude: boolean
 }
 
 const UpdateRecord = ({ dailyLoading }: { dailyLoading: RecordProp }) => {
@@ -186,7 +201,8 @@ const UpdateRecord = ({ dailyLoading }: { dailyLoading: RecordProp }) => {
 	const [updating, setUpdating] = useState<boolean>(false)
 	const [activityFrom, setActivityFrom] = useState<string>('')
 	const [activityTo, setActivityTo] = useState<string>('')
-	const [activity, setActivity] = useState<string>('')
+	const [activity, setActivity] = useState<string>(dailyLoading.activity ?? '')
+	const [excludeComputation, setExcludeComputation] = useState<boolean>(false)
 
 	const utils = trpc.useContext()
 
@@ -204,23 +220,48 @@ const UpdateRecord = ({ dailyLoading }: { dailyLoading: RecordProp }) => {
 		},
 	})
 
+	const handleExclude = () => {
+		setExcludeComputation(!excludeComputation)
+	}
+
 	const handleCloseModal = () => {
 		setActivityFrom('')
 		setActivityTo('')
-		setActivity('')
+		setActivity(dailyLoading.activity ?? '')
 		setOpen(false)
+		setExcludeComputation(dailyLoading.exclude)
 	}
 
 	const handleUpdate = () => {
 		setUpdating(true)
 		updateReport.mutate({
-			activityFrom: activityFrom,
-			activityTo: activityTo,
-			activity: activity,
+			activityFrom:
+				activityFrom === ''
+					? dayjs(dailyLoading.activityFrom).format('YYYY-MM-DDTHH:mm:ssZ')
+					: activityFrom,
+			activityTo:
+				activityTo === ''
+					? dayjs(dailyLoading.activityTo).format('YYYY-MM-DDTHH:mm:ssZ')
+					: activityTo,
+			activity: activity === '' ? (dailyLoading.activity as string) : activity,
 			reportId: dailyLoading.id,
+			exclude: excludeComputation,
 		})
 	}
 
+	// console.log({
+	// 	activityFrom:
+	// 		activityFrom === ''
+	// 			? dayjs(dailyLoading.activityFrom).format('YYYY-MM-DDTHH:mm:ssZ')
+	// 			: activityFrom,
+	// 	activityTo:
+	// 		activityTo === ''
+	// 			? dayjs(dailyLoading.activityTo).format('YYYY-MM-DDTHH:mm:ssZ')
+	// 			: activityTo,
+	// 	activity: activity === '' ? (dailyLoading.activity as string) : activity,
+	// 	reportId: dailyLoading.id,
+	// 	exclude: excludeComputation,
+	// })
 	return (
 		<>
 			<svg
@@ -296,6 +337,16 @@ const UpdateRecord = ({ dailyLoading }: { dailyLoading: RecordProp }) => {
 							minRows={2}
 							placeholder="Type activity.."
 						/>
+					</div>
+					<div
+						onClick={handleExclude}
+						className="flex items-center mt-1 w-full pt-1 mb-5 cursor-pointer">
+						<input
+							onChange={handleExclude}
+							checked={excludeComputation}
+							type="checkbox"
+						/>
+						<h5 className="pl-1 text-xs">Exclude day on computation</h5>
 					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
 						<Button onClick={handleUpdate} className="bg-sky-950 opacity-75">

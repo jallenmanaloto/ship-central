@@ -25,6 +25,7 @@ model LoadingReport {
   hourMins     String
   totalHours   Float     @default(0)
   days         Float     @default(0)
+  exclude       Boolean @default(false)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime? @updatedAt
   vesselId     String

@@ -555,7 +555,8 @@ export const appRouter = router({
       activityFrom: z.string(),
       activityTo: z.string(),
       activity: z.string(),
-      projectId: z.string()
+      projectId: z.string(),
+      exclude: z.boolean()
     }))
     .mutation(async (opts) => {
       const startHour = dayjs(opts.input.activityFrom)
@@ -586,7 +587,8 @@ export const appRouter = router({
           totalHours: parseFloat(totalHours),
           projectId: opts.input.projectId,
           days: day,
-          vesselId: vesselId
+          vesselId: vesselId,
+          exclude: opts.input.exclude
         }
       })
     }),
@@ -650,10 +652,11 @@ export const appRouter = router({
       activityFrom: z.string(),
       activityTo: z.string(),
       activity: z.string(),
-      reportId: z.string()
+      reportId: z.string(),
+      exclude: z.boolean()
     }))
     .mutation(async (opts) => {
-      const { activityFrom, activityTo, activity, reportId } = opts.input
+      const { activityFrom, activityTo, activity, reportId, exclude } = opts.input
       return await prisma.loadingReport.update({
         where: {
           id: reportId
@@ -662,6 +665,7 @@ export const appRouter = router({
           activityFrom: activityFrom,
           activityTo: activityTo,
           activity: activity,
+          exclude: exclude
         }
       })
     }),
