@@ -4,11 +4,35 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { signIn } from 'next-auth/react'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 export default function SignIn() {
 	return (
 		<>
-			<div className="block w-5/6  md:w-[40%] md:h-3/5 rounded-lg bg-white p-10 mb-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)">
+			<Link href="/">
+				<div className="absolute top-6 left-5 cursor-pointer">
+					<div className="flex">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth="1.5"
+							stroke="currentColor"
+							className="w-5 h-5">
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+							/>
+						</svg>
+						<h3 className="text-base text-slate-700 font-semibold px-1">
+							Home
+						</h3>
+					</div>
+				</div>
+			</Link>
+			<div className="block sm:w-5/6 md:w-[40%] md:h-3/5 rounded-lg bg-white p-10 mb-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)">
 				<h1 className="text-xl font-bold text-slate-600">Sign In</h1>
 				<h3 className="text-base py-3 text-slate-500">
 					Log in using your email and password
