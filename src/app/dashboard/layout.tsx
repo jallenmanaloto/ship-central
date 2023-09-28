@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	const { status } = useSession()
-	if (status === 'unauthenticated') redirect('/')
+	if (status === 'unauthenticated') redirect('/signin')
 
 	return (
 		<>
