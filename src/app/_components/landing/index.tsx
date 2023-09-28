@@ -24,7 +24,7 @@ export default function Landing() {
 						</Link>
 					</div>
 				</div>
-				<div className="flex justify-center pt-10 md:pl-24">
+				<div className="flex justify-center md:pt-10 md:pl-24">
 					<div
 						className="xs:w-96 xs:h-96 md:w-[500px] md:h-[500px]"
 						style={{ backgroundImage: `url(${mainHero.src})` }}></div>
