@@ -9,11 +9,11 @@ export default function Landing() {
 		<>
 			<div className="flex flex-col-reverse md:flex-row bg-neutral-900 bg-opacity-95 pb-8">
 				<div className=" md:pl-4 md:pt-28 md:w-1/2">
-					<h1 className="text-2xl md:text-6xl pt-20 px-7 font-bold text-slate-50 tracking-wider">
+					<h1 className="text-3xl xs:pt-10 md:text-6xl md:pt-20 px-7 font-bold text-slate-50 tracking-wider">
 						Ship Central
 					</h1>
 					<div className="px-7 py-4">
-						<h2 className="text-slate-100 font-medium md:w-[420px] tracking-wide text-opacity-40">
+						<h2 className="text-lg text-slate-100 font-medium md:w-[420px] tracking-wide text-opacity-40">
 							Your one-stop management tool to handle all of your ships'
 							activities and trips.
 						</h2>
