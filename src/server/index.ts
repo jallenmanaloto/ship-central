@@ -359,25 +359,34 @@ export const appRouter = router({
   }),
 
   // Projects Api
-  createProject: publicProcedure.input(z.object({ vesselId: z.string().nullable(), projectStartDate: z.string(), projectEndDate: z.string() })).mutation(async (opts) => {
+  createProject: publicProcedure.input(
+    z.object({
+      vesselId: z.string().nullable(),
+      projectStartDate: z.string(),
+      projectEndDate: z.string(),
+      cargoRate: z.number()
+    })
+  )
+    .mutation(async (opts) => {
+      const { vesselId, projectStartDate, projectEndDate, cargoRate } = opts.input
+      if (vesselId !== null) {
+        const vessel = await prisma.vessel.findFirst({
+          where: {
+            id: vesselId
+          }
+        })
 
-    if (opts.input.vesselId !== null) {
-      const vessel = await prisma.vessel.findFirst({
-        where: {
-          id: opts.input.vesselId
-        }
-      })
-
-      return await prisma.projects.create({
-        data: {
-          vesselId: opts.input.vesselId,
-          vesselName: vessel?.name,
-          projectStartDate: opts.input.projectStartDate,
-          projectEndDate: opts.input.projectEndDate
-        }
-      })
-    }
-  }),
+        return await prisma.projects.create({
+          data: {
+            vesselId: vesselId,
+            vesselName: vessel?.name,
+            projectStartDate: opts.input.projectStartDate,
+            projectEndDate: opts.input.projectEndDate,
+            cargoRate: cargoRate
+          }
+        })
+      }
+    }),
   getProjects: publicProcedure.input(
     z.object({
       vesselId: z.string().nullable(),

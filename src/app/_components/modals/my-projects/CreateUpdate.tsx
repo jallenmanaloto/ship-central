@@ -15,6 +15,7 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker'
 import { useProjectStore } from '@/utils/store'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { trpc } from '@/app/_trpc/client'
+import { Input } from '@/components/ui/input'
 import CreateProject from '../../options/CreateProject'
 
 const DatePicker = ({ type }: { type: string }) => {
@@ -40,6 +41,7 @@ const DatePicker = ({ type }: { type: string }) => {
 const CreateRecord = () => {
 	const [open, setOpen] = useState<boolean>(false)
 	const [creating, setCreating] = useState<boolean>(false)
+	const [cargoRate, setCargoRate] = useState<string>('0')
 
 	const utils = trpc.useContext()
 	const { chosenVesselIdForCreate, projectStartDate, projectEndDate } =
@@ -54,12 +56,19 @@ const CreateRecord = () => {
 			setCreating(false)
 		},
 	})
+
+	const handleCancel = () => {
+		setOpen(false)
+		setCargoRate('0')
+	}
+
 	const handleCreateProject = () => {
 		setCreating(true)
 		createProject.mutate({
 			vesselId: chosenVesselIdForCreate,
 			projectStartDate: projectStartDate,
 			projectEndDate: projectEndDate,
+			cargoRate: parseInt(cargoRate),
 		})
 	}
 	return (
@@ -73,7 +82,7 @@ const CreateRecord = () => {
 				aria-labelledby="modal-title"
 				aria-describedby="modal-desc"
 				open={open}
-				onClose={() => setOpen(false)}
+				onClose={handleCancel}
 				sx={{
 					display: 'flex',
 					justifyContent: 'center',
@@ -119,6 +128,15 @@ const CreateRecord = () => {
 							<DatePicker type="end" />
 						</div>
 					</div>
+					<div className="mt-1 w-full py-3">
+						<div className="flex justify-between">
+							<h2 className="text-bottom">Cargo rate:</h2>
+							<Input
+								value={cargoRate}
+								onChange={(e) => setCargoRate(e.target.value)}
+							/>
+						</div>
+					</div>
 					<div className="grid grid-cols-2 gap-3 py-3">
 						<Button
 							onClick={handleCreateProject}
@@ -129,9 +147,7 @@ const CreateRecord = () => {
 								'Save'
 							)}
 						</Button>
-						<Button
-							onClick={() => setOpen(false)}
-							className="bg-red-950 opacity-75">
+						<Button onClick={handleCancel} className="bg-red-950 opacity-75">
 							Cancel
 						</Button>
 					</div>
