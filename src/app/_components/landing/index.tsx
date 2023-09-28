@@ -13,12 +13,12 @@ export default function Landing() {
 						Ship Central
 					</h1>
 					<div className="px-7 py-4">
-						<h2 className="text-slate-100 font-medium md:w-[420px] tracking-wide">
+						<h2 className="text-slate-100 font-medium md:w-[420px] tracking-wide text-opacity-40">
 							Your one-stop management tool to handle all of your ships'
 							activities and trips.
 						</h2>
 						<Link href="/dashboard">
-							<Button className="mt-7 w-44 bg-slate-200 text-slate-950 font-semibold tracking-wide hover:bg-slate-400">
+							<Button className="mt-7 w-44 bg-slate-200 text-slate-800 text-base font-semibold tracking-wider hover:bg-slate-400">
 								Get started
 							</Button>
 						</Link>
