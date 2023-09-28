@@ -249,19 +249,6 @@ const UpdateRecord = ({ dailyLoading }: { dailyLoading: RecordProp }) => {
 		})
 	}
 
-	// console.log({
-	// 	activityFrom:
-	// 		activityFrom === ''
-	// 			? dayjs(dailyLoading.activityFrom).format('YYYY-MM-DDTHH:mm:ssZ')
-	// 			: activityFrom,
-	// 	activityTo:
-	// 		activityTo === ''
-	// 			? dayjs(dailyLoading.activityTo).format('YYYY-MM-DDTHH:mm:ssZ')
-	// 			: activityTo,
-	// 	activity: activity === '' ? (dailyLoading.activity as string) : activity,
-	// 	reportId: dailyLoading.id,
-	// 	exclude: excludeComputation,
-	// })
 	return (
 		<>
 			<svg

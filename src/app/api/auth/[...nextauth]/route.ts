@@ -9,11 +9,18 @@ const options: NextAuthOptions = {
     })
   ],
   secret: process.env.NEXTAUTH_SECRET as string,
-  callbacks: {
-    async redirect({ url, baseUrl }) {
-      return baseUrl + '/dashboard'
-    }
-  }
+  // callbacks: {
+  //   async redirect({ url, baseUrl }) {
+  //     if (url === baseUrl || url === baseUrl + '/signin') {
+  //       return baseUrl + '/dashboard';
+  //     } else if (url === baseUrl + '/dashboard') {
+  //       // Redirect to home if on dashboard and not logged in
+  //       return baseUrl;
+  //     } else {
+  //       return baseUrl;
+  //     }
+  //   }
+  // }
 }
 const handler = NextAuth(options)
 

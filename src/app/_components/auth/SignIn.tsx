@@ -30,7 +30,9 @@ export default function SignIn() {
 				<Button className="w-full mt-5">Sign In</Button>
 				<Separator className="my-4 bg-slate-300" />
 				<Button
-					onClick={() => signIn('google')}
+					onClick={() =>
+						signIn('google', { callbackUrl: 'http://localhost:3000/dashboard' })
+					}
 					className="w-full bg-white border-slate-300 border-x border-y cursor-pointer">
 					<div className="flex items-center">
 						<svg

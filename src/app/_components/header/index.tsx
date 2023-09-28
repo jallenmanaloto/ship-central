@@ -2,8 +2,18 @@
 
 import Avatar from './Avatar'
 import { useDrawerStore } from '@/utils/store'
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { useSession, signOut } from 'next-auth/react'
 
 const Header = () => {
+	const { data: session } = useSession()
 	const { toggleDrawer } = useDrawerStore()
 	return (
 		<div className="h-[60px] w-screen bg-white shadow-2xl">
@@ -26,8 +36,25 @@ const Header = () => {
 						</svg>
 					</div>
 					<div className="flex justify-center items-center">
-						<h4 className="pr-2">John</h4>
-						<Avatar imageUrl="https://tecdn.b-cdn.net/img/new/avatars/2.webp" />
+						<DropdownMenu>
+							<h4 className="pr-2">{session?.user?.name}</h4>
+							<DropdownMenuTrigger>
+								<Avatar imageUrl={session?.user?.image as string} />
+							</DropdownMenuTrigger>
+							<DropdownMenuContent>
+								<DropdownMenuLabel>My Account</DropdownMenuLabel>
+								<DropdownMenuSeparator />
+								<DropdownMenuItem
+									onClick={() =>
+										signOut({
+											redirect: true,
+											callbackUrl: 'http://localhost:3000/',
+										})
+									}>
+									Logout
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 				</div>
 			</div>
