@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import Provider from './_trpc/Provider'
 import 'tw-elements/dist/css/tw-elements.min.css'
+import { NextAuthProvider } from './context/NextAuthProvider'
 
 const roboto = Roboto({ weight: '400', subsets: ['latin'] })
 
@@ -19,7 +20,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={roboto.className}>
-				<Provider>{children}</Provider>
+				<NextAuthProvider>
+					<Provider>{children}</Provider>
+				</NextAuthProvider>
 			</body>
 		</html>
 	)

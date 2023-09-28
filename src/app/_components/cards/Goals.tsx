@@ -10,13 +10,13 @@ const Goals = () => {
 			</h1>
 			{vesselProgress.map((vessel, idx) => {
 				return (
-					<>
+					<React.Fragment key={idx}>
 						<ProgressBar
 							key={idx}
 							name={vessel.name}
 							percentage={vessel.percentage}
 						/>
-					</>
+					</React.Fragment>
 				)
 			})}
 		</div>
