@@ -8,7 +8,7 @@ import { signIn } from 'next-auth/react'
 export default function SignIn() {
 	return (
 		<>
-			<div className="block w-[40%] h-3/5 rounded-lg bg-white p-10 mb-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)">
+			<div className="block w-5/6  md:w-[40%] md:h-3/5 rounded-lg bg-white p-10 mb-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)">
 				<h1 className="text-xl font-bold text-slate-600">Sign In</h1>
 				<h3 className="text-base py-3 text-slate-500">
 					Log in using your email and password
