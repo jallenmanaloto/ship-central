@@ -24,6 +24,7 @@ module.exports = {
 				midnight: '#212b36',
 				body: '#637381',
 				weather: '#162D3B',
+				homeButton: '#603737',
 			},
 			colors: {
 				dashboard: '#f4f6f8',
