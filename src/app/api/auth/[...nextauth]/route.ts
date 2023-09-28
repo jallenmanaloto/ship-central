@@ -1,7 +1,11 @@
+import { PrismaClient } from "@prisma/client"
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from 'next-auth/providers/google'
 
+const prisma = new PrismaClient()
 const options: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -9,18 +13,6 @@ const options: NextAuthOptions = {
     })
   ],
   secret: process.env.NEXTAUTH_SECRET as string,
-  // callbacks: {
-  //   async redirect({ url, baseUrl }) {
-  //     if (url === baseUrl || url === baseUrl + '/signin') {
-  //       return baseUrl + '/dashboard';
-  //     } else if (url === baseUrl + '/dashboard') {
-  //       // Redirect to home if on dashboard and not logged in
-  //       return baseUrl;
-  //     } else {
-  //       return baseUrl;
-  //     }
-  //   }
-  // }
 }
 const handler = NextAuth(options)
 
