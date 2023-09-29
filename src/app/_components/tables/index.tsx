@@ -1,8 +1,6 @@
 'use client'
 
 import React from 'react'
-import { trpc } from '@/app/_trpc/client'
-import { Analytics } from '@prisma/client'
 import DetailsLoading from '../loading/DetailsLoading'
 
 const headers = [
@@ -100,7 +98,9 @@ const Table = ({
 													</td>
 													<td className="whitespace-nowrap px-6 py-4 font-medium">
 														{analytic?.totalCargoToBeLoaded !== null
-															? analytic?.totalCargoToBeLoaded.toLocaleString()
+															? parseFloat(
+																	analytic?.totalCargoToBeLoaded
+															  ).toLocaleString()
 															: ''}
 													</td>
 													<td className="whitespace-nowrap px-6 py-4 font-medium">

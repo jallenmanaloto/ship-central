@@ -1,14 +1,19 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import Table from '../tables'
 import AnalysisCard from '../cards/AnalysisCard'
-import vesselAnalytics from '../../../app/faker/data/analytics'
 import { trpc } from '@/app/_trpc/client'
+import { useAnalyticsStore } from '@/utils/store'
 
 const index = () => {
+	const { setActiveProjects } = useAnalyticsStore()
 	const { data: activeAnalytics, isLoading } =
 		trpc.getActiveAnalytics.useQuery()
+
+	useEffect(() => {
+		setActiveProjects(activeAnalytics)
+	}, [activeAnalytics])
 
 	return (
 		<div className="w-full grid grid-cols-1 px-10 pb-12">

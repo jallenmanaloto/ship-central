@@ -1,3 +1,4 @@
+import { Analytics } from '@prisma/client'
 import { create } from 'zustand'
 
 /** START OF DRAWER STORE */
@@ -147,3 +148,47 @@ export const useDailyLoadingStore = create<DailyLoadingStore>((set) => ({
   setLimit: (limit: number) => set({ limit: limit })
 }))
 /** END OF DAILY LOADING STORE */
+
+
+/** START OF ANALYTICS STORE */
+type Analysis = | {
+  vesselName: string
+  id: string
+  projectId: string | null
+  monitored: boolean | null
+  totalCargo: number | null
+  laytime: string | null
+  layTimeAsOf: number | null
+  layTimeConsumed: number | null
+  totalCargoToBeLoaded: string | null
+  totalLoadedCargo: string | null
+  estDespatch: number | null
+  estTimeToFinishLoading: number | null
+  estTotalTimeFinish: number | null
+}[]
+  | undefined
+
+type Prop = {
+  vesselName: string;
+  id: string;
+  projectId: string | null;
+  monitored: boolean | null;
+  totalCargo: number | null;
+  laytime: string | null;
+  layTimeAsOf: number | null;
+  layTimeConsumed: number | null;
+  totalCargoToBeLoaded: string | null;
+}[]
+
+
+type AnalyticStore = {
+  activeProjects: Analysis | []
+  setActiveProjects: (activeProjects: Analysis) => void
+}
+
+export const useAnalyticsStore = create<AnalyticStore>((set) => ({
+  activeProjects: [],
+  setActiveProjects: (activeProjects: Analysis) => set({ activeProjects: activeProjects })
+}))
+
+/** END OF ANALYTICS STORE */
