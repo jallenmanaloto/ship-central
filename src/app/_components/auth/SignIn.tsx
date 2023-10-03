@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import Loading from '../loading/Loading'
 
 export default function SignIn() {
 	return (
@@ -54,6 +55,7 @@ export default function SignIn() {
 				<Button className="w-full mt-5">Sign In</Button>
 				<Separator className="my-4 bg-slate-300" />
 				<Button
+					variant="outline"
 					onClick={() =>
 						signIn('google', {
 							callbackUrl: 'https://ship-central.vercel.app/dashboard',
