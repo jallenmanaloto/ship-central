@@ -17,7 +17,8 @@ const Goals = () => {
 				const totalCargo = project.totalCargo ?? 0
 				const loadedCargo = parseInt(project.totalLoadedCargo ?? '0')
 				const computed = ((loadedCargo / totalCargo) * 100).toFixed(2)
-				const percentage = computed.toString() + '%'
+				const percentage =
+					computed === 'NaN' ? 'N/A' : computed.toString() + '%'
 				return (
 					<React.Fragment key={idx}>
 						<ProgressBar
