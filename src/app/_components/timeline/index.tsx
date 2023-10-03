@@ -47,10 +47,9 @@ const Timeline = () => {
 
 								return bDate.getTime() - aDate.getTime()
 							})
-							const date = dayjs(Object.keys(dates)[0]).format('YYYY-MM-DD')
-							// const dateVal = date
-							// 	.tz('Asia/Shanghai')
-							// 	.format('YYYY-MM-DDTHH:mm:ssZ[Z]')
+							const date = dayjs(Object.keys(dates)[0])
+								.utcOffset(8)
+								.format('YYYY-MM-DD')
 
 							return (
 								<li key={idx}>
