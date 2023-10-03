@@ -46,14 +46,19 @@ const Timeline = () => {
 
 								return bDate.getTime() - aDate.getTime()
 							})
-							const dateVal = dayjs(Object.keys(dates)[0]).tz('UTC')
-							const dateKey = dateVal.tz('Asia/Manila').format('YYYY-MM-DD')
+							const dateVal = dayjs(Object.keys(dates)[0]).format(
+								'YYYY-MM-DDTHH:mm:ssZ[Z]'
+							)
+							// const dateKey = dayjs(dateVal)
+							// 	// .tz('Asia/Manila')
+							// 	.format('YYYY-MM-DD')
+							console.log(dateVal)
 							return (
 								<li key={idx}>
 									<div className="flex-start flex items-center pt-3">
 										<div className="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-900 dark:bg-neutral-500"></div>
 										<p className="text-sm text-neutral-500 dark:text-neutral-300">
-											{dateKey}
+											{dateVal}
 										</p>
 									</div>
 									{records?.map((record: LoadingReport, idx: number) => {
