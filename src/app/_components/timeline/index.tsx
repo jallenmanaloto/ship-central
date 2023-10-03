@@ -46,9 +46,9 @@ const Timeline = () => {
 
 								return bDate.getTime() - aDate.getTime()
 							})
-							const dateVal = dayjs(Object.keys(dates)[0]).format(
-								'YYYY-MM-DDTHH:mm:ssZ[Z]'
-							)
+							const dateVal = dayjs(Object.keys(dates)[0])
+								.tz('Asia/Taipei')
+								.format('YYYY-MM-DDTHH:mm:ssZ[Z]')
 							// const dateKey = dayjs(dateVal)
 							// 	// .tz('Asia/Manila')
 							// 	.format('YYYY-MM-DD')
