@@ -6,8 +6,14 @@ import dayjs from 'dayjs'
 import { LoadingReport } from '@prisma/client'
 import DailyLoadingPagination from '../pagination/DailyLoadingPagination'
 import Loading from '../loading/Loading'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 
 const Timeline = () => {
+	dayjs.extend(utc)
+	dayjs.extend(timezone)
+	dayjs.tz.setDefault('Asia/Manila')
+
 	const { dailyLoadingProjectId, setDailyLoadingProjectId, page, limit } =
 		useDailyLoadingStore()
 
@@ -39,6 +45,7 @@ const Timeline = () => {
 								const aDate = new Date(a.activityFrom)
 								const bDate = new Date(a.activityTo)
 
+								console.log(dayjs(Object.keys(dates)[0]))
 								return bDate.getTime() - aDate.getTime()
 							})
 							return (
