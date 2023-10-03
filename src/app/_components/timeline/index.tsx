@@ -48,8 +48,8 @@ const Timeline = () => {
 								return bDate.getTime() - aDate.getTime()
 							})
 							const date = dayjs(Object.keys(dates)[0])
-								// .utcOffset(24)
-								.format('YYYY-MM-DD HH:mm:ss')
+								.add(1, 'day')
+								.format('YYYY-MM-DD')
 
 							return (
 								<li key={idx}>
