@@ -55,7 +55,9 @@ export default function SignIn() {
 				<Separator className="my-4 bg-slate-300" />
 				<Button
 					onClick={() =>
-						signIn('google', { callbackUrl: 'http://localhost:3000/dashboard' })
+						signIn('google', {
+							callbackUrl: 'https://ship-central.vercel.app/dashboard',
+						})
 					}
 					className="w-full bg-white border-slate-300 border-x border-y cursor-pointer">
 					<div className="flex items-center">
