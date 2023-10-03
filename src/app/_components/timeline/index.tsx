@@ -45,15 +45,17 @@ const Timeline = () => {
 								const aDate = new Date(a.activityFrom)
 								const bDate = new Date(a.activityTo)
 
-								console.log(dayjs(Object.keys(dates)[0]))
 								return bDate.getTime() - aDate.getTime()
 							})
+							const dateKey = dayjs(Object.keys(dates)[0])
+								.tz('Asia/Manila')
+								.format('YYYY-MM-DD')
 							return (
 								<li key={idx}>
 									<div className="flex-start flex items-center pt-3">
 										<div className="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-900 dark:bg-neutral-500"></div>
 										<p className="text-sm text-neutral-500 dark:text-neutral-300">
-											{Object.keys(dates)}
+											{dateKey}
 										</p>
 									</div>
 									{records?.map((record: LoadingReport, idx: number) => {
