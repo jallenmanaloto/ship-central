@@ -12,7 +12,6 @@ import timezone from 'dayjs/plugin/timezone'
 const Timeline = () => {
 	dayjs.extend(utc)
 	dayjs.extend(timezone)
-	dayjs.tz.setDefault('Asia/Manila')
 
 	const { dailyLoadingProjectId, setDailyLoadingProjectId, page, limit } =
 		useDailyLoadingStore()
@@ -47,9 +46,8 @@ const Timeline = () => {
 
 								return bDate.getTime() - aDate.getTime()
 							})
-							const dateKey = dayjs(Object.keys(dates)[0])
-								.tz('Asia/Manila')
-								.format('YYYY-MM-DD')
+							const dateVal = dayjs(Object.keys(dates)[0]).tz('UTC')
+							const dateKey = dateVal.tz('Asia/Manila').format('YYYY-MM-DD')
 							return (
 								<li key={idx}>
 									<div className="flex-start flex items-center pt-3">
