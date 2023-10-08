@@ -637,7 +637,7 @@ export const appRouter = router({
 
         const groupedResults: any[] = [];
         dailyLoading.forEach((record) => {
-          const activityFrom = dayjs(record.activityFrom).format('YYYY-MM-DD'); // Convert to ISO string for grouping
+          const activityFrom = dayjs(record.activityFrom).local().format('YYYY-MM-DD'); // Convert to ISO string for grouping
           const existingEntry = groupedResults.find((entry) => entry[activityFrom]);
 
           if (existingEntry) {
