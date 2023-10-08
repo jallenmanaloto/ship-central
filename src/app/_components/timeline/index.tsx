@@ -71,7 +71,6 @@ const Timeline = () => {
 																'h:mmA'
 															)} - ${dayjs(record.activityTo).format('h:mmA')}`}
 														</h4>
-														<h5 className="px-1">{`(1h45m)`}</h5>
 													</div>
 													<p className="mb-3 text-neutral-500 dark:text-neutral-300">
 														{record.activity}
