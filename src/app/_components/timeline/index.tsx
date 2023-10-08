@@ -48,9 +48,9 @@ const Timeline = () => {
 								return bDate.getTime() - aDate.getTime()
 							})
 							const date = dayjs(Object.keys(dates)[0])
-								.add(1, 'day')
+								// .add(1, 'day')
 								.format('YYYY-MM-DD')
-
+							console.log(dates)
 							return (
 								<li key={idx}>
 									<div className="flex-start flex items-center pt-3">
