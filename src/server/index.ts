@@ -3,6 +3,12 @@ import prisma from '@/utils/prisma';
 import z from 'zod'
 import dayjs, { Dayjs } from 'dayjs';
 import { Prisma } from '@prisma/client';
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault('Asia/Manila')
 
 export const appRouter = router({
   // Vessels API
