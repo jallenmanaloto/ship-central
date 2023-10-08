@@ -49,6 +49,7 @@ const DatePicker = ({ kind, type, action, value }: DatePickerProps) => {
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<DateTimePicker
+				ampm={false}
 				value={kind === 'update' ? dateValue : null}
 				onChange={(val: string | null) => handleChange(val)}
 			/>
